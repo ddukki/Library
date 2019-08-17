@@ -6,6 +6,10 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\Models\Author;
+use App\Models\Book;
+use App\Models\Shelf;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -36,4 +40,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function shelves() {
+        return $this->hasMany(Shelf::class);
+    }
+
+    public function books() {
+        return $this->hasManyThrough(Book::class, Shelf::class);
+    }
 }
