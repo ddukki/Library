@@ -16,9 +16,15 @@ class CreateBooksTable extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
+            $table->timestamps();
+        });
+
+        Schema::create('editions', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('book_id');
+            $table->string('name');
             $table->unsignedBigInteger('location_type_id');
             $table->integer('location_size');
-            $table->string('edition');
             $table->timestamps();
         });
 
@@ -52,20 +58,14 @@ class CreateBooksTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('book_shelves', function (Blueprint $table) {
+        Schema::create('edition_shelves', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('shelf_id');
-            $table->unsignedBigInteger('book_id');
+            $table->unsignedBigInteger('edition_id');
             $table->timestamps();
         });
 
         // Create foreign keys
-        Schema::table('books', function (Blueprint $table) {
-            $table->foreign('location_type_id')
-                    ->references('id')->on('location_types')
-                    ->onDelete('cascade');
-        });
-
         Schema::table('book_authors', function (Blueprint $table) {
             $table->foreign('book_id')
                     ->references('id')->on('books')
@@ -75,9 +75,9 @@ class CreateBooksTable extends Migration
                     ->onDelete('cascade');
         });
 
-        Schema::table('book_shelves', function (Blueprint $table) {
-            $table->foreign('book_id')
-                    ->references('id')->on('books')
+        Schema::table('edition_shelves', function (Blueprint $table) {
+            $table->foreign('edition_id')
+                    ->references('id')->on('editions')
                     ->onDelete('cascade');
             $table->foreign('shelf_id')
                     ->references('id')->on('shelves')
@@ -87,6 +87,15 @@ class CreateBooksTable extends Migration
         Schema::table('shelves', function (Blueprint $table) {
             $table->foreign('user_id')
                     ->references('id')->on('users')
+                    ->onDelete('cascade');
+        });
+
+        Schema::table('editions', function (Blueprint $table) {
+            $table->foreign('book_id')
+                    ->references('id')->on('books')
+                    ->onDelete('cascade');
+            $table->foreign('location_type_id')
+                    ->references('id')->on('location_types')
                     ->onDelete('cascade');
         });
     }

@@ -15,15 +15,19 @@ class CreateQuotesTable extends Migration
     {
         Schema::create('quotes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('book_id');
+            $table->unsignedBigInteger('edition_id');
+            $table->unsignedBigInteger('user_id');
             $table->mediumText('quote');
-            $table->mediumInteger('book_location');
+            $table->mediumInteger('location');
             $table->timestamps();
         });
 
         Schema::table('quotes', function (Blueprint $table) {
-            $table->foreign('book_id')
-                    ->references('id')->on('books')
+            $table->foreign('edition_id')
+                    ->references('id')->on('editions')
+                    ->onDelete('cascade');
+            $table->foreign('user_id')
+                    ->references('id')->on('users')
                     ->onDelete('cascade');
         });
     }

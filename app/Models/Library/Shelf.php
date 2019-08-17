@@ -4,6 +4,8 @@ namespace App\Models\Library;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\User;
+
 class Shelf extends Model
 {
     public $fillable = ['name', 'user_id'];
