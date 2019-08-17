@@ -15,17 +15,17 @@ class CreateProgressTable extends Migration
     {
         Schema::create('progress', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('book_id');
+            $table->unsignedBigInteger('edition_id');
             $table->unsignedBigInteger('user_id');
-            $table->mediumInteger('book_location_start');
-            $table->mediumInteger('book_location_end');
+            $table->mediumInteger('location_start');
+            $table->mediumInteger('location_end');
             $table->timestamp('datetime');
             $table->timestamps();
         });
 
         Schema::table('progress', function (Blueprint $table) {
-            $table->foreign('book_id')
-                    ->references('id')->on('books')
+            $table->foreign('edition_id')
+                    ->references('id')->on('editions')
                     ->onDelete('cascade');
             $table->foreign('user_id')
                     ->references('id')->on('users')
@@ -41,7 +41,7 @@ class CreateProgressTable extends Migration
     public function down()
     {
         Schema::table('progress', function (Blueprint $table) {
-            $table->dropForeign(['book_id']);
+            $table->dropForeign(['edition_id']);
             $table->dropForeign(['user_id']);
         });
 

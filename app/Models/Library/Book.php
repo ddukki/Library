@@ -13,7 +13,7 @@ class Book extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'edition', 'location_type', 'location_size'];
+    protected $fillable = ['title'];
 
     public function authors() {
         return $this->hasMany(Author::class);

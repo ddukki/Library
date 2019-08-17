@@ -14,17 +14,17 @@ class Progress extends Model
      * @var array
      */
     protected $fillable = [
-            'book_id',
+            'edition_id',
             'user_id',
-            'book_location_start',
-            'book_location_end',
+            'location_start',
+            'location_end',
             'datetime'];
 
     public function user() {
         return $this->belongsTo(User::class);
     }
 
-    public function book() {
-        return $this->belongsTo(Book::class);
+    public function edition() {
+        return $this->belongsTo(Edition::class);
     }
 }

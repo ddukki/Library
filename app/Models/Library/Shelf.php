@@ -10,8 +10,8 @@ class Shelf extends Model
 {
     public $fillable = ['name', 'user_id'];
 
-    public function books() {
-        return $this->belongsToMany(Book::class);
+    public function editions() {
+        return $this->hasMany(Edition::class);
     }
 
     public function user() {

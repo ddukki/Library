@@ -13,10 +13,10 @@ class Quote extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'edition', 'location_type', 'location_size'];
+    protected $fillable = ['title', 'edition_id', 'user_id', 'quote', 'location'];
 
-    public function book() {
-        return $this->belongsTo(Book::class);
+    public function edition() {
+        return $this->belongsTo(edition::class);
     }
 
     public function user() {

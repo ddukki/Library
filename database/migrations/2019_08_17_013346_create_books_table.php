@@ -107,7 +107,8 @@ class CreateBooksTable extends Migration
      */
     public function down()
     {
-        Schema::table('books', function (Blueprint $table) {
+        Schema::table('editions', function (Blueprint $table) {
+            $table->dropForeign(['book_id']);
             $table->dropForeign(['location_type_id']);
         });
 
@@ -116,8 +117,8 @@ class CreateBooksTable extends Migration
             $table->dropForeign(['author_id']);
         });
 
-        Schema::table('book_shelves', function (Blueprint $table) {
-            $table->dropForeign(['book_id']);
+        Schema::table('edition_shelves', function (Blueprint $table) {
+            $table->dropForeign(['edition_id']);
             $table->dropForeign(['shelf_id']);
         });
 
@@ -130,6 +131,7 @@ class CreateBooksTable extends Migration
         Schema::dropIfExists('shelves');
         Schema::dropIfExists('location_types');
         Schema::dropIfExists('book_authors');
-        Schema::dropIfExists('book_shelves');
+        Schema::dropIfExists('edition_shelves');
+        Schema::dropIfExists('editions');
     }
 }
