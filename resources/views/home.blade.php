@@ -14,7 +14,7 @@
 								aria-describedby="basic-addon2">
 						<div class="input-group-append">
 							<button class="btn btn-outline-secondary" type="submit">
-								<i class="fa fa-search"></i>
+								<i class="fas fa-search"></i>
 							</button>
 						</div>
 					</div>

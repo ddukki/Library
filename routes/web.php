@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+include('library/library.php');
+
+Route::get('/', 'HomeController@index');
 
 Auth::routes();
 

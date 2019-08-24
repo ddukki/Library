@@ -16,6 +16,10 @@ class ShelfController extends Controller
         //
     }
 
+	public function add() {
+		return view('library.shelves.add');
+	}
+
     /**
      * Show the form for creating a new resource.
      *

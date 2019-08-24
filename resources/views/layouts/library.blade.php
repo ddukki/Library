@@ -9,6 +9,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+	@routes
+
 	@section('header-scripts')
 		@include('layouts.header-scripts')
 	@show
@@ -21,6 +23,7 @@
 		<!-- Styles -->
 	    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/library.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/all.css') }}" rel="stylesheet">
 	@show
 
 </head>
