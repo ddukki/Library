@@ -1,3 +1,5 @@
 <?php
-Route::get('shelves/add', 'ShelfController@add')->name('shelves.add');
 Route::resource('shelves', 'ShelfController');
+
+Route::get('books/search', 'BookController@search')->name('books.search');
+Route::resource('books', 'BookController');

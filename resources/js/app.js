@@ -27,6 +27,9 @@ Vue.mixin({
 
 Vue.component('shelf-manager', require('./components/ShelfManager.vue').default);
 Vue.component('shelf-add', require('./components/AddShelf.vue').default);
+Vue.component('shelf-books', require('./components/ShelfBooks.vue').default);
+Vue.component('all-books', require('./components/AllBooks.vue').default);
+Vue.component('book-card', require('./components/BookCard.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

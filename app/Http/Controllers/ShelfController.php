@@ -21,10 +21,6 @@ class ShelfController extends Controller
 		]);
     }
 
-	public function add() {
-		return view('library.shelves.add');
-	}
-
     /**
      * Show the form for creating a new resource.
      *
@@ -32,7 +28,7 @@ class ShelfController extends Controller
      */
     public function create()
     {
-        //
+		return view('library.shelves.create');
     }
 
     /**
@@ -59,7 +55,8 @@ class ShelfController extends Controller
      */
     public function show($id)
     {
-        //
+		$shelf = Shelf::where('id', $id)->with('editions')->first();
+        return view('library.shelves.show')->with(compact('shelf'));
     }
 
     /**

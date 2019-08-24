@@ -3,8 +3,8 @@
 @section('content')
 	<div class="container">
 	    <div class="row justify-content-center">
-			<shelf-books :shelf="{{ json_encode($shelf) }}">
-			</shelf-books>
+			<all-books>
+			</all-books>
 		</div>
 	</div>
 @endsection

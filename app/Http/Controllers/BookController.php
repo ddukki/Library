@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Library\Book;
 
 class BookController extends Controller
 {
@@ -11,9 +12,19 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+		$books = Book::query();
+
+		$searchTitle = $request->title ?? null;
+
+		if (isset($searchTitle)) {
+			$books = $books->where('title', 'like', $searchTitle);
+		}
+
+		$books = $books->paginate(20);
+
+		return view('library.books.index');
     }
 
     /**
