@@ -1856,16 +1856,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      shelfname: ''
+      shelfname: '',
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
     };
-  },
-  methods: {
-    getAddRoute: function getAddRoute() {
-      return route('shelves.store');
-    }
   }
 });
 
@@ -1905,13 +1902,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       shelves: []
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get(route('shelves.index')).then(function (response) {
+      _this.shelves = response.data.shelves;
+    })["catch"](function (error) {});
   }
 });
 
@@ -37212,43 +37214,52 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-12" }, [
-    _c("form", { attrs: { method: "POST", action: _vm.getAddRoute } }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "shelf_name" } }, [_vm._v("Shelf Name")]),
-        _vm._v(" "),
+    _c(
+      "form",
+      { attrs: { method: "POST", action: _vm.route("shelves.store") } },
+      [
         _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.shelfname,
-              expression: "shelfname"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            id: "shelf_name",
-            name: "shelf_name",
-            placeholder: "Shelf Name"
-          },
-          domProps: { value: _vm.shelfname },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: _vm.csrf }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "shelf_name" } }, [_vm._v("Shelf Name")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.shelfname,
+                expression: "shelfname"
               }
-              _vm.shelfname = $event.target.value
+            ],
+            staticClass: "form-control",
+            attrs: {
+              id: "shelf_name",
+              name: "shelf_name",
+              placeholder: "Shelf Name"
+            },
+            domProps: { value: _vm.shelfname },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.shelfname = $event.target.value
+              }
             }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [_vm._v("\r\n\t\t\t+ Add\r\n\t\t")]
-      )
-    ])
+          })
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+          [_vm._v("\r\n\t\t\t+ Add\r\n\t\t")]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -37279,17 +37290,20 @@ var render = function() {
       { staticClass: "row" },
       [
         _c("div", { staticClass: "col-3 text-center" }, [
-          _c("a", { attrs: { href: _vm.route("shelves.add") } }, [_vm._m(0)])
+          _c(
+            "a",
+            { staticClass: "card", attrs: { href: _vm.route("shelves.add") } },
+            [_vm._m(0)]
+          )
         ]),
         _vm._v(" "),
         _vm._l(_vm.shelves, function(shelf) {
           return _c("div", { staticClass: "col-3" }, [
             _c("div", { staticClass: "card text-center" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _vm._v("\n\t\t\t\t\t" + _vm._s(shelf.name) + "\n\t\t\t\t")
-              ]),
-              _vm._v(" "),
-              _vm._m(1, true)
+              _c("div", { staticClass: "card-body" }, [
+                _vm._v("\n\t\t\t\t\t" + _vm._s(shelf.name) + "\n\t\t\t\t\t"),
+                _vm._m(1, true)
+              ])
             ])
           ])
         })
@@ -37316,9 +37330,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-body" }, [
-      _c("h1", [_c("i", { staticClass: "fa fa-archive" })])
-    ])
+    return _c("h1", [_c("i", { staticClass: "fas fa-archive" })])
   }
 ]
 render._withStripped = true

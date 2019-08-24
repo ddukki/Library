@@ -2,7 +2,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-3 text-center">
-				<a :href="route('shelves.add')">
+				<a class="card" :href="route('shelves.add')">
 					<div class="card">
 						<div class="card-body">
 							Add New Book<br/>
@@ -13,11 +13,9 @@
 			</div>
 			<div v-for="shelf in shelves" class="col-3">
 				<div class="card text-center">
-					<div class="card-header">
-						{{ shelf.name }}
-					</div>
 					<div class="card-body">
-						<h1><i class="fa fa-archive"></i></h1>
+						{{ shelf.name }}
+						<h1><i class="fas fa-archive"></i></h1>
 					</div>
 				</div>
 			</div>
@@ -32,5 +30,12 @@ export default {
 			shelves: [],
 		}
 	},
+	mounted: function() {
+		axios.get(route('shelves.index')).then(response => {
+			this.shelves = response.data.shelves;
+		}).catch(error => {
+
+		});
+	}
 }
 </script>

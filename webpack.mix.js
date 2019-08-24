@@ -15,4 +15,4 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
 	.sass('resources/sass/library.scss', 'public/css')
 
-	.copy('node_modules/@fortawesome/fontawesome-free/css/all.css', 'public/css');;
+	.copy('node_modules/@fortawesome/fontawesome-free/js/all.js', 'public/js');;

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Library\Shelf;
 
 class ShelfController extends Controller
 {
@@ -13,7 +15,10 @@ class ShelfController extends Controller
      */
     public function index()
     {
-        //
+		$shelves = Shelf::where('user_id', Auth::user()->id)->get();
+		return response()->json([
+			'shelves' => $shelves,
+		]);
     }
 
 	public function add() {
@@ -38,7 +43,12 @@ class ShelfController extends Controller
      */
     public function store(Request $request)
     {
-        //
+		Shelf::create([
+			'name' => $request->shelf_name,
+			'user_id' => Auth::user()->id,
+		]);
+
+		return redirect()->route('home');
     }
 
     /**

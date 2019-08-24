@@ -11,10 +11,10 @@
 |
 */
 
-include('library/library.php');
-
 Route::get('/', 'HomeController@index');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+include('library/library.php');

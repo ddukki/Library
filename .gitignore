@@ -4,6 +4,9 @@
 /storage/*.key
 /vendor
 package-lock.json
+/public/*
+/public/css/*
+/public/js/*
 .env
 .env.backup
 .phpunit.result.cache

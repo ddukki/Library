@@ -1,6 +1,7 @@
 <template>
 <div class="col-12">
-	<form method="POST" :action="getAddRoute">
+	<form method="POST" :action="route('shelves.store')">
+		<input type="hidden" name="_token" :value="csrf">
 		<div class="form-group">
 			<label for="shelf_name">Shelf Name</label>
 			<input class="form-control"
@@ -21,12 +22,8 @@ export default {
 	data() {
 		return {
 			shelfname: '',
+			csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
 		}
 	},
-	methods: {
-		getAddRoute() {
-			return route('shelves.store');
-		},
-	}
 }
 </script>
