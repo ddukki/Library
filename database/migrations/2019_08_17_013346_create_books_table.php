@@ -37,7 +37,7 @@ class CreateBooksTable extends Migration
         Schema::create('authors', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('first_name');
-            $table->string('middle_name');
+            $table->string('middle_name')->nullable();
             $table->string('last_name');
             $table->timestamp('birth_date')->nullable();
             $table->timestamp('death_date')->nullable();

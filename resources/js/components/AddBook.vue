@@ -85,13 +85,13 @@ export default {
     },
     methods: {
         addBook() {
-            axios.post(route('books.store', {
+            axios.post(route('books.store'), {
                 title: this.title,
-            })).then(response => {}).catch(error => {});
-
-            axios.post(route('authors.store', {
                 authors: this.authors,
-            })).then(response => {}).catch(error => {});
+            }).then(response => {
+                // Redirect to books page
+                window.location.replace(route('books.all').url());
+            }).catch(error => {});
         },
         addAuthor() {
             this.authors.push(

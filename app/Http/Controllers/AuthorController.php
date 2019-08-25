@@ -36,18 +36,21 @@ class AuthorController extends Controller
     public function store(Request $request)
     {
         $authors = $request->authors;
+        $added = [];
 
         foreach($authors as $author) {
-            Author::create([
-                'first_name' => $author->firstname,
-                'middle_name' => $author->middlename,
-                'last_name' => $author->lastname,
+            $new = Author::create([
+                'first_name' => $author['firstname'],
+                'middle_name' => $author['middlename'],
+                'last_name' => $author['lastname'],
             ]);
+
+            array_push($added, $new);
         }
 
         return response()->json([
             'success' => true,
-            'added' => $authors,
+            'added' => $added,
             'message' => 'Authors added!'
         ]);
     }

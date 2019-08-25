@@ -1922,12 +1922,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addBook: function addBook() {
-      axios.post(route('books.store', {
-        title: this.title
-      })).then(function (response) {})["catch"](function (error) {});
-      axios.post(route('authors.store', {
+      axios.post(route('books.store'), {
+        title: this.title,
         authors: this.authors
-      })).then(function (response) {})["catch"](function (error) {});
+      }).then(function (response) {
+        // Redirect to books page
+        window.location.replace(route('books.all').url());
+      })["catch"](function (error) {});
     },
     addAuthor: function addAuthor() {
       this.authors.push({
@@ -1992,8 +1993,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -37784,79 +37783,84 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-12" }, [
-    _c("div", { staticClass: "container-fluid" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-9" }, [
-          _c("div", { staticClass: "input-group mb-3" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.title,
-                  expression: "title"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                placeholder: "Search Books",
-                "aria-label": "Search for books",
-                "aria-describedby": "basic-addon2"
-              },
-              domProps: { value: _vm.title },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+    _c(
+      "div",
+      { staticClass: "container-fluid" },
+      [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-9" }, [
+            _c("div", { staticClass: "input-group mb-3" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.title,
+                    expression: "title"
                   }
-                  _vm.title = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "input-group-append" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-outline-secondary",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.search($event)
-                    }
-                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  placeholder: "Search Books",
+                  "aria-label": "Search for books",
+                  "aria-describedby": "basic-addon2"
                 },
-                [_c("i", { staticClass: "fas fa-search" })]
-              )
+                domProps: { value: _vm.title },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.title = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group-append" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-secondary",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.search($event)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fas fa-search" })]
+                )
+              ])
             ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-3" }, [
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { href: _vm.route("books.create"), role: "button" }
+              },
+              [
+                _c("i", { staticClass: "fas fa-plus" }),
+                _vm._v(" Add New\n                ")
+              ]
+            )
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-3" }, [
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-primary",
-              attrs: { href: _vm.route("books.create"), role: "button" }
-            },
-            [
-              _c("i", { staticClass: "fas fa-plus" }),
-              _vm._v(" Add New\n                ")
-            ]
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "row" },
         _vm._l(_vm.books, function(book, index) {
-          return _c("book-card", { key: index, attrs: { book: book } })
-        }),
-        1
-      )
-    ])
+          return _c(
+            "div",
+            { staticClass: "row mb-2" },
+            [_c("book-card", { key: index, attrs: { book: book } })],
+            1
+          )
+        })
+      ],
+      2
+    )
   ])
 }
 var staticRenderFns = []
@@ -37985,10 +37989,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-body" }, [
-        _vm._v("\n                        Add New Book"),
-        _c("br"),
+        _c("p", [_vm._v("Add New Book")]),
         _vm._v(" "),
-        _c("h1", [_vm._v("+")])
+        _c("h1", { staticClass: "mt-3" }, [
+          _c("i", { staticClass: "fas fa-plus" })
+        ])
       ])
     ])
   },

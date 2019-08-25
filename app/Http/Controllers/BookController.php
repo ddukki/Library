@@ -42,16 +42,26 @@ class BookController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage. This store must include a book
+     * title as well as the authors for the book and the edition that will be
+     * added to the book.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, AuthorController $authorController)
     {
         $book = Book::create([
             'title' => $request->title,
         ]);
+
+        // Generate new Authors
+        $authorResponse = $authorController->store($request);
+        $newAuthors = collect($authorResponse->getData()->added)->pluck('id');
+
+        foreach($newAuthors as $newAuthor) {
+            $book->authors()->attach($newAuthor);
+        }
 
         return response()->json([
             'success' => true,

@@ -10,8 +10,8 @@
                 <a class="card" :href="route('books.all')">
                     <div class="card">
                         <div class="card-body">
-                            Add New Book<br/>
-                            <h1>+</h1>
+                            <p>Add New Book</p>
+                            <h1 class="mt-3"><i class="fas fa-plus"></i></h1>
                         </div>
                     </div>
                 </a>

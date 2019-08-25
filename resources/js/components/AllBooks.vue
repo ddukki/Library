@@ -24,10 +24,8 @@
                     </a>
                 </div>
             </div>
-            <div class="row">
-                <book-card v-for="(book, index) in books"
-                    :book="book"
-                    :key="index">
+            <div class="row mb-2" v-for="(book, index) in books">
+                <book-card :book="book" :key="index">
                 </book-card>
             </div>
         </div>
