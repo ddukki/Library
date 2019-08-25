@@ -3,32 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Library\Book;
+use App\Models\Library\Author;
 
-class BookController extends Controller
+class AuthorController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $books = Book::with('authors');
-
-        $searchTitle = $request->title ?? null;
-
-        if (isset($searchTitle)) {
-            $books = $books->where('title', 'like', '%'.$searchTitle.'%');
-        }
-
-        $books = $books->paginate(20);
-
-        return $books;
-    }
-
-    public function all() {
-        return view('library.books.index');
+        //
     }
 
     /**
@@ -38,7 +24,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('library.books.create');
+        //
     }
 
     /**
@@ -49,14 +35,20 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        $book = Book::create([
-            'title' => $request->title,
-        ]);
+        $authors = $request->authors;
+
+        foreach($authors as $author) {
+            Author::create([
+                'first_name' => $author->firstname,
+                'middle_name' => $author->middlename,
+                'last_name' => $author->lastname,
+            ]);
+        }
 
         return response()->json([
             'success' => true,
-            'added' => $book,
-            'message' => 'Book added!'
+            'added' => $authors,
+            'message' => 'Authors added!'
         ]);
     }
 

@@ -21,7 +21,7 @@
                             class="btn btn-primary"
                             role="button">
                         <i class="fas fa-plus"></i> Add New
-                    </button>
+                    </a>
                 </div>
             </div>
             <div class="row">
@@ -44,7 +44,7 @@ export default {
     },
     mounted: function() {
         axios.get(route('books.index')).then(response => {
-            this.books = response.data.books;
+            this.books = response.data.data;
         }).catch(error => {
 
         });
@@ -55,8 +55,8 @@ export default {
                 title: this.title ? this.title : null,
             }
 
-            axios.get(route('books.index'), formdata).then(response => {
-                this.books = response.data.books;
+            axios.get(route('books.index', formdata)).then(response => {
+                this.books = response.data.data;
             }).catch(error => {
 
             });

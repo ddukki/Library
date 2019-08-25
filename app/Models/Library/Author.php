@@ -9,6 +9,6 @@ class Author extends Model
     public $fillable = ['first_name', 'middle_name', 'last_name', 'birth_date', 'death_date'];
 
     public function books() {
-        return $this->hasMany(Book::class);
+        return $this->belongsToMany(Book::class, 'book_authors');
     }
 }
