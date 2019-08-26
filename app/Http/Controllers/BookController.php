@@ -16,17 +16,11 @@ class BookController extends Controller
      */
     public function index(Request $request)
     {
-        $books = Book::with('authors');
+        $searchTerm = '';
+        $searchColumn = [];
 
-        $searchTitle = $request->title ?? null;
-
-        if (isset($searchTitle)) {
-            $books = $books->where('title', 'like', '%'.$searchTitle.'%');
-        }
-
-        $books = $books->paginate(20);
-
-        return $books;
+        return view('library.books.index')
+                ->with(compact('searchTerm', 'searchColumn'));
     }
 
     public function all(Request $request) {
@@ -85,18 +79,16 @@ class BookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, AuthorController $authorController)
+    public function store(Request $request)
     {
+        $newBook = $request->book;
         $book = Book::create([
-            'title' => $request->title,
+            'title' => $newBook['title'],
         ]);
 
         // Generate new Authors
-        $authorResponse = $authorController->store($request);
-        $newAuthors = collect($authorResponse->getData()->added)->pluck('id');
-        $existingAuthors = collect($request->existingAuthors)->pluck('id');
-        $book->authors()->attach($newAuthors);
-        $book->authors()->attach($existingAuthors);
+        $authors = collect($newBook['authors'])->pluck('id');
+        $book->authors()->attach($authors);
 
         return response()->json([
             'success' => true,
@@ -124,7 +116,8 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+        $book = Book::find($id)->first();
+        return view('library.books.edit')->with(compact('book'));
     }
 
     /**

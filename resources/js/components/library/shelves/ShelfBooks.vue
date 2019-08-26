@@ -7,7 +7,7 @@
         </div>
         <div class="row">
             <div class="col-3 text-center">
-                <a class="card" :href="route('books.all')">
+                <a class="card" :href="route('books.index')">
                     <div class="card">
                         <div class="card-body">
                             <p>Add New Book</p>

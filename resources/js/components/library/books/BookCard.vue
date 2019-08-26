@@ -4,7 +4,10 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-10">
-                        {{ book.title }}<br/>
+                        <a :href="route('books.edit', { id: book.id }).url()">
+                            {{ book.title }}
+                        </a>
+                        <br/>
                         <p class="small" v-if="book.authors.length > 0">
                             By:
                             <span v-for="n in book.authors.length">
