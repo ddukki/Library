@@ -116,8 +116,9 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        $book = Book::find($id)->first();
-        return view('library.books.edit')->with(compact('book'));
+        $authors = Author::with('books')->paginate(10);
+        $book = Book::where('id', $id)->with('authors')->first();
+        return view('library.books.edit')->with(compact('book', 'authors'));
     }
 
     /**
@@ -129,7 +130,19 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $book = Book::where('id', $id)->with('authors')->first();
+        $book->title = $request->book['title'];
+        $book->save();
+
+        // Get the new list of Authors
+        $authors = collect($request->book['authors'])->pluck('id');
+        $book->authors()->sync($authors);
+
+        return response()->json([
+            'success' => true,
+            'updated' => $book,
+            'message' => 'Book added!'
+        ]);
     }
 
     /**

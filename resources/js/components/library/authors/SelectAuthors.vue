@@ -73,9 +73,11 @@
 import Pagination from '../Pagination.vue';
 export default {
     props: {
+        initialPage: Object,
         initialSelected: Array,
     },
     mounted() {
+        this.page = this.initialPage;
         this.selected = this.initialSelected;
     },
     data() {

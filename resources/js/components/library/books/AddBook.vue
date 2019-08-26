@@ -18,14 +18,15 @@
         </div>
         <div class="row">
             <div class="col-12 mb-4">
-                <select-authors :initial-selected="book.authors">
+                <select-authors
+                    :initial-page="initialAuthors"
+                    :initial-selected="book.authors">
                 </select-authors>
             </div>
             <div class="col-12">
                 <div class="row">
                     <div class="form-group col-12">
-                        <button class="btn btn-primary btn-lg"
-                                @click.prevent="addBook">
+                        <button class="btn btn-primary btn-lg" @click="addBook">
                             Create Book
                         </button>
                     </div>
@@ -37,7 +38,7 @@
 
 <script>
 export default {
-    props: ['editBook'],
+    props: ['editBook', 'initialAuthors'],
     mounted: function() {
         if (this.editBook) {
             this.book = this.editBook;
@@ -54,19 +55,20 @@ export default {
     methods: {
         addBook() {
             if (this.editBook) {
-                axios.post(route('books.update'), {
+                axios.put(route('books.update', { id: this.book.id, }), {
                     book: this.book,
                 }).then(response => {
                     // Redirect to books page
-                    window.location.replace(route('books.all').url());
-                }).catch(error => {});
+                    window.location.replace(route('books.index').url());
+                })
+                .catch(error => {});
             }
             else {
                 axios.post(route('books.store'), {
                     book: this.book,
                 }).then(response => {
                     // Redirect to books page
-                    window.location.replace(route('books.all').url());
+                    window.location.replace(route('books.index').url());
                 }).catch(error => {});
             }
         },

@@ -42,7 +42,11 @@
 </template>
 
 <script>
+import BookCard from './BookCard.vue';
 export default {
+    components: {
+        BookCard,
+    },
     props: {
         initialSearchTerm: String,
         initialSearchColumn: Array,
