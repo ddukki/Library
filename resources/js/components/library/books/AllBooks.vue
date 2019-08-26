@@ -2,12 +2,11 @@
     <div class="col-12">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-9">
+                <div class="col-10">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control"
                                 placeholder="Search Books"
                                 aria-label="Search for books"
-                                aria-describedby="basic-addon2"
                                 v-model="searchTerm">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" @click.prevent="search">
@@ -16,7 +15,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-2">
                     <a :href="route('books.create')"
                             class="btn btn-primary"
                             role="button">
@@ -44,6 +43,10 @@
 
 <script>
 export default {
+    props: {
+        initialSearchTerm: String,
+        initialSearchColumn: Array,
+    },
     data() {
         return {
             page: null,
@@ -61,7 +64,14 @@ export default {
         }
     },
     mounted: function() {
-        axios.get(route('books.page', { page: 1 })).then(response => {
+        this.searchTerm = this.initialSearchTerm;
+        this.searchColumn = this.initialSearchColumn;
+
+        axios.get(route('books.page'), {
+            page: 1,
+            searchTerm: this.searchTerm,
+            searchColumn: this.searchColumn,
+        }).then(response => {
             this.page = response.data.page;
         }).catch(error => {
 

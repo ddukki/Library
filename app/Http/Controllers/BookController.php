@@ -29,14 +29,18 @@ class BookController extends Controller
         return $books;
     }
 
-    public function all() {
-        return view('library.books.index');
+    public function all(Request $request) {
+        $searchTerm = $request->searchTerm ?? '';
+        $searchColumn = $request->searchColumn ?? [];
+
+        return view('library.books.index')
+                ->with(compact('searchTerm', 'searchColumn'));
     }
 
     public function page($page, Request $request) {
         $orderBy = $request->orderBy ?? 'id';
         $asc = $request->asc ?? 'desc';
-        $perPage = $request->perPage ?? 5;
+        $perPage = $request->perPage ?? 10;
         $searchColumn = $request->searchColumn ?? null;
         $searchTerm = $request->searchTerm ?? null;
 

@@ -3,14 +3,12 @@
     <div class="col-12 mb-4">
         <div class="card">
             <div class="card-header">
-                Selected Authors
+                Book Author(s)
             </div>
             <div class="card-body">
                 <p v-if="selected.length == 0">
                     Select authors for the book from the list of <b>Available
-                    Authors</b>! If the author of this book is not available
-                    (be sure to use the search function), then add a new author
-                    in the <b>New Author Name(s)</b> section.
+                    Authors</b>!
                 </p>
                 <h3><span class="badge badge-primary mr-2" v-for="select in selected">
                     {{ select.first_name }} {{ select.middle_name }} {{ select.last_name }}
@@ -18,16 +16,7 @@
                         <i class="fas fa-times-circle"></i>
                     </a>
                 </span></h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                Available Authors
-            </div>
-            <div class="card-body">
-                <div class="input-group mb-2">
+                <div class="input-group mb-3">
                     <input type="text"
                             class="form-control"
                             v-model="searchTerm"
@@ -49,13 +38,13 @@
                             <button v-if="!isSelected(author)"
                                     class="btn btn-sm btn-outline-primary"
                                     @click="selectAuthor(author)">
-                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-check"></i>
                             </button>
 
                             <button v-else
-                                    class="btn btn-sm btn-outline-danger"
+                                    class="btn btn-sm btn-primary"
                                     @click="unselectAuthor(author)">
-                                <i class="fas fa-minus"></i>
+                                <i class="fas fa-check"></i>
                             </button>
                         </td>
                         <td>{{ author.first_name }} {{ author.middle_name }} {{ author.last_name }}</td>
@@ -85,9 +74,11 @@ import Pagination from '../Pagination.vue';
 export default {
     props: {
         initialPage: Object,
+        initialSelected: Array,
     },
     mounted() {
         this.page = this.initialPage;
+        this.selected = this.initialSelected;
     },
     data() {
         return {
