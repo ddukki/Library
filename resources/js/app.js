@@ -25,12 +25,21 @@ Vue.mixin({
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('shelf-manager', require('./components/ShelfManager.vue').default);
-Vue.component('shelf-add', require('./components/AddShelf.vue').default);
-Vue.component('shelf-books', require('./components/ShelfBooks.vue').default);
-Vue.component('all-books', require('./components/AllBooks.vue').default);
-Vue.component('book-card', require('./components/BookCard.vue').default);
-Vue.component('book-add', require('./components/AddBook.vue').default);
+// Shelf components
+Vue.component('shelf-manager', () => import('./components/library/shelves/ShelfManager.vue'));
+Vue.component('shelf-add', () => import('./components/library/shelves/AddShelf.vue'));
+Vue.component('shelf-books', () => import('./components/library/shelves/ShelfBooks.vue'));
+
+// Book components
+Vue.component('all-books', () => import('./components/library/books/AllBooks.vue'));
+Vue.component('book-card', () => import('./components/library/books/BookCard.vue'));
+Vue.component('book-add', () => import('./components/library/books/AddBook.vue'));
+
+//Author components
+Vue.component('select-authors', () => import('./components/library/authors/SelectAuthors.vue'));
+
+// Miscellaneous Components for the library
+Vue.component('pagination-vue', () => import('./components/library/Pagination.vue'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

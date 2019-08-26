@@ -8,7 +8,7 @@
                                 placeholder="Search Books"
                                 aria-label="Search for books"
                                 aria-describedby="basic-addon2"
-                                v-model="title">
+                                v-model="searchTerm">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" @click.prevent="search">
                                 <i class="fas fa-search"></i>
@@ -28,6 +28,16 @@
                 <book-card :book="book" :key="index">
                 </book-card>
             </div>
+            <div class="row">
+                <div class="col-12">
+                    <pagination-vue @paginated="updateBooks"
+                            :pagination-route="paginationRoute"
+                            :search-column="searchColumn"
+                            :search-term="searchTerm"
+                            ref="pagination">
+                    </pagination-vue>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -36,28 +46,33 @@
 export default {
     data() {
         return {
-            books: [],
-            title: '',
+            page: null,
+            searchTerm: '',
+            searchColumn: ['title'],
+            paginationRoute: 'books.page',
+        }
+    },
+    computed: {
+        books: function() {
+            if (this.page) {
+                return this.page.data;
+            }
+            return [];
         }
     },
     mounted: function() {
-        axios.get(route('books.index')).then(response => {
-            this.books = response.data.data;
+        axios.get(route('books.page', { page: 1 })).then(response => {
+            this.page = response.data.page;
         }).catch(error => {
 
         });
     },
     methods: {
+        updateBooks(e) {
+            this.page = e;
+        },
         search() {
-            var formdata = {
-                title: this.title ? this.title : null,
-            }
-
-            axios.get(route('books.index', formdata)).then(response => {
-                this.books = response.data.data;
-            }).catch(error => {
-
-            });
+            this.$refs.pagination.getPage(1);
         }
     }
 }

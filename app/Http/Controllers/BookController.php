@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Library\Book;
+use App\Models\Library\Author;
 
 class BookController extends Controller
 {
@@ -31,6 +33,35 @@ class BookController extends Controller
         return view('library.books.index');
     }
 
+    public function page($page, Request $request) {
+        $orderBy = $request->orderBy ?? 'id';
+        $asc = $request->asc ?? 'desc';
+        $perPage = $request->perPage ?? 5;
+        $searchColumn = $request->searchColumn ?? null;
+        $searchTerm = $request->searchTerm ?? null;
+
+        $query = Book::with('authors');
+        if ($searchColumn) {
+            $searchColumn = explode(',', $searchColumn);
+            $concat = 'concat(';
+            foreach($searchColumn as $index => $col) {
+                $concat = $concat.$col;
+                if ($index != count($searchColumn) - 1) {
+                    $concat = $concat.'," ",';
+                }
+            }
+            $concat = $concat.')';
+
+            $query = $query->where(DB::raw($concat), 'like', '%'.$searchTerm.'%');
+        }
+
+        return response()->json([
+            'page' => $query
+                    ->orderBy($orderBy, $asc)
+                    ->paginate($perPage, ['*'], 'page', $page)
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -38,7 +69,8 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('library.books.create');
+        $authors = Author::with('books')->paginate(10);
+        return view('library.books.create')->with(compact('authors'));
     }
 
     /**
@@ -58,10 +90,9 @@ class BookController extends Controller
         // Generate new Authors
         $authorResponse = $authorController->store($request);
         $newAuthors = collect($authorResponse->getData()->added)->pluck('id');
-
-        foreach($newAuthors as $newAuthor) {
-            $book->authors()->attach($newAuthor);
-        }
+        $existingAuthors = collect($request->existingAuthors)->pluck('id');
+        $book->authors()->attach($newAuthors);
+        $book->authors()->attach($existingAuthors);
 
         return response()->json([
             'success' => true,
