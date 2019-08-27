@@ -7,4 +7,5 @@ Route::post('books/all', 'BookController@all')->name('books.all');
 Route::resource('books', 'BookController');
 
 Route::get('authors/page/{page}', 'AuthorController@page')->name('authors.page');
+Route::post('authors/all', 'AuthorController@all')->name('authors.all');
 Route::resource('authors', 'AuthorController');

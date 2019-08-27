@@ -5,8 +5,8 @@
                 <div class="col-10">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control"
-                                placeholder="Search Books"
-                                aria-label="Search for books"
+                                placeholder="Search Authors"
+                                aria-label="Search for authors"
                                 v-model="searchTerm">
                         <div class="input-group-append">
                             <button class="btn btn-primary" @click.prevent="search">
@@ -16,20 +16,20 @@
                     </div>
                 </div>
                 <div class="col-2">
-                    <a :href="route('books.create')"
+                    <a :href="route('authors.create')"
                             class="btn btn-primary"
                             role="button">
                         <i class="fas fa-plus"></i> Add New
                     </a>
                 </div>
             </div>
-            <div class="row mb-2" v-for="(book, index) in books">
-                <book-card :book="book" :key="index">
-                </book-card>
+            <div class="row mb-2" v-for="(author, index) in authors">
+                <author-card :author="author" :key="index">
+                </author-card>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <pagination-vue @paginated="updateBooks"
+                    <pagination-vue @paginated="updateAuthors"
                             :pagination-route="paginationRoute"
                             :search-column="searchColumn"
                             :search-term="searchTerm"
@@ -42,10 +42,10 @@
 </template>
 
 <script>
-import BookCard from './BookCard.vue';
+import AuthorCard from './AuthorCard.vue';
 export default {
     components: {
-        BookCard,
+        AuthorCard,
     },
     props: {
         initialSearchTerm: String,
@@ -55,12 +55,12 @@ export default {
         return {
             page: null,
             searchTerm: '',
-            searchColumn: ['title'],
-            paginationRoute: 'books.page',
+            searchColumn: ['first_name', 'last_name'],
+            paginationRoute: 'authors.page',
         }
     },
     computed: {
-        books: function() {
+        authors: function() {
             if (this.page) {
                 return this.page.data;
             }
@@ -71,7 +71,7 @@ export default {
         this.searchTerm = this.initialSearchTerm;
         this.searchColumn = this.initialSearchColumn;
 
-        axios.get(route('books.page'), {
+        axios.get(route('authors.page'), {
             page: 1,
             searchTerm: this.searchTerm,
             searchColumn: this.searchColumn,
@@ -82,7 +82,7 @@ export default {
         });
     },
     methods: {
-        updateBooks(e) {
+        updateAuthors(e) {
             this.page = e;
         },
         search() {

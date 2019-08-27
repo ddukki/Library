@@ -3,9 +3,9 @@
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <book-add :edit-book="false"
+            <book-form :edit-book="false"
                     :initial-authors="{{ json_encode($authors) }}">
-            </book-add>
+            </book-form>
         </div>
     </div>
 @endsection

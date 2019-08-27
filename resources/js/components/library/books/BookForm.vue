@@ -26,8 +26,13 @@
             <div class="col-12">
                 <div class="row">
                     <div class="form-group col-12">
-                        <button class="btn btn-primary btn-lg" @click="addBook">
+                        <button v-if="!editBook" class="btn btn-primary btn-lg"
+                                @click="addBook">
                             Create Book
+                        </button>
+                        <button v-else class="btn btn-primary btn-lg"
+                                @click="updateBook">
+                            Update Book
                         </button>
                     </div>
                 </div>
@@ -37,6 +42,7 @@
 </template>
 
 <script>
+import SelectAuthors from '../authors/SelectAuthors.vue';
 export default {
     props: ['editBook', 'initialAuthors'],
     mounted: function() {
@@ -54,23 +60,21 @@ export default {
     },
     methods: {
         addBook() {
-            if (this.editBook) {
-                axios.put(route('books.update', { id: this.book.id, }), {
-                    book: this.book,
-                }).then(response => {
-                    // Redirect to books page
-                    window.location.replace(route('books.index').url());
-                })
-                .catch(error => {});
-            }
-            else {
-                axios.post(route('books.store'), {
-                    book: this.book,
-                }).then(response => {
-                    // Redirect to books page
-                    window.location.replace(route('books.index').url());
-                }).catch(error => {});
-            }
+            axios.post(route('books.store'), {
+                book: this.book,
+            }).then(response => {
+                // Redirect to books page
+                window.location.replace(route('books.index').url());
+            }).catch(error => {});
+        },
+        updateBook() {
+            axios.put(route('books.update', { id: this.book.id, }), {
+                book: this.book,
+            }).then(response => {
+                // Redirect to books page
+                window.location.replace(route('books.index').url());
+            })
+            .catch(error => {});
         },
         addAuthor(e) {
             this.book.authors.push(e);

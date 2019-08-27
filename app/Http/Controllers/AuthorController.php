@@ -15,7 +15,19 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        //
+        $searchTerm = '';
+        $searchColumn = [];
+
+        return view('library.authors.index')
+                ->with(compact('searchTerm', 'searchColumn'));
+    }
+
+    public function all(Request $request) {
+        $searchTerm = $request->searchTerm ?? '';
+        $searchColumn = $request->searchColumn ?? [];
+
+        return view('library.authors.index')
+                ->with(compact('searchTerm', 'searchColumn'));
     }
 
     /**
@@ -25,7 +37,7 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        //
+        return view('library.authors.create');
     }
 
     public function page($page, Request $request) {
@@ -65,22 +77,15 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-        $authors = $request->authors;
-        $added = [];
-
-        foreach($authors as $author) {
-            $new = Author::create([
-                'first_name' => $author['firstname'],
-                'middle_name' => $author['middlename'],
-                'last_name' => $author['lastname'],
-            ]);
-
-            array_push($added, $new);
-        }
+        $author = Author::create([
+            'first_name' => $request->author['first_name'],
+            'middle_name' => $request->author['middle_name'],
+            'last_name' => $request->author['last_name'],
+        ]);
 
         return response()->json([
             'success' => true,
-            'added' => $added,
+            'added' => $author,
             'message' => 'Authors added!'
         ]);
     }
@@ -104,7 +109,8 @@ class AuthorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $author = Author::where('id', $id)->first();
+        return view('library.authors.edit')->with(compact('author'));
     }
 
     /**
@@ -116,7 +122,17 @@ class AuthorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $author = Author::where('id', $id)->first();
+        $author->first_name = $request->author['first_name'];
+        $author->middle_name = $request->author['middle_name'];
+        $author->last_name = $request->author['last_name'];
+        $author->save();
+
+        return response()->json([
+            'success' => true,
+            'updated' => $author,
+            'message' => 'Author updated!'
+        ]);
     }
 
     /**

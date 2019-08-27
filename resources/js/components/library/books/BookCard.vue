@@ -4,9 +4,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-10">
-                        <a :href="route('books.edit', { id: book.id }).url()">
-                            {{ book.title }}
-                        </a>
+                        {{ book.title }}
                         <br/>
                         <p class="small" v-if="book.authors.length > 0">
                             By:
@@ -21,7 +19,7 @@
                         </p>
                     </div>
                     <div class="col-2">
-                        <a @click.prevent="edit">
+                        <a :href="route('books.edit', { id: book.id }).url()">
                             <i class="fas fa-edit"></i>
                         </a>
                     </div>

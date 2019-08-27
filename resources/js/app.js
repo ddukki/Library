@@ -33,10 +33,13 @@ Vue.component('shelf-books', () => import('./components/library/shelves/ShelfBoo
 // Book components
 Vue.component('all-books', () => import('./components/library/books/AllBooks.vue'));
 Vue.component('book-card', () => import('./components/library/books/BookCard.vue'));
-Vue.component('book-add', () => import('./components/library/books/AddBook.vue'));
+Vue.component('book-form', () => import('./components/library/books/BookForm.vue'));
 
 //Author components
+Vue.component('all-authors', () => import('./components/library/authors/AllAuthors.vue'));
+Vue.component('author-card', () => import('./components/library/authors/AuthorCard.vue'));
 Vue.component('select-authors', () => import('./components/library/authors/SelectAuthors.vue'));
+Vue.component('author-form', () => import('./components/library/authors/AuthorForm.vue'));
 
 // Miscellaneous Components for the library
 Vue.component('pagination-vue', () => import('./components/library/Pagination.vue'));

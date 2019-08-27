@@ -49284,31 +49284,40 @@ Vue.mixin({
 // Shelf components
 
 Vue.component('shelf-manager', function () {
-  return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./components/library/shelves/ShelfManager.vue */ "./resources/js/components/library/shelves/ShelfManager.vue"));
+  return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./components/library/shelves/ShelfManager.vue */ "./resources/js/components/library/shelves/ShelfManager.vue"));
 });
 Vue.component('shelf-add', function () {
-  return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./components/library/shelves/AddShelf.vue */ "./resources/js/components/library/shelves/AddShelf.vue"));
+  return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./components/library/shelves/AddShelf.vue */ "./resources/js/components/library/shelves/AddShelf.vue"));
 });
 Vue.component('shelf-books', function () {
-  return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./components/library/shelves/ShelfBooks.vue */ "./resources/js/components/library/shelves/ShelfBooks.vue"));
+  return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./components/library/shelves/ShelfBooks.vue */ "./resources/js/components/library/shelves/ShelfBooks.vue"));
 }); // Book components
 
 Vue.component('all-books', function () {
-  return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./components/library/books/AllBooks.vue */ "./resources/js/components/library/books/AllBooks.vue"));
+  return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./components/library/books/AllBooks.vue */ "./resources/js/components/library/books/AllBooks.vue"));
 });
 Vue.component('book-card', function () {
-  return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./components/library/books/BookCard.vue */ "./resources/js/components/library/books/BookCard.vue"));
+  return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./components/library/books/BookCard.vue */ "./resources/js/components/library/books/BookCard.vue"));
 });
-Vue.component('book-add', function () {
-  return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./components/library/books/AddBook.vue */ "./resources/js/components/library/books/AddBook.vue"));
+Vue.component('book-form', function () {
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! ./components/library/books/BookForm.vue */ "./resources/js/components/library/books/BookForm.vue"));
 }); //Author components
 
+Vue.component('all-authors', function () {
+  return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./components/library/authors/AllAuthors.vue */ "./resources/js/components/library/authors/AllAuthors.vue"));
+});
+Vue.component('author-card', function () {
+  return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./components/library/authors/AuthorCard.vue */ "./resources/js/components/library/authors/AuthorCard.vue"));
+});
 Vue.component('select-authors', function () {
   return __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! ./components/library/authors/SelectAuthors.vue */ "./resources/js/components/library/authors/SelectAuthors.vue"));
+});
+Vue.component('author-form', function () {
+  return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./components/library/authors/AuthorForm.vue */ "./resources/js/components/library/authors/AuthorForm.vue"));
 }); // Miscellaneous Components for the library
 
 Vue.component('pagination-vue', function () {
-  return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./components/library/Pagination.vue */ "./resources/js/components/library/Pagination.vue"));
+  return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./components/library/Pagination.vue */ "./resources/js/components/library/Pagination.vue"));
 });
 /**
  * Next, we will create a fresh Vue application instance and attach it to

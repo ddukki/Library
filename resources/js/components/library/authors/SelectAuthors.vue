@@ -20,6 +20,7 @@
                     <input type="text"
                             class="form-control"
                             v-model="searchTerm"
+                            @keyup.enter="searchAuthors"
                             placeholder="Search Available Authors">
                     <div class="input-group-append">
                         <button class="btn btn-secondary" @click="searchAuthors">
