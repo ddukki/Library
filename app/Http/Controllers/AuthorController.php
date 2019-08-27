@@ -50,11 +50,11 @@ class AuthorController extends Controller
         $query = Author::with('books');
         if ($searchColumn) {
             $searchColumn = explode(',', $searchColumn);
-            $concat = 'concat(';
+            $concat = "concat_ws(' ', ";
             foreach($searchColumn as $index => $col) {
                 $concat = $concat.$col;
                 if ($index != count($searchColumn) - 1) {
-                    $concat = $concat.'," ",';
+                    $concat = $concat.',';
                 }
             }
             $concat = $concat.')';

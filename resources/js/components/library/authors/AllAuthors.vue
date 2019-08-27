@@ -55,7 +55,7 @@ export default {
         return {
             page: null,
             searchTerm: '',
-            searchColumn: ['first_name', 'last_name'],
+            searchColumn: ['first_name', 'middle_name', 'last_name'],
             paginationRoute: 'authors.page',
         }
     },

@@ -1,8 +1,15 @@
 <template>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row mb-5">
             <div class="col-12 text-center">
                 <h2>{{ shelf.name }}</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <a :href="route('shelves.edit', { id: shelf.id })">
+                            <i class="fas fa-edit"></i> Edit Shelf
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">

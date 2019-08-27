@@ -105,7 +105,8 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        //
+        $book = Book::where('id', $id)->with('authors')->with('editions')->first();
+        return view('library.books.show')->with(compact('book'));
     }
 
     /**

@@ -27,7 +27,7 @@ Vue.mixin({
 
 // Shelf components
 Vue.component('shelf-manager', () => import('./components/library/shelves/ShelfManager.vue'));
-Vue.component('shelf-add', () => import('./components/library/shelves/AddShelf.vue'));
+Vue.component('shelf-form', () => import('./components/library/shelves/ShelfForm.vue'));
 Vue.component('shelf-books', () => import('./components/library/shelves/ShelfBooks.vue'));
 
 // Book components

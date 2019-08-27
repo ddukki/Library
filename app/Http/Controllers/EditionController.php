@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Library\Shelf;
 
-class ShelfController extends Controller
+class EditionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +13,7 @@ class ShelfController extends Controller
      */
     public function index()
     {
-        $shelves = Shelf::where('user_id', Auth::user()->id)->get();
-        return response()->json([
-            'shelves' => $shelves,
-        ]);
+        //
     }
 
     /**
@@ -28,7 +23,7 @@ class ShelfController extends Controller
      */
     public function create()
     {
-        return view('library.shelves.create');
+        //
     }
 
     /**
@@ -39,12 +34,7 @@ class ShelfController extends Controller
      */
     public function store(Request $request)
     {
-        Shelf::create([
-            'name' => $request->shelf_name,
-            'user_id' => Auth::user()->id,
-        ]);
-
-        return redirect()->route('home');
+        //
     }
 
     /**
@@ -55,8 +45,7 @@ class ShelfController extends Controller
      */
     public function show($id)
     {
-        $shelf = Shelf::where('id', $id)->with('editions')->first();
-        return view('library.shelves.show')->with(compact('shelf'));
+        //
     }
 
     /**
@@ -67,8 +56,7 @@ class ShelfController extends Controller
      */
     public function edit($id)
     {
-        $shelf = Shelf::where('id', $id)->first();
-        return view('library.shelves.edit')->with(compact('shelf'));
+        //
     }
 
     /**
@@ -80,15 +68,7 @@ class ShelfController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $shelf = Shelf::where('id', $id)->first();
-        $shelf->name = $request->shelf['name'];
-        $shelf->save();
-
-        return response()->json([
-            'success' => true,
-            'updated' => $shelf,
-            'message' => 'Shelf updated!'
-        ]);
+        //
     }
 
     /**

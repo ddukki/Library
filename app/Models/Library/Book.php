@@ -26,4 +26,8 @@ class Book extends Model
     public function users() {
         return $this->hasManyThrough(User::class, BookShelf::class);
     }
+
+    public function editions() {
+        return $this->hasMany(Edition::class);
+    }
 }

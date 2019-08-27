@@ -28,6 +28,7 @@
             <form class="form" method="POST" action="{{ route('authors.all') }}">
                 @csrf
                 <input hidden value="first_name" name="searchColumn[]">
+                <input hidden value="middle_name" name="searchColumn[]">
                 <input hidden value="last_name" name="searchColumn[]">
                 <div class="form-group">
                     <div class="input-group mb-3">
@@ -44,9 +45,20 @@
                 </div>
             </form>
         </div>
-
         <shelf-manager>
         </shelf-manager>
+        <div class="col-12 mt-4">
+            <div class="card">
+                <div class="card-header">
+                    Admin Settings
+                </div>
+                <div class="card-body">
+                    <a href="{{ route('locationtypes.index') }}">
+                        Manage Location Types
+                    </a> |
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

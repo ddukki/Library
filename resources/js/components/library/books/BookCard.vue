@@ -4,7 +4,9 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-10">
-                        {{ book.title }}
+                        <a :href="route('books.show', { id: book.id })">
+                            {{ book.title }}
+                        </a>
                         <br/>
                         <p class="small" v-if="book.authors.length > 0">
                             By:
