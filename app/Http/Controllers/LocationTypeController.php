@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Library\LocationType;
 
 class LocationTypeController extends Controller
 {
@@ -13,7 +14,16 @@ class LocationTypeController extends Controller
      */
     public function index()
     {
-        //
+        return view('library.locationtypes.index');
+    }
+
+    public function all()
+    {
+        $locationTypes = LocationType::all();
+
+        return response()->json([
+            'locationTypes' => $locationTypes,
+        ]);
     }
 
     /**
@@ -34,7 +44,13 @@ class LocationTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $locationType = LocationType::create([
+            'name' => $request->locationType['name'],
+        ]);
+
+        return response()->json([
+            'added' => $locationType
+        ]);
     }
 
     /**
@@ -79,6 +95,9 @@ class LocationTypeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $locationType = LocationType::where('id', $id)->first();
+        $locationType->delete();
+
+        return response()->json([], 204);
     }
 }

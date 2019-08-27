@@ -41,6 +41,9 @@ Vue.component('author-card', () => import('./components/library/authors/AuthorCa
 Vue.component('select-authors', () => import('./components/library/authors/SelectAuthors.vue'));
 Vue.component('author-form', () => import('./components/library/authors/AuthorForm.vue'));
 
+//Location Type Components
+Vue.component('all-location-types', () => import('./components/library/locationtypes/LocationTypes.vue'));
+
 // Miscellaneous Components for the library
 Vue.component('pagination-vue', () => import('./components/library/Pagination.vue'));
 

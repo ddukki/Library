@@ -11,6 +11,10 @@ Route::post('authors/all', 'AuthorController@all')->name('authors.all');
 Route::resource('authors', 'AuthorController');
 
 Route::resource('editions', 'EditionController');
+
+Route::get('locationtypes/all', 'LocationTypeController@all')->name('locationtypes.all');
 Route::resource('locationtypes', 'LocationTypeController');
+
 Route::resource('quotes', 'QuoteController');
+
 Route::resource('progress', 'ProgressController');

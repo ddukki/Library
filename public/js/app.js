@@ -49284,13 +49284,13 @@ Vue.mixin({
 // Shelf components
 
 Vue.component('shelf-manager', function () {
-  return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./components/library/shelves/ShelfManager.vue */ "./resources/js/components/library/shelves/ShelfManager.vue"));
+  return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./components/library/shelves/ShelfManager.vue */ "./resources/js/components/library/shelves/ShelfManager.vue"));
 });
 Vue.component('shelf-form', function () {
-  return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./components/library/shelves/ShelfForm.vue */ "./resources/js/components/library/shelves/ShelfForm.vue"));
+  return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./components/library/shelves/ShelfForm.vue */ "./resources/js/components/library/shelves/ShelfForm.vue"));
 });
 Vue.component('shelf-books', function () {
-  return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./components/library/shelves/ShelfBooks.vue */ "./resources/js/components/library/shelves/ShelfBooks.vue"));
+  return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./components/library/shelves/ShelfBooks.vue */ "./resources/js/components/library/shelves/ShelfBooks.vue"));
 }); // Book components
 
 Vue.component('all-books', function () {
@@ -49300,7 +49300,7 @@ Vue.component('book-card', function () {
   return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./components/library/books/BookCard.vue */ "./resources/js/components/library/books/BookCard.vue"));
 });
 Vue.component('book-form', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! ./components/library/books/BookForm.vue */ "./resources/js/components/library/books/BookForm.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! ./components/library/books/BookForm.vue */ "./resources/js/components/library/books/BookForm.vue"));
 }); //Author components
 
 Vue.component('all-authors', function () {
@@ -49314,6 +49314,10 @@ Vue.component('select-authors', function () {
 });
 Vue.component('author-form', function () {
   return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./components/library/authors/AuthorForm.vue */ "./resources/js/components/library/authors/AuthorForm.vue"));
+}); //Location Type Components
+
+Vue.component('all-location-types', function () {
+  return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./components/library/locationtypes/LocationTypes.vue */ "./resources/js/components/library/locationtypes/LocationTypes.vue"));
 }); // Miscellaneous Components for the library
 
 Vue.component('pagination-vue', function () {
