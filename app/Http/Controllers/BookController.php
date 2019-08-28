@@ -105,7 +105,12 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        $book = Book::where('id', $id)->with('authors')->with('editions')->first();
+        $book = Book::where('id', $id)
+                ->with('authors')
+                ->with('editions')
+                ->with('editions.location_type')
+                ->with('editions.shelves')
+                ->first();
         return view('library.books.show')->with(compact('book'));
     }
 

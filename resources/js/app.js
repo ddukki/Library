@@ -41,6 +41,10 @@ Vue.component('author-card', () => import('./components/library/authors/AuthorCa
 Vue.component('select-authors', () => import('./components/library/authors/SelectAuthors.vue'));
 Vue.component('author-form', () => import('./components/library/authors/AuthorForm.vue'));
 
+Vue.component('book-editions', () => import('./components/library/editions/Editions.vue'));
+Vue.component('edition-card', () => import('./components/library/editions/EditionCard.vue'));
+Vue.component('shelve-edition', () => import('./components/library/editions/ShelveEdition.vue'));
+
 //Location Type Components
 Vue.component('all-location-types', () => import('./components/library/locationtypes/LocationTypes.vue'));
 

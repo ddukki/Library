@@ -55,7 +55,11 @@ class ShelfController extends Controller
      */
     public function show($id)
     {
-        $shelf = Shelf::where('id', $id)->with('editions')->first();
+        $shelf = Shelf::where('id', $id)
+                ->with('editions')
+                ->with('editions.book')
+                ->with('editions.book.authors')
+                ->first();
         return view('library.shelves.show')->with(compact('shelf'));
     }
 
@@ -100,5 +104,16 @@ class ShelfController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function user()
+    {
+        $user = Auth::user();
+        $shelves = $user->shelves;
+
+        return response()->json([
+            'success' => true,
+            'shelves' => $shelves,
+        ]);
     }
 }

@@ -6,9 +6,9 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-use App\Models\Author;
-use App\Models\Book;
-use App\Models\Shelf;
+use App\Models\Library\Author;
+use App\Models\Library\Book;
+use App\Models\Library\Shelf;
 
 class User extends Authenticatable
 {

@@ -3,6 +3,7 @@
 namespace App\Models\Library;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Library\Shelf;
 
 use App\User;
 
@@ -19,6 +20,10 @@ class Edition extends Model
     }
 
     public function shelves() {
-        return $this->hasMany(Shelf::class);
+        return $this->belongsToMany(Shelf::class, 'edition_shelves');
+    }
+
+    public function location_type() {
+        return $this->belongsTo(LocationType::class);
     }
 }

@@ -31,13 +31,9 @@
                         Editions
                     </div>
                     <div class="card-body">
-                        @foreach($book->editions as $edition)
-
-                        @endforeach
-                        <a href="{{ route('editions.create') }}"
-                                class="btn btn-primary" role="button">
-                            <i class="fas fa-plus"></i> Add Edition
-                        </a>
+                        <book-editions
+                                :book="{{ json_encode($book) }}">
+                        </book-editions>
                     </div>
                 </div>
             </div>

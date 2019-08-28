@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-3 text-center">
+            <div class="col-3 text-center mb-3">
                 <a class="card" :href="route('books.index')">
                     <div class="card">
                         <div class="card-body">
@@ -23,12 +23,17 @@
                     </div>
                 </a>
             </div>
-            <div v-for="book in shelf.editions" class="col-3">
-                <a class="card" :href="route('books.show', { id: book.id })">
+            <div v-for="shelf in shelf.editions" class="col-3 mb-3">
+                <a class="card" :href="route('books.show', { id: shelf.book.id })">
                     <div class="card text-center">
                         <div class="card-body">
-                            {{ book.title }}
-                            <h1><i class="fas fa-book"></i></h1>
+                            <div class="row">
+                                <div class="col-12">{{ shelf.book.title }}</div>
+                                <div class="col-12 small">{{ joinNames(shelf.book.authors) }}</div>
+                                <div class="col-12">
+                                    <h1 class="mt-3"><i class="fas fa-book"></i></h1>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </a>
@@ -42,5 +47,23 @@ export default {
     props: {
         shelf: Object,
     },
+    methods: {
+        fullName(author) {
+            var names = [];
+            names.push(author.first_name);
+            names.push(author.middle_name);
+            names.push(author.last_name);
+            return names.filter(Boolean).join(" ");
+        },
+        joinNames(authors) {
+            var names = [];
+
+            authors.forEach((author) => {
+                names.push(this.fullName(author));
+            });
+
+            return names.join(", ");
+        }
+    }
 }
 </script>
