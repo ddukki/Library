@@ -1,8 +1,7 @@
 <template>
-    <div class="row">
-        <div class="col-12">
-            <p class="small mb-0">Your Shelves with this Edition:</p>
-            <select class="custom-select"
+    <div class="row no-gutters">
+        <div class="col-10">
+            <select class="custom-select custom-select-sm"
                     id="locationTypes"
                     v-model="shelf">
                 <option v-for="(userShelf, index) in userShelves"
@@ -10,6 +9,13 @@
                     {{ userShelf.name }}
                 </option>
             </select>
+        </div>
+        <div class="col-2">
+            <button class="btn btn-primary btn-sm ml-2" @click="shelveEdition">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+        <div class="col-12 mt-2">
             <span v-for="(shelf, index) in shelves"
                     class="badge badge-pill badge-primary mr-1">
                 {{ shelf.name }}
@@ -17,9 +23,6 @@
                     <i class="fas fa-times-circle"></i>
                 </a>
             </span>
-            <button class="btn btn-primary mt-3" @click="shelveEdition">
-                Add to Shelf
-            </button>
         </div>
     </div>
 </template>
@@ -42,7 +45,22 @@ export default {
         }).catch(error => {});
     },
     methods: {
+        isShelved(shelf) {
+            var s;
+            for(s of this.shelves) {
+                if(s.id == shelf.id) {
+                    return true;
+                }
+            }
+
+            return false;
+        },
         shelveEdition() {
+            // Don't shelve if this edition is already in selected shelf
+            if(this.isShelved(this.shelf)) {
+                return;
+            }
+
             axios.post(route('editions.shelve', {
                 edition: this.edition.id,
                 shelf: this.shelf.id,

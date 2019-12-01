@@ -16,7 +16,7 @@
                     {{ $authorList }}
                 </h5>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-header">
                         Book Information
@@ -25,7 +25,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 mt-3">
                 <div class="card">
                     <div class="card-header">
                         Editions

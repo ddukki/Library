@@ -108,7 +108,7 @@ class ShelfController extends Controller
 
     public function user()
     {
-        $user = Auth::user();
+        $user = auth()->user();
         $shelves = $user->shelves;
 
         return response()->json([

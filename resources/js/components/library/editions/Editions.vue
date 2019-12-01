@@ -1,15 +1,32 @@
 <template>
     <div class="row">
         <div class="col-12">
-            <edition-card v-for="(edition, index) in editions"
+            <div class="row border-bottom">
+                <div class="col-3">
+                    Name
+                </div>
+                <div class="col-1">
+                    Format
+                </div>
+                <div class="col-2">
+                    Size
+                </div>
+                <div class="col-4">
+                    Shelves
+                </div>
+                <div class="col-2">
+                    Actions
+                </div>
+            </div>
+            <edition-row v-for="(edition, index) in editions"
                     :initial-edition="edition"
                     :location-types="locationTypes"
                     @deleted="deleteEdition(index)"
                     :key="index">
-            </edition-card>
+            </edition-row>
 
             <button @click="showAddForm"
-                    class="btn btn-primary" role="button">
+                    class="btn btn-primary mt-2" role="button">
                 <i class="fas fa-plus"></i> Add Edition
             </button>
             <div id="addForm" class="row mt-3">
