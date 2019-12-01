@@ -1,28 +1,40 @@
 <template>
-    <div class="row no-gutters">
-        <div class="col-10">
-            <select class="custom-select custom-select-sm"
-                    id="locationTypes"
-                    v-model="shelf">
-                <option v-for="(userShelf, index) in userShelves"
-                        :value="userShelf">
-                    {{ userShelf.name }}
-                </option>
-            </select>
+    <div>
+        <div v-if="editing" class="row no-gutters mb-2">
+            <div class="col-10">
+                <select class="custom-select custom-select-sm"
+                        id="locationTypes"
+                        v-model="shelf">
+                    <option v-for="(userShelf, index) in userShelves"
+                            :value="userShelf">
+                        {{ userShelf.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-primary btn-sm ml-2" @click="shelveEdition">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
         </div>
-        <div class="col-2">
-            <button class="btn btn-primary btn-sm ml-2" @click="shelveEdition">
-                <i class="fas fa-plus"></i>
-            </button>
-        </div>
-        <div class="col-12 mt-2">
-            <span v-for="(shelf, index) in shelves"
-                    class="badge badge-pill badge-primary mr-1">
-                {{ shelf.name }}
-                <a @click="unshelveEdition(index)">
-                    <i class="fas fa-times-circle"></i>
+        <div class="row no-gutters">
+            <div class="col-12">
+                <span v-for="(shelf, index) in shelves"
+                        class="badge badge-pill badge-primary">
+                    <a class="text-light mr-1" :href="shelfURL(shelf)">{{ shelf.name }}</a>
+                    <a v-if="editing" @click="unshelveEdition(index)">
+                        <i class="fas fa-times-circle"></i>
+                    </a>
+                </span>
+                <a v-if="!editing" class="badge badge-pill badge-primary text-light"
+                        @click.prevent="toggleEdit">
+                    <i class="fas fa-edit"></i>
                 </a>
-            </span>
+                <a v-if="editing" class="badge badge-pill badge-danger text-light"
+                        @click.prevent="toggleEdit">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </div>
         </div>
     </div>
 </template>
@@ -31,12 +43,19 @@
 export default {
     props: {
         edition: Object,
+        parentEditing: Boolean,
     },
     data() {
         return {
             shelves: [ ... this.edition.shelves ],
             userShelves: [],
             shelf: null,
+            editing: this.parentEditing,
+        }
+    },
+    watch: {
+        parentEditing: function(val) {
+            this.editing = val;
         }
     },
     mounted() {
@@ -45,6 +64,12 @@ export default {
         }).catch(error => {});
     },
     methods: {
+        shelfURL(shelf) {
+            return route('shelves.show', { id: shelf.id });
+        },
+        toggleEdit() {
+            this.editing = !this.editing;
+        },
         isShelved(shelf) {
             var s;
             for(s of this.shelves) {

@@ -1,13 +1,13 @@
 <template>
-    <div class="row border-bottom mt-2">
-        <div class="col-3 form-group">
-            <p v-if="!editing">{{ editEdition.name }}</p>
+    <div class="row border-bottom mt-1">
+        <div class="col-3">
+            <p class="small" v-if="!editing">{{ editEdition.name }}</p>
             <input v-else class="form-control form-control-sm"
                     type="text"
                     v-model="editEdition.name">
         </div>
-        <div class="col-1 form-group">
-            <p v-if="!editing">{{ editEdition.location_type.name }}</p>
+        <div class="col-2">
+            <p class="small" v-if="!editing">{{ editEdition.location_type.name }}</p>
             <select v-else class="form-control form-control-sm"
                     id="locationTypes"
                     v-model="editEdition.location_type">
@@ -17,12 +17,12 @@
                 </option>
             </select>
         </div>
-        <div class="col-2 form-group">
-            <p v-if="!editing">{{ editEdition.location_size }}</p>
+        <div class="col-2">
+            <p class="small" v-if="!editing">{{ editEdition.location_size }}</p>
             <input v-else class="form-control form-control-sm" type="text" v-model="editEdition.location_size">
         </div>
-        <div class="col-4 form-group">
-            <shelve-edition :edition="edition">
+        <div class="col-3">
+            <shelve-edition :edition="edition" :parentEditing="editing">
             </shelve-edition>
         </div>
         <div class="col-2">

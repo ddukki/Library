@@ -31,9 +31,11 @@
                         Editions
                     </div>
                     <div class="card-body">
-                        <book-editions
-                                :book="{{ json_encode($book) }}">
-                        </book-editions>
+                        <div class="container">
+                            <book-editions
+                                    :book="{{ json_encode($book) }}">
+                            </book-editions>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -5,13 +5,13 @@
                 <div class="col-3">
                     Name
                 </div>
-                <div class="col-1">
+                <div class="col-2">
                     Format
                 </div>
                 <div class="col-2">
                     Size
                 </div>
-                <div class="col-4">
+                <div class="col-3">
                     Shelves
                 </div>
                 <div class="col-2">
