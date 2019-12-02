@@ -61,7 +61,22 @@ class EditionController extends Controller
      */
     public function show($id)
     {
-        //
+        $edition = Edition::where('id', $id)
+                ->with('book')
+                ->with('book.authors')
+                ->with(['progress' => function($q) {
+                    $q->where('user_id', auth()->user()->id);
+                }])
+                ->first();
+        $progress = $edition->progress;
+        $allProgress = array();
+        foreach($progress as $p) {
+            array_push($allProgress, array($p->location_start, $p->location_end));
+        }
+
+        $allProgress = $this->mergeRanges($allProgress);
+
+        return view('library.editions.show')->with(compact('edition', 'allProgress'));
     }
 
     public function shelve(Edition $edition, Shelf $shelf) {
@@ -126,5 +141,27 @@ class EditionController extends Controller
         $edition->delete();
 
         return response()->json([], 204);
+    }
+
+    private function mergeRanges($data)
+    {
+        usort($data, function($a, $b) {
+            return $a[0] - $b[0];
+        });
+
+        $n = 0; $len = count($data);
+        for ($i = 1; $i < $len; ++$i) {
+            if ($data[$i][0] > $data[$n][1] + 1) {
+                $n = $i;
+            }
+            else {
+                if ($data[$n][1] < $data[$i][1]) {
+                    $data[$n][1] = $data[$i][1];
+                }
+                unset($data[$i]);
+            }
+        }
+
+        return array_values($data);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models\Library;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Library\Shelf;
+use App\Models\Library\Progress;
 
 use App\User;
 
@@ -25,5 +26,9 @@ class Edition extends Model
 
     public function location_type() {
         return $this->belongsTo(LocationType::class);
+    }
+
+    public function progress() {
+        return $this->hasMany(Progress::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Library\Progress;
 use Illuminate\Http\Request;
 
 class ProgressController extends Controller
@@ -34,7 +35,22 @@ class ProgressController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $start = $request->location_start;
+        $end = $request->location_end;
+
+        if ($start == $end) {
+            $start = $start - 1;
+        }
+
+        Progress::create([
+            'edition_id' => $request->edition_id,
+            'user_id' => auth()->user()->id,
+            'location_start' => $start,
+            'location_end' => $end,
+            'datetime' => \Carbon\Carbon::now()
+        ]);
+
+        return redirect()->back();
     }
 
     /**

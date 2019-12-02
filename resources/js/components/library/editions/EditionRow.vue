@@ -1,7 +1,7 @@
 <template>
     <div class="row border-bottom mt-1">
         <div class="col-3">
-            <p class="small" v-if="!editing">{{ editEdition.name }}</p>
+            <a class="small" :href="editionURL()" v-if="!editing">{{ editEdition.name }}</a>
             <input v-else class="form-control form-control-sm"
                     type="text"
                     v-model="editEdition.name">
@@ -58,6 +58,9 @@ export default {
         }
     },
     methods: {
+        editionURL() {
+            return route('editions.show', { id: this.edition.id });
+        },
         toggleEdit() {
             this.editing = !this.editing;
             this.editEdition = { ... this.edition};

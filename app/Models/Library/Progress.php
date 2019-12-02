@@ -20,6 +20,8 @@ class Progress extends Model
             'location_end',
             'datetime'];
 
+    protected $table = 'progress';
+
     public function user() {
         return $this->belongsTo(User::class);
     }
