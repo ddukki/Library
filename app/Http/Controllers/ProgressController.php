@@ -38,10 +38,6 @@ class ProgressController extends Controller
         $start = $request->location_start;
         $end = $request->location_end;
 
-        if ($start == $end) {
-            $start = $start - 1;
-        }
-
         Progress::create([
             'edition_id' => $request->edition_id,
             'user_id' => auth()->user()->id,
