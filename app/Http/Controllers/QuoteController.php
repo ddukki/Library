@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Library\Quote;
 use Illuminate\Http\Request;
 
 class QuoteController extends Controller
@@ -34,7 +35,16 @@ class QuoteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $start = $request->quoteText;
+
+        Quote::create([
+            'edition_id' => $request->edition_id,
+            'user_id' => auth()->user()->id,
+            'quote' => $request->quoteText,
+            'location' => $request->location
+        ]);
+
+        return redirect()->back();
     }
 
     /**

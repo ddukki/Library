@@ -61,12 +61,14 @@ class EditionController extends Controller
      */
     public function show($id)
     {
+        $scopeForUser = function($q) {
+            $q->where('user_id', auth()->user()->id);
+        };
+
         $edition = Edition::where('id', $id)
                 ->with('book')
                 ->with('book.authors')
-                ->with(['progress' => function($q) {
-                    $q->where('user_id', auth()->user()->id);
-                }])
+                ->with(['progress' => $scopeForUser, 'quotes' => $scopeForUser])
                 ->first();
         $progress = $edition->progress;
         $allProgress = array();

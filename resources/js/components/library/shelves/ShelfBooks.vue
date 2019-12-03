@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-3 text-center mb-3">
+            <div class="col-12 text-center mb-3">
                 <a class="card" :href="route('books.index')">
                     <div class="card">
                         <div class="card-body">
@@ -23,8 +23,8 @@
                     </div>
                 </a>
             </div>
-            <div v-for="shelf in shelf.editions" class="col-3 mb-3">
-                <a class="card" :href="route('books.show', { id: shelf.book.id })">
+            <div v-for="shelf in shelf.editions" class="col-12 mb-3">
+                <a class="card" :href="route('editions.show', { id: shelf.id })">
                     <div class="card text-center">
                         <div class="card-body">
                             <div class="row">
@@ -33,6 +33,7 @@
                                 <div class="col-12">
                                     <h1 class="mt-3"><i class="fas fa-book"></i></h1>
                                 </div>
+                                <div class="col-12 small">{{ shelf.name }} Edition</div>
                             </div>
                         </div>
                     </div>

@@ -5,6 +5,7 @@ namespace App\Models\Library;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Library\Shelf;
 use App\Models\Library\Progress;
+use App\Models\Library\Quote;
 
 use App\User;
 
@@ -30,5 +31,9 @@ class Edition extends Model
 
     public function progress() {
         return $this->hasMany(Progress::class);
+    }
+
+    public function quotes() {
+        return $this->hasMany(Quote::class);
     }
 }
