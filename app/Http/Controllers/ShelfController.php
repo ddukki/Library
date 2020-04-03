@@ -40,7 +40,7 @@ class ShelfController extends Controller
     public function store(Request $request)
     {
         Shelf::create([
-            'name' => $request->shelf_name,
+            'name' => $request->shelf['name'],
             'user_id' => Auth::user()->id,
         ]);
 
@@ -98,12 +98,19 @@ class ShelfController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $shelf
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($shelf)
     {
-        //
+        $shelf = Shelf::where('id', $shelf)->first();
+        $shelf->delete();
+
+        return response()->json([
+            'success' => true,
+            'updated' => $shelf,
+            'message' => 'Shelf deleted!'
+        ]);
     }
 
     public function user()
