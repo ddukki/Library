@@ -25,6 +25,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@popperjs/core": "^2.9.2",
         "chart.js": "^2.8.0",
         "moment": "^2.24.0",
         "vue-chartjs": "^3.4.2"
