@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -14,6 +12,7 @@ use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
+use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -35,17 +34,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth.basic' => AuthenticateWithBasicAuth::class,
             'cache.headers' => SetCacheHeaders::class,
             'can' => Authorize::class,
-            'guest' => Closure::fromCallable(function (Request $request, Closure $next, ...$guards) {
-                $guards = empty($guards) ? [null] : $guards;
-
-                foreach ($guards as $guard) {
-                    if (Auth::guard($guard)->check()) {
-                        return redirect('/home');
-                    }
-                }
-
-                return $next($request);
-            }),
+            'guest' => RedirectIfAuthenticated::class,
             'signed' => ValidateSignature::class,
             'throttle' => ThrottleRequests::class,
             'verified' => EnsureEmailIsVerified::class,
