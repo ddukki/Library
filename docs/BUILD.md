@@ -14,14 +14,14 @@ All PHP/Composer commands run inside Docker. No PHP or Composer installation nee
 docker run --rm -v ${PWD}:/app -w /app composer:2.0 composer install
 
 # Run artisan commands
-docker run --rm -v ${PWD}:/var/www/html -w /var/www/html php:8.0-cli php artisan <command>
+docker run --rm -v ${PWD}:/var/www/html -w /var/www/html php:8.2-cli php artisan <command>
 
 # Start dev server (SQLite, threaded workers for concurrent AJAX)
 docker run --rm -d --name lib-dev -p 8080:80 `
   -v ${PWD}:/var/www/html `
   -w /var/www/html `
   -e PHP_CLI_SERVER_WORKERS=4 `
-  php:8.0-cli php -S 0.0.0.0:80 -t /var/www/html/public
+  php:8.2-cli php -S 0.0.0.0:80 -t /var/www/html/public
 ```
 
 > **Note:** `PHP_CLI_SERVER_WORKERS=4` is required — the single-threaded built-in server causes multi-second delays when the app makes concurrent Vue AJAX requests.
@@ -63,7 +63,7 @@ DB_DATABASE=/var/www/html/database/database.sqlite
 
 ```bash
 # Run PHP tests
-docker run --rm -v ${PWD}:/var/www/html -w /var/www/html php:8.0-cli `
+docker run --rm -v ${PWD}:/var/www/html -w /var/www/html php:8.2-cli `
   php vendor/bin/phpunit
 ```
 
@@ -73,7 +73,7 @@ docker run --rm -v ${PWD}:/var/www/html -w /var/www/html php:8.0-cli `
 # 1. Start Docker Desktop
 
 # 2. Install PHP deps
-docker run --rm -v ${PWD}:/app -w /app composer:2.0 composer install
+docker run --rm -v ${PWD}:/app -w /app composer:2.7 composer install
 
 # 3. Install & build frontend
 npm install
@@ -85,14 +85,14 @@ cp .env.example .env
 # Edit DB_DATABASE to absolute path as above
 
 # 5. Run migrations
-docker run --rm -v ${PWD}:/var/www/html -w /var/www/html php:8.0-cli php artisan migrate
+docker run --rm -v ${PWD}:/var/www/html -w /var/www/html php:8.2-cli php artisan migrate
 
 # 6. Start server
 docker run --rm -d --name lib-dev -p 8080:80 `
   -v ${PWD}:/var/www/html `
   -w /var/www/html `
   -e PHP_CLI_SERVER_WORKERS=4 `
-  php:8.0-cli php -S 0.0.0.0:80 -t /var/www/html/public
+  php:8.2-cli php -S 0.0.0.0:80 -t /var/www/html/public
 
 # Visit http://localhost:8080
 ```
@@ -101,9 +101,9 @@ docker run --rm -d --name lib-dev -p 8080:80 `
 
 | Laravel | Docker Image    | PHP   | Notes                    |
 |---------|-----------------|-------|--------------------------|
-| 8.x     | `composer:2.0`  | 8.0   | Current step             |
-| 9.x     | `composer:2.2`  | 8.0+  | Next step                |
-| 10.x    | `composer:2.4`  | 8.1+  |                          |
-| 11.x    | `composer:2.7`  | 8.2+  |                          |
+| 8.x     | `composer:2.0`  | 8.0   | Completed                |
+| 9.x     | `composer:2.2`  | 8.0+  | Completed                |
+| 10.x    | `composer:2.4`  | 8.1+  | Completed                |
+| 11.x    | `composer:2.7`  | 8.2+  | Current step             |
 | 12.x    | `composer:2.7`  | 8.2+  |                          |
 | 13.x    | `composer:latest`| 8.3+ | Final target             |
