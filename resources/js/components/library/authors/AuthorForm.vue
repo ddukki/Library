@@ -68,17 +68,21 @@ export default {
                 author: this.author,
             }).then(response => {
                 // Redirect to authors page
-                window.location.replace(route('authors.index').url());
-            }).catch(error => {});
+                window.location.replace(route('authors.index'));
+            }).catch(error => {
+                console.error('Failed to create author:', error.response?.data || error);
+            });
         },
         updateAuthor() {
             axios.put(route('authors.update', { id: this.author.id, }), {
                 author: this.author,
             }).then(response => {
                 // Redirect to authors page
-                window.location.replace(route('authors.index').url());
+                window.location.replace(route('authors.index'));
             })
-            .catch(error => {});
+            .catch(error => {
+                console.error('Failed to update author:', error.response?.data || error);
+            });
         },
     },
     data() {

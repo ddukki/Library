@@ -40,7 +40,7 @@
                         this.$emit('paginated', this.page);
                     }
                 }).catch(error => {
-
+                    console.error('Failed to load page:', error.response?.data || error);
                 });
             },
             pageClass: function(n) {

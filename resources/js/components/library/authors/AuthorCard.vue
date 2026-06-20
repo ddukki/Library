@@ -14,7 +14,7 @@
                         </span>
                     </div>
                     <div class="col-2">
-                        <a :href="route('authors.edit', { id: author.id }).url()">
+                        <a :href="route('authors.edit', { id: author.id })">
                             <i class="fas fa-edit"></i>
                         </a>
                     </div>

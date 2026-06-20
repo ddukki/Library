@@ -21,4 +21,6 @@ Route::post('email/resend', [App\Http\Controllers\Auth\VerificationController::c
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-include base_path('routes/library/library.php');
+Route::prefix('library')->middleware('auth')->group(function () {
+    include base_path('routes/library/library.php');
+});

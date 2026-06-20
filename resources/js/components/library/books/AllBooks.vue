@@ -71,14 +71,15 @@ export default {
         this.searchTerm = this.initialSearchTerm;
         this.searchColumn = this.initialSearchColumn;
 
-        axios.get(route('books.page'), {
-            page: 1,
-            searchTerm: this.searchTerm,
-            searchColumn: this.searchColumn,
+        axios.get(route('books.page', { page: 1 }), {
+            params: {
+                searchTerm: this.searchTerm,
+                searchColumn: this.searchColumn,
+            }
         }).then(response => {
             this.page = response.data.page;
         }).catch(error => {
-
+            console.error('Failed to load books:', error.response?.data || error);
         });
     },
     methods: {

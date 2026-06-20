@@ -31,17 +31,21 @@ export default {
                 shelf: this.shelf,
             }).then(response => {
                 // Redirect to authors page
-                window.location.replace(route('shelves.show', { id: this.shelf.id }).url());
-            }).catch(error => {});
+                window.location.replace(route('shelves.show', { id: this.shelf.id }));
+            }).catch(error => {
+                console.error('Failed to create shelf:', error.response?.data || error);
+            });
         },
         updateShelf() {
             axios.put(route('shelves.update', { id: this.shelf.id, }), {
                 shelf: this.shelf,
             }).then(response => {
                 // Redirect to authors page
-                window.location.replace(route('shelves.show', { id: this.shelf.id }).url());
+                window.location.replace(route('shelves.show', { id: this.shelf.id }));
             })
-            .catch(error => {});
+            .catch(error => {
+                console.error('Failed to update shelf:', error.response?.data || error);
+            });
         },
     },
     data() {

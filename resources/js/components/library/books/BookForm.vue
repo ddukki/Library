@@ -64,17 +64,21 @@ export default {
                 book: this.book,
             }).then(response => {
                 // Redirect to books page
-                window.location.replace(route('books.index').url());
-            }).catch(error => {});
+                window.location.replace(route('books.index'));
+            }).catch(error => {
+                console.error('Failed to create book:', error.response?.data || error);
+            });
         },
         updateBook() {
             axios.put(route('books.update', { id: this.book.id, }), {
                 book: this.book,
             }).then(response => {
                 // Redirect to books page
-                window.location.replace(route('books.index').url());
+                window.location.replace(route('books.index'));
             })
-            .catch(error => {});
+            .catch(error => {
+                console.error('Failed to update book:', error.response?.data || error);
+            });
         },
         addAuthor(e) {
             this.book.authors.push(e);

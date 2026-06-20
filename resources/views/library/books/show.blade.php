@@ -11,7 +11,7 @@
                         foreach($book->authors as $author) {
                             array_push($authors, $author->first_name.' '.$author->middle_name.' '.$author->last_name);
                         }
-                        $authorList = implode($authors, ', ');
+                        $authorList = implode(', ', $authors);
                     @endphp
                     {{ $authorList }}
                 </h5>

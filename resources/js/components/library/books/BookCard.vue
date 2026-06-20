@@ -21,7 +21,7 @@
                         </p>
                     </div>
                     <div class="col-2">
-                        <a :href="route('books.edit', { id: book.id }).url()">
+                        <a :href="route('books.edit', { id: book.id })">
                             <i class="fas fa-edit"></i>
                         </a>
                     </div>

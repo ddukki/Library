@@ -47,9 +47,12 @@ class AuthorController extends Controller
         $searchColumn = $request->searchColumn ?? null;
         $searchTerm = $request->searchTerm ?? null;
 
+        if (is_string($searchColumn)) {
+            $searchColumn = explode(',', $searchColumn);
+        }
+
         $query = Author::with('books');
         if ($searchColumn) {
-            $searchColumn = explode(',', $searchColumn);
             $concat = "concat_ws(' ', ";
             foreach($searchColumn as $index => $col) {
                 $concat = $concat.$col;
@@ -77,9 +80,15 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'author.first_name' => 'required|string|max:255',
+            'author.middle_name' => 'nullable|string|max:255',
+            'author.last_name' => 'required|string|max:255',
+        ]);
+
         $author = Author::create([
             'first_name' => $request->author['first_name'],
-            'middle_name' => $request->author['middle_name'],
+            'middle_name' => $request->author['middle_name'] ?? '',
             'last_name' => $request->author['last_name'],
         ]);
 
@@ -122,9 +131,15 @@ class AuthorController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validated = $request->validate([
+            'author.first_name' => 'required|string|max:255',
+            'author.middle_name' => 'nullable|string|max:255',
+            'author.last_name' => 'required|string|max:255',
+        ]);
+
         $author = Author::where('id', $id)->first();
         $author->first_name = $request->author['first_name'];
-        $author->middle_name = $request->author['middle_name'];
+        $author->middle_name = $request->author['middle_name'] ?? '';
         $author->last_name = $request->author['last_name'];
         $author->save();
 
