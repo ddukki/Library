@@ -77,7 +77,7 @@ Feature: Laravel 11 → 12 Upgrade
 
 ### Step B: Bootstrap Cleanup
 
-1. Replace the Closure-based `guest` middleware alias with `Illuminate\Routing\Middleware\RedirectIfAuthenticated::class` (added in L12)
+1. Replace the Closure-based `guest` middleware alias with `Illuminate\Auth\Middleware\RedirectIfAuthenticated::class` (available in L12, not in `Illuminate\Routing\Middleware`)
 2. Check for any removed/deprecated config keys
 
 ### Step C: Config Check
