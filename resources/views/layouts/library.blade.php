@@ -21,11 +21,17 @@
 <body>
     <div id="app">
 		@include('layouts.nav')
-        <div id="vue-root">
+        @if ($useVueRoot ?? true)
+            <div id="vue-root">
+                <main class="py-4">
+                    @yield('content')
+                </main>
+            </div>
+        @else
             <main class="py-4">
                 @yield('content')
             </main>
-        </div>
+        @endif
     </div>
 </body>
 </html>

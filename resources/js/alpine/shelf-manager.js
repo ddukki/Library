@@ -4,7 +4,6 @@ export default function () {
         init() {
             axios.get(route('shelves.index')).then(response => {
                 this.shelves = response.data.shelves;
-                console.log('shelves data:', JSON.stringify(this.shelves));
             }).catch(error => {});
         },
         deleteShelf(shelfID, index) {

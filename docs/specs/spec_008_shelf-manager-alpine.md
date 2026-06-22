@@ -137,6 +137,27 @@ Delete `resources/js/components/library/shelves/ShelfManager.vue`.
 
 Alpine inside `#vue-root` must use `x-on:click` not `@click`. See Spec 006 Implementation Notes for details.
 
+### Alpine `x-for` incompatible with Vue 2's `<template>` handling
+
+Vue 2's template compiler processes `<template>` elements inside its mounted subtree. Alpine's `x-for` requires a `<template>` wrapper — Vue 2 strips or consumes it, preventing Alpine from scoping the iteration variable (`shelf` is never defined).
+
+**Fix:** Pages using Alpine `x-for` must not be inside `#vue-root`. Pass `useVueRoot => false` to the layout:
+
+```blade
+@extends('layouts.library', ['useVueRoot' => false])
+```
+
+The layout conditionally omits the `#vue-root` wrapper:
+```blade
+@if ($useVueRoot ?? true)
+    <div id="vue-root"> ... </div>
+@else
+    <main> ... </main>
+@endif
+```
+
+When `#vue-root` is absent, Vue never mounts on that page, avoiding all conflicts.
+
 ### `x-bind:` not `:` for attribute binding inside `#vue-root`
 
 Vue 2 interprets `:attr` as `v-bind:attr` shorthand. Alpine content inside `#vue-root` must use the full `x-bind:attr` form:

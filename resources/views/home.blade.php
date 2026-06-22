@@ -1,4 +1,4 @@
-@extends('layouts.library')
+@extends('layouts.library', ['useVueRoot' => false])
 
 @section('content')
 <div class="container">
