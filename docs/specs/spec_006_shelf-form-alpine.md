@@ -89,7 +89,7 @@ export default function (editShelfData) {
             axios.post(route('shelves.store'), {
                 shelf: this.shelf,
             }).then(response => {
-                window.location.replace(route('shelves.show', { shelf: this.shelf.id }));
+                window.location.replace(route('shelves.show', { shelf: response.data.shelf.id }));
             }).catch(error => {
                 console.error('Failed to create shelf:', error.response?.data || error);
             });
@@ -154,6 +154,20 @@ Alpine content rendered inside `#vue-root` (Vue's mount target) must use `x-on:c
 ```
 
 This only applies to Alpine templates inside Vue's mounted subtree. Alpine elements outside `#vue-root` (e.g., nav) can safely use `@click`.
+
+### Server must return JSON on store
+
+`shelf-form.js` `addShelf()` redirects via `response.data.shelf.id` — the controller's `store()` method must return JSON with the new shelf's ID, not an HTML redirect:
+
+```php
+return response()->json([
+    'success' => true,
+    'shelf' => $shelf,
+    'message' => 'Shelf created successfully.',
+], 201);
+```
+
+If the controller returns a `redirect()` (HTML), the JS `response.data` is the HTML string — `.shelf.id` is `undefined` and the redirect URL becomes `route('shelves.show', { shelf: undefined })`, causing a `UrlGenerationException`.
 
 ### Resource Route Parameter Names
 

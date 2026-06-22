@@ -53,7 +53,73 @@ Migrate the Vue 2 `Editions` component tree to Alpine.js using the ADR-0016 patt
 - Remove (X on badge): POST to `editions.unshelve`, splices from local shelves array
 - Editing state synced with parent row editing state
 
+### Alpine `<select>` default values
+
+Alpine's `x-model` on `<select>` does not auto-set the model to the first `<option>` value when the model starts as `null`. The browser highlights the first option visually, but the JS value stays `null`. Submitting sends `null` to the server.
+
+**Fix:** Initialize to the first option's value when the async data loads, and on form/toggle open:
+
+```js
+// In init() after fetching locationTypes:
+if (this.locationTypes.length > 0) {
+    this.newEdition.type_id = this.locationTypes[0].id;
+}
+
+// In toggleAddForm() when opening:
+this.newEdition = { name: '', type_id: null, size: 0 };
+if (this.locationTypes.length > 0) {
+    this.newEdition.type_id = this.locationTypes[0].id;
+}
+
+// In init() after fetching userShelves:
+if (this.userShelves.length > 0) {
+    this.selectedShelf = this.userShelves[0].id;
+}
+
+// In toggleShelveEdit() when opening:
+if (this.shelveEditRows[index] && this.userShelves.length > 0) {
+    this.selectedShelf = this.userShelves[0].id;
+}
+```
+
+### Alpine `<select>` with object values
+
+Alpine does not support objects as `<option :value="object">` — HTML option values are always strings, and Alpine serializes the object to `"[object Object]"`. Vue 2 handles this via reference matching, but Alpine cannot.
+
+**Fix:** Use `:value="object.id"` (scalar) everywhere:
+
+- Add form type select: `x-model="newEdition.type_id"` + `:value="type.id"`
+- Edit row type select: `x-model="editData[index].location_type_id"` + `:value="type.id"`
+- Shelve select: `x-model="selectedShelf"` + `:value="userShelf.id"`
+- Display: look up name via `locationTypeName(id)` helper that searches `locationTypes` array by `id`
+
+### Controller field name consistency
+
+`EditionController::store()` and `update()` must use the same field names. In the original code, `store()` read `$newEdition['type_id']`/`['size']` while `update()` read `['location_type_id']`/`['location_size']`. The JS `addEdition()` must send the same keys that `updateEdition()` sends:
+
+```js
+addEdition() {
+    axios.post(route('editions.store'), {
+        book: bookData,
+        edition: {
+            name: this.newEdition.name,
+            location_type_id: this.newEdition.type_id,
+            location_size: this.newEdition.size,
+        },
+    })
+}
+```
+
+The controller must then read those same keys in `store()`:
+
+```php
+'location_type_id' => $newEdition['location_type_id'],
+'location_size' => $newEdition['location_size'],
+```
+
 ## Implementation
+
+(Note: code blocks below reflect the actual implementation, including all fixes described above.)
 
 ### 1. Create shelving module: `resources/js/alpine/book-editions-shelve.js`
 
@@ -65,6 +131,9 @@ export default {
 
     toggleShelveEdit(index) {
         this.shelveEditRows[index] = !this.shelveEditRows[index];
+        if (this.shelveEditRows[index] && this.userShelves.length > 0) {
+            this.selectedShelf = this.userShelves[0].id;
+        }
     },
 
     shelfURL(shelf) {
@@ -75,7 +144,9 @@ export default {
         return editionShelves.some(s => s.id === shelf.id);
     },
 
-    shelveEdition(editionIndex, shelf) {
+    shelveEdition(editionIndex, shelfId) {
+        const shelf = this.userShelves.find(s => s.id == shelfId);
+        if (!shelf) return;
         const edition = this.editions[editionIndex];
         if (this.isShelved(shelf, edition.shelves || [])) return;
 
@@ -113,7 +184,7 @@ export default function (bookData) {
     return {
         editions: editions,
         locationTypes: [],
-        newEdition: { name: '', type: null, size: 0 },
+        newEdition: { name: '', type_id: null, size: 0 },
         showAddForm: false,
         editingRows: editions.map(() => false),
         editData: editions.map(e => ({ ...e })),
@@ -123,26 +194,42 @@ export default function (bookData) {
         init() {
             axios.get(route('locationtypes.all')).then(response => {
                 this.locationTypes = response.data.locationTypes;
+                if (this.locationTypes.length > 0) {
+                    this.newEdition.type_id = this.locationTypes[0].id;
+                }
             }).catch(error => {});
             axios.get(route('shelves.user')).then(response => {
                 this.userShelves = response.data.shelves;
+                if (this.userShelves.length > 0) {
+                    this.selectedShelf = this.userShelves[0].id;
+                }
             }).catch(error => {});
             this.shelveEditRows = this.editions.map(() => false);
         },
 
         toggleAddForm() {
             this.showAddForm = !this.showAddForm;
+            if (this.showAddForm) {
+                this.newEdition = { name: '', type_id: null, size: 0 };
+                if (this.locationTypes.length > 0) {
+                    this.newEdition.type_id = this.locationTypes[0].id;
+                }
+            }
         },
 
         addEdition() {
             axios.post(route('editions.store'), {
                 book: bookData,
-                edition: this.newEdition,
+                edition: {
+                    name: this.newEdition.name,
+                    location_type_id: this.newEdition.type_id,
+                    location_size: this.newEdition.size,
+                },
             }).then(response => {
                 this.editions.push(response.data.added);
                 this.editingRows.push(false);
                 this.editData.push({ ...response.data.added });
-                this.newEdition = { name: '', type: null, size: 0 };
+                this.newEdition = { name: '', type_id: null, size: 0 };
                 this.showAddForm = false;
             }).catch(error => {});
         },
@@ -157,20 +244,33 @@ export default function (bookData) {
 
         toggleEdit(index) {
             this.editingRows[index] = !this.editingRows[index];
-            this.editData[index] = { ...this.editions[index] };
+            this.editData[index] = {
+                ...this.editions[index],
+                location_type_id: this.editions[index].location_type?.id ?? null,
+            };
         },
 
         updateEdition(index) {
             axios.put(route('editions.update', { edition: this.editions[index].id }), {
-                edition: this.editData[index],
+                edition: {
+                    name: this.editData[index].name,
+                    location_type_id: this.editData[index].location_type_id,
+                    location_size: this.editData[index].location_size,
+                },
             }).then(response => {
-                this.editions[index] = { ...this.editData[index] };
+                const type = this.locationTypes.find(t => t.id == this.editData[index].location_type_id);
+                this.editions[index] = { ...this.editData[index], location_type: type };
                 this.editingRows[index] = false;
             }).catch(error => {});
         },
 
         editionURL(edition) {
             return route('editions.show', { edition: edition.id });
+        },
+
+        locationTypeName(id) {
+            const type = this.locationTypes.find(t => t.id === id);
+            return type ? type.name : '';
         },
     };
 }
@@ -183,9 +283,10 @@ export default function (bookData) {
     <div x-show="shelveEditRows[index]" class="row no-gutters mb-2">
         <div class="col-10">
             <select class="custom-select custom-select-sm"
+                    name="selectedShelf"
                     x-model="selectedShelf">
                 <template x-for="userShelf in userShelves">
-                    <option :value="userShelf" x-text="userShelf.name"></option>
+                    <option :value="userShelf.id" x-text="userShelf.name"></option>
                 </template>
             </select>
         </div>
@@ -229,11 +330,11 @@ export default function (bookData) {
                 x-model="editData[index].name">
     </div>
     <div class="col-2">
-        <p class="small" x-show="!editingRows[index]" x-text="editData[index].location_type?.name"></p>
+        <p class="small" x-show="!editingRows[index]" x-text="locationTypeName(edition.location_type?.id)"></p>
         <select x-show="editingRows[index]" class="form-control form-control-sm"
-                x-model="editData[index].location_type">
+                x-model="editData[index].location_type_id">
             <template x-for="type in locationTypes">
-                <option :value="type" x-text="type.name"></option>
+                <option :value="type.id" x-text="type.name"></option>
             </template>
         </select>
     </div>
@@ -299,9 +400,9 @@ export default function (bookData) {
                     <label for="type">Edition Type</label>
                     <select class="form-control"
                             id="locationTypes"
-                            x-model="newEdition.type">
+                            x-model="newEdition.type_id">
                         <template x-for="type in locationTypes">
-                            <option :value="type" x-text="type.name"></option>
+                            <option :value="type.id" x-text="type.name"></option>
                         </template>
                     </select>
                 </div>
@@ -423,6 +524,38 @@ This page has `useVueRoot => false` due to `x-for`, so `:attr` shorthand is safe
 
 The shelve select needs a local variable. Since `_shelve` is included inside `x-for`, the variable is scoped at the parent Alpine data level and shared across rows. Each row's shelve add uses the current row index to determine which edition to shelve.
 
+### Alpine `<select>` default values
+
+`x-model` on `<select>` does not auto-set from the first `<option>`. The browser highlights the first option visually but the model stays `null`. Always initialize to the first option's value when the data source loads, and when opening a form/toggle that contains a select:
+
+- `init()` after `locationTypes` fetch: `newEdition.type_id = locationTypes[0].id`
+- `init()` after `userShelves` fetch: `selectedShelf = userShelves[0].id`
+- `toggleAddForm()` when opening: reset `newEdition` with default `type_id`
+- `toggleShelveEdit()` when opening: set `selectedShelf` to first shelf
+
+### Alpine `<select>` with object values
+
+Alpine does not support objects as `<option :value="object">` — HTML option values are always strings, and Alpine serializes the object to `"[object Object]"`. Vue 2 handles this via reference matching, but Alpine cannot.
+
+**Fix:** Use `:value="object.id"` (scalar) and look up the full object from the local array when needed. For add form: `newEdition.type_id` + `:value="type.id"`, then `type_id` is sent directly to the controller. For edit form: same pattern with `location_type_id`. For shelve select: `selectedShelf` stores a shelf ID, `shelveEdition()` looks up the shelf from `userShelves`.
+
+### Controller field names must match
+
+`EditionController::store()` and `update()` must read the same keys the JS sends. If `updateEdition()` sends `location_type_id`/`location_size`, the `store()` method must also read `location_type_id`/`location_size`, not `type_id`/`size`. Mismatched keys cause 500 errors with `Undefined array key` or NOT NULL constraint violations.
+
+### Explicit request payloads
+
+Do not pass `this.newEdition` or `this.editData[index]` directly as the request body. Spread only the fields the controller expects — this prevents unexpected fields from causing mass-assignment or validation issues:
+
+```js
+// Good — explicit fields
+edition: {
+    name: this.newEdition.name,
+    location_type_id: this.newEdition.type_id,
+    location_size: this.newEdition.size,
+}
+```
+
 ### Resource Route Parameter Names
 
 - `editions.update` → `{ edition: id }`
@@ -432,15 +565,12 @@ The shelve select needs a local variable. Since `_shelve` is included inside `x-
 - `editions.show` → `{ edition: id }`
 - `shelves.show` → `{ shelf: id }`
 
-### Alpine `<select>` with object values
-
-Alpine does not support objects as `<option :value="object">` — HTML option values are always strings, and Alpine's `x-model` serializes the object to `"[object Object]"`. Vue 2 handles this via reference matching.
-
-**Fix:** Use `:value="object.id"` (scalar) and look up the full object from the local array when needed. For add form: `newEdition.type_id` + `:value="type.id"`, then `type_id` is sent directly to the controller. For edit form: same pattern with `location_type_id`. For shelve select: `selectedShelf` stores a shelf ID, `shelveEdition()` looks up the shelf from `userShelves`.
-
 ## Edge Cases
 
 - **No editions**: Header row + Add button only
-- **Edition with null location_type**: Empty format cell
+- **Edition with null location_type**: Display shows empty string via `locationTypeName(null)` which returns `''`
 - **Network error on add/edit/delete/shelve/unshelve**: Logged, no UI change
-- **Add form visibility**: Starts hidden, toggles on button click
+- **Add form visibility**: Starts hidden, toggles on button click. Form is reset to defaults (including default `type_id`) each time it opens.
+- **No location types in database**: API returns `{ locationTypes: [] }`, select has no options, `newEdition.type_id` stays `null`, server returns 500 on submit (NOT NULL constraint). User must create location types first.
+- **No user shelves**: API returns `{ shelves: [] }`, shelve select has no options, `shelveEdition()` silently exits via `if (!shelf) return` guard.
+- **Alpine `<select>` default value is null**: Without explicit initialization, `x-model` stays `null` even though the browser shows the first option highlighted. Use the patterns in Implementation Notes.

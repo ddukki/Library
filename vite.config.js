@@ -1,10 +1,8 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import vue2 from '@vitejs/plugin-vue2';
 
 export default defineConfig({
     plugins: [
-        vue2(),
         laravel({
             input: [
                 'resources/sass/app.scss',
@@ -17,7 +15,6 @@ export default defineConfig({
     resolve: {
         alias: {
             '~bootstrap': '/node_modules/bootstrap',
-            'vue': 'vue/dist/vue.esm.js',
         },
     },
     server: {

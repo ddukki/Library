@@ -1,6 +1,6 @@
 # Spec 010: Alpine.js — LocationTypes Migration
 
-**Status:** Draft
+**Status:** Implemented
 **Applies to:** ADR-0002 (Alpine.js over Vue 2), ADR-0004 (Bootstrap SCSS kept until migration done), ADR-0016 (Blade partial + Alpine JS module pattern)
 
 ## Goal
