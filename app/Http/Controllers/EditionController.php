@@ -41,8 +41,8 @@ class EditionController extends Controller
         $edition = Edition::create([
             'book_id' => $bookID,
             'name' => $newEdition['name'],
-            'location_type_id' => $newEdition['type']['id'],
-            'location_size' => $newEdition['size'],
+            'location_type_id' => $newEdition['location_type_id'],
+            'location_size' => $newEdition['location_size'],
         ]);
         $edition->load('location_type');
         $edition->load('shelves');
@@ -121,7 +121,7 @@ class EditionController extends Controller
 
         $edition = Edition::where('id', $id)->first();
         $edition->name = $newEdition['name'];
-        $edition->location_type_id = $newEdition['location_type']['id'];
+        $edition->location_type_id = $newEdition['location_type_id'];
         $edition->location_size = $newEdition['location_size'];
         $edition->save();
 

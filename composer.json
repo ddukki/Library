@@ -17,6 +17,7 @@
     "require-dev": {
         "fakerphp/faker": "^1.9",
         "filp/whoops": "^2.14",
+        "laravel/dusk": "^8.6",
         "mockery/mockery": "^1.4",
         "nunomaduro/collision": "^8.0",
         "phpunit/phpunit": "^11.0",

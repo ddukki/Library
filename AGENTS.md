@@ -27,6 +27,10 @@ Links: Spec references ADR by number to surface constraints. Code references nei
 - `docs/specs/` — Behavior Specifications
 - `docs/BUILD.md` — Build instructions
 
+## Debugging Errors
+
+- When a user reports an error, first ask what they were doing at the time — they often know the cause. Don't dive into logs or code investigation until you've asked.
+
 ## Technology Stack
 
 - **Backend:** Laravel (currently on 10.x, migrating to 13.x)

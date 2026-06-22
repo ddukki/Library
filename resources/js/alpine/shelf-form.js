@@ -9,7 +9,7 @@ export default function (editShelfData) {
             axios.post(route('shelves.store'), {
                 shelf: this.shelf,
             }).then(response => {
-                window.location.replace(route('shelves.show', { shelf: this.shelf.id }));
+                window.location.replace(route('shelves.show', { shelf: response.data.shelf.id }));
             }).catch(error => {
                 console.error('Failed to create shelf:', error.response?.data || error);
             });

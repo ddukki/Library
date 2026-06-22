@@ -16,3 +16,4 @@ npm-debug.log
 yarn-error.log
 composer.phar
 check_*.php
+/database/database.test.sqlite

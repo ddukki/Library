@@ -6,6 +6,7 @@ import shelfForm from './alpine/shelf-form';
 import shelfManager from './alpine/shelf-manager';
 import authorForm from './alpine/author-form';
 import locationTypes from './alpine/location-types';
+import bookEditions from './alpine/book-editions';
 
 Alpine.plugin(collapse);
 
@@ -31,10 +32,6 @@ Vue.component('all-authors', () => import('./components/library/authors/AllAutho
 Vue.component('author-card', () => import('./components/library/authors/AuthorCard.vue'));
 Vue.component('select-authors', () => import('./components/library/authors/SelectAuthors.vue'));
 
-Vue.component('book-editions', () => import('./components/library/editions/Editions.vue'));
-Vue.component('edition-row', () => import('./components/library/editions/EditionRow.vue'));
-Vue.component('shelve-edition', () => import('./components/library/editions/ShelveEdition.vue'));
-
 
 Vue.component('pagination-vue', () => import('./components/library/Pagination.vue'));
 
@@ -50,6 +47,7 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('shelfManager', shelfManager);
     Alpine.data('authorForm', authorForm);
     Alpine.data('locationTypes', locationTypes);
+    Alpine.data('bookEditions', bookEditions);
 });
 
 Alpine.start();

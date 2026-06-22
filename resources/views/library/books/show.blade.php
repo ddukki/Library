@@ -1,4 +1,4 @@
-@extends('layouts.library')
+@extends('layouts.library', ['useVueRoot' => false])
 
 @section('content')
     <div class="container">
@@ -32,9 +32,7 @@
                     </div>
                     <div class="card-body">
                         <div class="container">
-                            <book-editions
-                                    :book="{{ json_encode($book) }}">
-                            </book-editions>
+                            @include('library.editions._editions')
                         </div>
                     </div>
                 </div>
