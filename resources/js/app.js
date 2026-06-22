@@ -3,6 +3,7 @@ import Alpine from 'alpinejs';
 import collapse from '@alpinejs/collapse';
 import '@fortawesome/fontawesome-free/js/all.js';
 import shelfForm from './alpine/shelf-form';
+import shelfManager from './alpine/shelf-manager';
 
 Alpine.plugin(collapse);
 
@@ -20,7 +21,6 @@ Vue.mixin({
     }
 });
 
-Vue.component('shelf-manager', () => import('./components/library/shelves/ShelfManager.vue'));
 Vue.component('all-books', () => import('./components/library/books/AllBooks.vue'));
 Vue.component('book-card', () => import('./components/library/books/BookCard.vue'));
 Vue.component('book-form', () => import('./components/library/books/BookForm.vue'));
@@ -47,6 +47,7 @@ if (vueRoot) {
 
 document.addEventListener('alpine:init', () => {
     Alpine.data('shelfForm', shelfForm);
+    Alpine.data('shelfManager', shelfManager);
 });
 
 Alpine.start();
