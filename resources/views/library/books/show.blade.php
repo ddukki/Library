@@ -11,7 +11,7 @@
                         foreach($book->authors as $author) {
                             array_push($authors, $author->first_name.' '.$author->middle_name.' '.$author->last_name);
                         }
-                        $authorList = implode($authors, ', ');
+                        $authorList = implode(', ', $authors);
                     @endphp
                     {{ $authorList }}
                 </h5>
@@ -32,9 +32,7 @@
                     </div>
                     <div class="card-body">
                         <div class="container">
-                            <book-editions
-                                    :book="{{ json_encode($book) }}">
-                            </book-editions>
+                            @include('library.editions._editions')
                         </div>
                     </div>
                 </div>

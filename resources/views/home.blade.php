@@ -45,8 +45,7 @@
                 </div>
             </form>
         </div>
-        <shelf-manager>
-        </shelf-manager>
+        @include('library.shelves._shelf-manager')
         <div class="col-12 mt-4">
             <div class="card">
                 <div class="card-header">

@@ -3,8 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-		<shelf-form :edit-shelf="false">
-		</shelf-form>
+        @include('library.shelves._form', ['shelf' => false])
     </div>
 </div>
 @endsection

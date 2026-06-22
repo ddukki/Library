@@ -38,9 +38,12 @@ class BookController extends Controller
         $searchColumn = $request->searchColumn ?? null;
         $searchTerm = $request->searchTerm ?? null;
 
+        if (is_string($searchColumn)) {
+            $searchColumn = explode(',', $searchColumn);
+        }
+
         $query = Book::with('authors');
         if ($searchColumn) {
-            $searchColumn = explode(',', $searchColumn);
             $concat = 'concat(';
             foreach($searchColumn as $index => $col) {
                 $concat = $concat.$col;

@@ -39,12 +39,16 @@ class ShelfController extends Controller
      */
     public function store(Request $request)
     {
-        Shelf::create([
+        $shelf = Shelf::create([
             'name' => $request->shelf['name'],
             'user_id' => Auth::user()->id,
         ]);
 
-        return redirect()->route('home');
+        return response()->json([
+            'success' => true,
+            'shelf' => $shelf,
+            'message' => 'Shelf created!',
+        ], 201);
     }
 
     /**

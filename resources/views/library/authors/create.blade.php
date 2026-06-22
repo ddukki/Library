@@ -3,8 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <author-form :edit-author="false">
-            </author-form>
+            @include('library.authors._form', ['author' => false])
         </div>
     </div>
 @endsection

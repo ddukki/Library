@@ -1,0 +1,1 @@
+{"version":2,"defects":{"Tests\\Browser\\EditionShelveTest::test_user_can_shelve_an_edition_via_ui":8,"Tests\\Browser\\EditionShelveTest::test_edition_text_appears_on_page":8},"times":{"Tests\\Browser\\EditionShelveTest::test_user_can_shelve_an_edition_via_ui":7.994,"Tests\\Browser\\EditionShelveTest::test_edition_text_appears_on_page":8.621}}

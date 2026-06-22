@@ -23,9 +23,4 @@
 
 @section('body-scripts')
     @parent
-    <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
-    </script>
 @endsection

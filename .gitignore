@@ -1,5 +1,5 @@
 /node_modules
-/public/hot
+/public/build
 /public/storage
 /storage/*.key
 /vendor
@@ -14,3 +14,6 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+composer.phar
+check_*.php
+/database/database.test.sqlite
