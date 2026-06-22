@@ -1,5 +1,4 @@
-<template>
-<div class="container">
+<div x-data="authorForm(@js($author))" class="container">
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
@@ -18,31 +17,31 @@
                                     type="text"
                                     class="form-control"
                                     placeholder="First Name"
-                                    v-model="author.first_name">
+                                    x-model="author.first_name">
                         </div>
                         <div class="form-group col-4">
                             <input name="middlename"
                                     type="text"
                                     class="form-control"
                                     placeholder="Middle Name"
-                                    v-model="author.middle_name">
+                                    x-model="author.middle_name">
                         </div>
                         <div class="form-group col-4">
                             <input name="lastname"
                                     type="text"
                                     class="form-control"
                                     placeholder="Last Name"
-                                    v-model="author.last_name">
+                                    x-model="author.last_name">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-12">
-                            <button v-if="!editAuthor" type="button" class="btn btn-primary"
-                                    @click.prevent="addAuthor">
+                            <button x-show="!editAuthor" type="button" class="btn btn-primary"
+                                    x-on:click="addAuthor">
                                 <i class="fas fa-plus"></i> Create Author
                             </button>
-                            <button v-else type="button" class="btn btn-primary"
-                                    @click.prevent="updateAuthor">
+                            <button x-show="editAuthor" type="button" class="btn btn-primary"
+                                    x-on:click="updateAuthor">
                                 <i class="fas fa-plus"></i> Update Author
                             </button>
                         </div>
@@ -52,47 +51,3 @@
         </div>
     </div>
 </div>
-</template>
-
-<script>
-export default {
-    props: ['editAuthor'],
-    mounted: function() {
-        if (this.editAuthor) {
-            this.author = this.editAuthor;
-        }
-    },
-    methods: {
-        addAuthor() {
-            axios.post(route('authors.store'), {
-                author: this.author,
-            }).then(response => {
-                // Redirect to authors page
-                window.location.replace(route('authors.index'));
-            }).catch(error => {
-                console.error('Failed to create author:', error.response?.data || error);
-            });
-        },
-        updateAuthor() {
-            axios.put(route('authors.update', { id: this.author.id, }), {
-                author: this.author,
-            }).then(response => {
-                // Redirect to authors page
-                window.location.replace(route('authors.index'));
-            })
-            .catch(error => {
-                console.error('Failed to update author:', error.response?.data || error);
-            });
-        },
-    },
-    data() {
-        return {
-            author: {
-                first_name: '',
-                middle_name: '',
-                last_name: ''
-            }
-        }
-    }
-}
-</script>

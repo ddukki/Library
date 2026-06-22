@@ -4,6 +4,7 @@ import collapse from '@alpinejs/collapse';
 import '@fortawesome/fontawesome-free/js/all.js';
 import shelfForm from './alpine/shelf-form';
 import shelfManager from './alpine/shelf-manager';
+import authorForm from './alpine/author-form';
 
 Alpine.plugin(collapse);
 
@@ -28,7 +29,6 @@ Vue.component('book-form', () => import('./components/library/books/BookForm.vue
 Vue.component('all-authors', () => import('./components/library/authors/AllAuthors.vue'));
 Vue.component('author-card', () => import('./components/library/authors/AuthorCard.vue'));
 Vue.component('select-authors', () => import('./components/library/authors/SelectAuthors.vue'));
-Vue.component('author-form', () => import('./components/library/authors/AuthorForm.vue'));
 
 Vue.component('book-editions', () => import('./components/library/editions/Editions.vue'));
 Vue.component('edition-row', () => import('./components/library/editions/EditionRow.vue'));
@@ -48,6 +48,7 @@ if (vueRoot) {
 document.addEventListener('alpine:init', () => {
     Alpine.data('shelfForm', shelfForm);
     Alpine.data('shelfManager', shelfManager);
+    Alpine.data('authorForm', authorForm);
 });
 
 Alpine.start();

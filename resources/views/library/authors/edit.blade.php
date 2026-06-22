@@ -3,8 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <author-form :edit-author="{{ json_encode($author) }}">
-            </author-form>
+            @include('library.authors._form', ['author' => $author])
         </div>
     </div>
 @endsection
