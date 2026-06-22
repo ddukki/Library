@@ -5,6 +5,7 @@ import '@fortawesome/fontawesome-free/js/all.js';
 import shelfForm from './alpine/shelf-form';
 import shelfManager from './alpine/shelf-manager';
 import authorForm from './alpine/author-form';
+import locationTypes from './alpine/location-types';
 
 Alpine.plugin(collapse);
 
@@ -34,7 +35,6 @@ Vue.component('book-editions', () => import('./components/library/editions/Editi
 Vue.component('edition-row', () => import('./components/library/editions/EditionRow.vue'));
 Vue.component('shelve-edition', () => import('./components/library/editions/ShelveEdition.vue'));
 
-Vue.component('all-location-types', () => import('./components/library/locationtypes/LocationTypes.vue'));
 
 Vue.component('pagination-vue', () => import('./components/library/Pagination.vue'));
 
@@ -49,6 +49,7 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('shelfForm', shelfForm);
     Alpine.data('shelfManager', shelfManager);
     Alpine.data('authorForm', authorForm);
+    Alpine.data('locationTypes', locationTypes);
 });
 
 Alpine.start();
