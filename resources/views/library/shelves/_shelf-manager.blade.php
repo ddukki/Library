@@ -15,7 +15,7 @@
                 </div>
             </a>
         </div>
-        <template x-for="(shelf, index) in shelves" :key="shelf.id">
+        <template x-for="(shelf, index) in shelves">
             <div class="col-3">
                 <div class="card">
                     <div class="p-1 text-right">
@@ -24,7 +24,7 @@
                             <i class="fas fa-times"></i>
                         </a>
                     </div>
-                    <a class="card-link" :href="route('shelves.show', { shelf: shelf.id })">
+                    <a class="card-link" x-bind:href="route('shelves.show', { shelf: shelf.id })">
                         <div class="card-body text-center" x-text="shelf.name">
                         </div>
                     </a>

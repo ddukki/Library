@@ -70,7 +70,7 @@ export default function () {
                 </div>
             </a>
         </div>
-        <template x-for="(shelf, index) in shelves" :key="shelf.id">
+        <template x-for="(shelf, index) in shelves">
             <div class="col-3">
                 <div class="card">
                     <div class="p-1 text-right">
@@ -79,7 +79,7 @@ export default function () {
                             <i class="fas fa-times"></i>
                         </a>
                     </div>
-                    <a class="card-link" :href="route('shelves.show', { shelf: shelf.id })">
+                    <a class="card-link" x-bind:href="route('shelves.show', { shelf: shelf.id })">
                         <div class="card-body text-center" x-text="shelf.name">
                         </div>
                     </a>
@@ -134,6 +134,24 @@ Delete `resources/js/components/library/shelves/ShelfManager.vue`.
 ### `x-on:click` inside `#vue-root`
 
 Alpine inside `#vue-root` must use `x-on:click` not `@click`. See Spec 006 Implementation Notes for details.
+
+### `x-bind:` not `:` for attribute binding inside `#vue-root`
+
+Vue 2 interprets `:attr` as `v-bind:attr` shorthand. Alpine content inside `#vue-root` must use the full `x-bind:attr` form:
+
+```html
+<!-- CORRECT inside #vue-root — Alpine-only, Vue ignores unknown x-* attributes -->
+<a x-bind:href="route('shelves.show', { shelf: shelf.id })">
+
+<!-- WRONG — Vue 2 interprets :href as v-bind:href, crashes on route() not in Vue scope -->
+<a :href="route('shelves.show', { shelf: shelf.id })">
+```
+
+This applies to **all** attribute bindings (`:href`, `:class`, `:style`, etc.) inside `#vue-root`.
+
+### No `:key` on `<template x-for>`
+
+Vue 2 processes `<template>` elements specially. Do not use `:key="..."` on `<template x-for>` — Alpine handles keying internally. Vue 2 will choke on the expression.
 
 ### Resource Route Parameters
 
