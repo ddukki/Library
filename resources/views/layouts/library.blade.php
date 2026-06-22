@@ -11,30 +11,21 @@
 
 	@routes
 
-	@section('header-scripts')
-		@include('layouts.header-scripts')
-	@show
-
 	@section('header-styles')
-		<!-- Fonts -->
-	    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-	    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+		@routes
 
-		<!-- Styles -->
-	    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-		<link href="{{ asset('css/library.css') }}" rel="stylesheet">
+	    @vite(['resources/sass/app.scss', 'resources/sass/library.scss', 'resources/js/app.js'])
 	@show
 
 </head>
 <body>
     <div id="app">
 		@include('layouts.nav')
-        <main class="py-4">
-            @yield('content')
-        </main>
+        <div id="vue-root">
+            <main class="py-4">
+                @yield('content')
+            </main>
+        </div>
     </div>
-	@section('body-scripts')
-		<script src="{{ asset('js/app.js') }}"></script>
-	@show
 </body>
 </html>

@@ -7,8 +7,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-use App\Models\Library\Author;
-use App\Models\Library\Book;
 use App\Models\Library\Shelf;
 
 class User extends Authenticatable
@@ -44,9 +42,5 @@ class User extends Authenticatable
 
     public function shelves() {
         return $this->hasMany(Shelf::class);
-    }
-
-    public function books() {
-        return $this->hasManyThrough(Book::class, Shelf::class);
     }
 }

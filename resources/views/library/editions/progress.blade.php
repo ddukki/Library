@@ -27,8 +27,6 @@
 
                             <div class="progress-bar"
                                     role="progressbar"
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
                                     title="@if($allProgress[$i][0] == $allProgress[$i][1]) {{ $allProgress[$i][0] }} @else {{ $allProgress[$i][0] }} to {{ $allProgress[$i][1] }} @endif"
                                     style="width: {{ ($allProgress[$i][1] - $allProgress[$i][0] + 1) / $edition->location_size * 100 }}%">
                             </div>

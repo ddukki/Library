@@ -16,7 +16,7 @@ class Quote extends Model
     protected $fillable = ['title', 'edition_id', 'user_id', 'quote', 'location'];
 
     public function edition() {
-        return $this->belongsTo(edition::class);
+        return $this->belongsTo(Edition::class);
     }
 
     public function user() {
