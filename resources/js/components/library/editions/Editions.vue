@@ -67,9 +67,7 @@
 </template>
 
 <script>
-import EditionCard from './EditionCard.vue'
 export default {
-    components: { EditionCard },
     props: ['book'],
     data() {
         return {

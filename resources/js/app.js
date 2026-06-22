@@ -21,8 +21,6 @@ Vue.mixin({
 });
 
 Vue.component('shelf-manager', () => import('./components/library/shelves/ShelfManager.vue'));
-Vue.component('shelf-books', () => import('./components/library/shelves/ShelfBooks.vue'));
-
 Vue.component('all-books', () => import('./components/library/books/AllBooks.vue'));
 Vue.component('book-card', () => import('./components/library/books/BookCard.vue'));
 Vue.component('book-form', () => import('./components/library/books/BookForm.vue'));
@@ -33,7 +31,6 @@ Vue.component('select-authors', () => import('./components/library/authors/Selec
 Vue.component('author-form', () => import('./components/library/authors/AuthorForm.vue'));
 
 Vue.component('book-editions', () => import('./components/library/editions/Editions.vue'));
-Vue.component('edition-card', () => import('./components/library/editions/EditionCard.vue'));
 Vue.component('edition-row', () => import('./components/library/editions/EditionRow.vue'));
 Vue.component('shelve-edition', () => import('./components/library/editions/ShelveEdition.vue'));
 
