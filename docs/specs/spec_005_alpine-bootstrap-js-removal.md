@@ -1,5 +1,7 @@
 # Spec 005: Alpine.js Setup + Bootstrap JS Removal
 
+**Status:** Approved (implemented)
+
 ## Objective
 
 Replace Bootstrap 4 JavaScript behaviors (collapse, dropdown, tooltip) with Alpine.js and CSS equivalents. Remove jQuery, Popper.js, and Bootstrap JS as runtime dependencies. Keep Bootstrap 4 SCSS for Vue 2 components.
@@ -52,18 +54,27 @@ if (token) {
 
 // Vue component registrations (unchanged) ...
 
-const app = new Vue({
-    el: '#app',
+const vueRoot = document.getElementById('vue-root');
+if (vueRoot) {
+    new Vue({
+        el: '#vue-root',
+    });
+}
+
+document.addEventListener('alpine:init', () => {
+    // Alpine component registrations (e.g. shelfForm)
 });
 
-// Alpine after Vue — critical for coexisting inside #app
+// Alpine after Vue — critical for coexisting
 Alpine.start();
 ```
 
-Alpine and Vue coexist on the same `#app` container because:
-- Vue treats nodes without Vue directives as static HTML
-- Alpine's `x-data`, `x-show`, `@click` etc. are unknown attributes to Vue and pass through
+Alpine and Vue coexist in the same page because:
+- Vue mounts on `#vue-root` (a child of `#app`), not on `#app` itself
+- Alpine attributes on nav elements (`@click`, `x-data`) live inside `#app` but outside `#vue-root`
 - `Alpine.start()` after Vue mount ensures Alpine sees the compiled DOM
+
+**Critical: Vue must NOT mount on `#app`.** Vue 2's template compiler interprets `@click` as `v-on:click` on elements within its mounted subtree, breaking Alpine handlers on shared elements. Mounting on a nested `#vue-root` inside `#app` isolates Vue's scope.
 
 ### 2. `resources/js/bootstrap.js`
 

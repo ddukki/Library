@@ -9,16 +9,16 @@ export default function (editShelfData) {
             axios.post(route('shelves.store'), {
                 shelf: this.shelf,
             }).then(response => {
-                window.location.replace(route('shelves.show', { id: this.shelf.id }));
+                window.location.replace(route('shelves.show', { shelf: this.shelf.id }));
             }).catch(error => {
                 console.error('Failed to create shelf:', error.response?.data || error);
             });
         },
         updateShelf() {
-            axios.put(route('shelves.update', { id: this.shelf.id }), {
+            axios.put(route('shelves.update', { shelf: this.shelf.id }), {
                 shelf: this.shelf,
             }).then(response => {
-                window.location.replace(route('shelves.show', { id: this.shelf.id }));
+                window.location.replace(route('shelves.show', { shelf: this.shelf.id }));
             }).catch(error => {
                 console.error('Failed to update shelf:', error.response?.data || error);
             });

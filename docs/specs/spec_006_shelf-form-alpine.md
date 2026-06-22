@@ -1,6 +1,6 @@
 # Spec 006: Alpine.js — ShelfForm Migration
 
-**Status:** Draft
+**Status:** Approved (implemented)
 **Applies to:** ADR-0002 (Alpine.js over Vue 2), ADR-0004 (Bootstrap SCSS kept until migration done), ADR-0016 (Blade partial + Alpine JS module pattern)
 
 ## Goal
@@ -38,10 +38,10 @@ Migrate the Vue 2 `ShelfForm` component to Alpine.js using the ADR-0016 pattern:
                placeholder="Shelf Name"
                x-model="shelf.name">
     </div>
-    <button class="btn btn-primary" @click="addShelf" x-show="!editShelf">
+    <button class="btn btn-primary" x-on:click="addShelf" x-show="!editShelf">
         + Add
     </button>
-    <button class="btn btn-primary" @click="updateShelf" x-show="editShelf">
+    <button class="btn btn-primary" x-on:click="updateShelf" x-show="editShelf">
         + Update
     </button>
 </div>
@@ -89,16 +89,16 @@ export default function (editShelfData) {
             axios.post(route('shelves.store'), {
                 shelf: this.shelf,
             }).then(response => {
-                window.location.replace(route('shelves.show', { id: this.shelf.id }));
+                window.location.replace(route('shelves.show', { shelf: this.shelf.id }));
             }).catch(error => {
                 console.error('Failed to create shelf:', error.response?.data || error);
             });
         },
         updateShelf() {
-            axios.put(route('shelves.update', { id: this.shelf.id }), {
+            axios.put(route('shelves.update', { shelf: this.shelf.id }), {
                 shelf: this.shelf,
             }).then(response => {
-                window.location.replace(route('shelves.show', { id: this.shelf.id }));
+                window.location.replace(route('shelves.show', { shelf: this.shelf.id }));
             }).catch(error => {
                 console.error('Failed to update shelf:', error.response?.data || error);
             });
@@ -138,6 +138,37 @@ Delete `resources/js/components/library/shelves/ShelfForm.vue`.
 4. Edit shelf: PUT `shelves.update`, redirects to shelf show
 5. No console errors on either page
 6. `ShelfForm.vue` no longer in JS bundle or source
+
+## Implementation Notes
+
+### `@click` vs `x-on:click` in Alpine inside `#vue-root`
+
+Alpine content rendered inside `#vue-root` (Vue's mount target) must use `x-on:click` instead of `@click`. Vue 2's template compiler interprets `@click` as `v-on:click` shorthand, breaking Alpine event handlers.
+
+```blade
+<!-- CORRECT inside #vue-root -->
+<button x-on:click="addShelf">+ Add</button>
+
+<!-- WRONG — Vue 2 interprets @click as v-on:click -->
+<button @click="addShelf">+ Add</button>
+```
+
+This only applies to Alpine templates inside Vue's mounted subtree. Alpine elements outside `#vue-root` (e.g., nav) can safely use `@click`.
+
+### Resource Route Parameter Names
+
+Laravel resource routes use **singular** parameter names derived from the resource name:
+
+```js
+// Route: Route::resource('shelves', ShelfController::class)
+// URI:   library/shelves/{shelf} (not {id})
+
+route('shelves.show', { shelf: shelfId })    // correct
+route('shelves.update', { shelf: shelfId })  // correct
+route('shelves.show', { id: shelfId })       // UrlGenerationException
+```
+
+The Ziggy JS `route()` helper shares the same parameter naming.
 
 ## Edge Cases
 
