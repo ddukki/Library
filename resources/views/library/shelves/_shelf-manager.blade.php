@@ -26,7 +26,7 @@
                     </div>
                     <a class="card-link" x-bind:href="route('shelves.show', { shelf: shelf.id })">
                         <div class="card-body text-center">
-                            <div x-text="shelf.name"></div>
+                            <span class="d-block" x-text="shelf.name"></span>
                             <h1><i class="fas fa-archive"></i></h1>
                         </div>
                     </a>
