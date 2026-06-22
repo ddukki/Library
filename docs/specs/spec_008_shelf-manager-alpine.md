@@ -80,7 +80,9 @@ export default function () {
                         </a>
                     </div>
                     <a class="card-link" x-bind:href="route('shelves.show', { shelf: shelf.id })">
-                        <div class="card-body text-center" x-text="shelf.name">
+                        <div class="card-body text-center">
+                            <div x-text="shelf.name"></div>
+                            <h1><i class="fas fa-archive"></i></h1>
                         </div>
                     </a>
                 </div>
