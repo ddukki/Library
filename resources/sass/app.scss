@@ -1,8 +1,17 @@
+// Variables
+@use 'variables' as *;
+
+// Bootstrap
+@use '~bootstrap/scss/bootstrap' as *;
+
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Heebo');
 
-// Variables
-@import 'variables';
+// Library-specific
+a.card-link {
+	text-decoration: none;
+}
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+a {
+    cursor: pointer;
+}

@@ -10,21 +10,23 @@
 All PHP/Composer commands run inside Docker. No PHP or Composer installation needed on host.
 
 ```bash
-# Install PHP dependencies
-docker run --rm -v ${PWD}:/app -w /app composer:2.0 composer install
+# Install PHP dependencies (vendor/ should be on a Docker volume for speed)
+docker run --rm -v lib-vendor:/app/vendor -v ${PWD}:/app -w /app composer:latest composer install
 
-# Run artisan commands
-docker run --rm -v ${PWD}:/var/www/html -w /var/www/html php:8.4-cli php artisan <command>
+# Run artisan commands (needs DB + vendor volumes for slow filesystems)
+docker run --rm -v lib-db:/var/lib/library/db -v lib-vendor:/var/www/html/vendor -v ${PWD}:/var/www/html -w /var/www/html php:8.4-cli php artisan <command>
 
-# Start dev server (SQLite, threaded workers for concurrent AJAX)
-docker run --rm -d --name lib-dev -p 8080:80 `
+# Start dev server (threaded workers for concurrent AJAX)
+docker run --rm -d --name lib-dev -p 8081:80 `
+  -v lib-db:/var/lib/library/db `
+  -v lib-vendor:/var/www/html/vendor `
   -v ${PWD}:/var/www/html `
   -w /var/www/html `
   -e PHP_CLI_SERVER_WORKERS=4 `
   php:8.4-cli php -S 0.0.0.0:80 -t /var/www/html/public
 ```
 
-> **Note:** `PHP_CLI_SERVER_WORKERS=4` is required — the single-threaded built-in server causes multi-second delays when the app makes concurrent Vue AJAX requests.
+> **Performance:** Docker Desktop bind mounts are slow on Windows/macOS. Named volumes (`lib-db`, `lib-vendor`) bypass this. Create them with `docker volume create lib-db && docker volume create lib-vendor` before first start. The vendor volume takes precedence over the bind mount at `/var/www/html/vendor`.
 
 ## Frontend Build
 
@@ -52,18 +54,18 @@ Copy `.env.example` to `.env` and configure:
 cp .env.example .env
 ```
 
-The app uses **SQLite** — no MySQL server needed. Ensure `DB_DATABASE` in `.env` is an absolute path to survive Docker working-directory changes:
+The app uses **SQLite** — no MySQL server needed. The database file lives on a Docker named volume to avoid slow bind-mount I/O:
 
 ```
 DB_CONNECTION=sqlite
-DB_DATABASE=/var/www/html/database/database.sqlite
+DB_DATABASE=/var/lib/library/db/database.sqlite
 ```
 
 ## Testing
 
 ```bash
 # Run PHP tests
-docker run --rm -v ${PWD}:/var/www/html -w /var/www/html php:8.4-cli `
+docker run --rm -v lib-vendor:/var/www/html/vendor -v ${PWD}:/var/www/html -w /var/www/html php:8.4-cli `
   php vendor/bin/phpunit
 ```
 
@@ -72,29 +74,34 @@ docker run --rm -v ${PWD}:/var/www/html -w /var/www/html php:8.4-cli `
 ```bash
 # 1. Start Docker Desktop
 
-# 2. Install PHP deps
-docker run --rm -v ${PWD}:/app -w /app composer:latest composer install
+# 2. Create volumes (one-time)
+docker volume create lib-db
+docker volume create lib-vendor
 
-# 3. Install & build frontend
+# 3. Install PHP deps (mounts vendor on named volume for speed)
+docker run --rm -v lib-vendor:/app/vendor -v ${PWD}:/app -w /app composer:latest composer install
+
+# 4. Install & build frontend
 npm install
-$env:NODE_OPTIONS="--openssl-legacy-provider"
-npm run production
+npm run build
 
-# 4. Set up .env
+# 5. Set up .env
 cp .env.example .env
-# Edit DB_DATABASE to absolute path as above
+# Edit DB_DATABASE to: /var/lib/library/db/database.sqlite
 
-# 5. Run migrations
-docker run --rm -v ${PWD}:/var/www/html -w /var/www/html php:8.4-cli php artisan migrate
+# 6. Run migrations (creates schema in volume)
+docker run --rm -v lib-db:/var/lib/library/db -v lib-vendor:/var/www/html/vendor -v ${PWD}:/var/www/html -w /var/www/html php:8.4-cli php artisan migrate
 
-# 6. Start server
-docker run --rm -d --name lib-dev -p 8080:80 `
+# 7. Start server
+docker run --rm -d --name lib-dev -p 8081:80 `
+  -v lib-db:/var/lib/library/db `
+  -v lib-vendor:/var/www/html/vendor `
   -v ${PWD}:/var/www/html `
   -w /var/www/html `
   -e PHP_CLI_SERVER_WORKERS=4 `
   php:8.4-cli php -S 0.0.0.0:80 -t /var/www/html/public
 
-# Visit http://localhost:8080
+# Visit http://localhost:8081
 ```
 
 ## Version Matrix

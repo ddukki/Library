@@ -25,12 +25,14 @@ All Vue 2 components migrated to Blade + Alpine.js. Vue 2 removed from build cha
 | 014 | AllAuthors+AllBooks Alpine | ✅ | Last page-level Vue migrations |
 | 015 | BookForm+SelectAuthors Alpine | ✅ | book-form.js |
 | 016 | Remove Vue 2 from Build | ✅ | Deps, plugin, #vue-root removed |
+| 017 | SCSS Consolidation | ✅ | `@import`→`@use`, remove chart.js/moment, inline library.scss |
 
 ## Known Bugs / Gotchas
 
 - Alpine `<select>` with `x-model="null"` doesn't auto-set to first option — init explicitly
 - Controller `store()`/`update()` field names must match JS payload keys
 - Container restart needed after PHP changes (PHP_CLI_SERVER_WORKERS=4 caches code)
+- vendor/ on Docker named volume (`lib-vendor`) — re-copy on `composer install`
 - `@include` inside `<template x-for>` works via `$item` convention
 - LSP errors for `Illuminate\*` are false positives (Docker-only PHP)
 
@@ -44,8 +46,9 @@ Bootstrap 4 SCSS kept during migration per ADR-0004. All Vue components migrated
 - Evaluate `chart.js`/`moment` usage
 
 ### Infrastructure
-- SQLite is a stopgap (ADR-0003) — evaluate server database post-migration
-- CLI `swarm memory find` URL_INVALID bug (deferred)
+- SQLite moved to Docker named volume `lib-db` — avoids slow bind-mount I/O on Windows
+- `vendor/` moved to Docker named volume `lib-vendor` — fixes Laravel cold boot from 2s→0.3s
+- ADR-0003 post-migration evaluation deferred (not urgent)
 
 ### Upstream
 - PR #201 awaiting maintainer vouch on issue #202

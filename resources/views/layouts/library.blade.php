@@ -14,7 +14,7 @@
 	@section('header-styles')
 		@routes
 
-	    @vite(['resources/sass/app.scss', 'resources/sass/library.scss', 'resources/js/app.js'])
+	    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 	@show
 
 </head>
