@@ -7,6 +7,11 @@ body {
     color: $color-text;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 h1, .heading--1 { font-size: $font-size-3xl; font-weight: $font-weight-bold; line-height: $line-height-tight; }
 h2, .heading--2 { font-size: $font-size-2xl; font-weight: $font-weight-semibold; line-height: $line-height-tight; }
 h3, .heading--3 { font-size: $font-size-xl; font-weight: $font-weight-semibold; line-height: $line-height-tight; }

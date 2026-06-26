@@ -1,4 +1,5 @@
 @use '../tokens' as *;
+@use 'sass:color';
 
 .alert {
     display: flex;
@@ -12,25 +13,25 @@
 
     &--success {
         background: $color-success-light;
-        color: darken($color-success, 10%);
+        color: color.adjust($color-success, $lightness: -10%);
         border-color: $color-success;
     }
 
     &--danger {
         background: $color-danger-light;
-        color: darken($color-danger, 10%);
+        color: color.adjust($color-danger, $lightness: -10%);
         border-color: $color-danger;
     }
 
     &--warning {
         background: $color-warning-light;
-        color: darken($color-warning, 10%);
+        color: color.adjust($color-warning, $lightness: -10%);
         border-color: $color-warning;
     }
 
     &--info {
         background: $color-info-light;
-        color: darken($color-info, 10%);
+        color: color.adjust($color-info, $lightness: -10%);
         border-color: $color-info;
     }
 }

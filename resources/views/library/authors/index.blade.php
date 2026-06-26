@@ -3,8 +3,8 @@
 @section('content')
     <div class="container">
         <div x-data="allAuthors(@js($searchTerm ?? ''), @js($searchColumn ?? []))">
-            <div class="flex" style="align-items: center; gap: 1rem; margin-bottom: 1rem">
-                <div style="flex: 1">
+            <div class="flex" style="align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap">
+                <div style="flex: 1; min-width: 200px">
                     <div class="input-group">
                         <input type="text" class="form-input__field"
                                 placeholder="Search Authors"

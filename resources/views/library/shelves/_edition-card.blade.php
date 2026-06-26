@@ -1,5 +1,5 @@
-<div style="margin-bottom: 1rem">
-    <x-card href="{{ route('editions.show', ['edition' => $edition->id]) }}">
+<a href="{{ route('editions.show', ['edition' => $edition->id]) }}" style="display: block; height: 100%">
+    <x-card>
         <div style="text-align: center">
             <div>{{ $edition->book->title }}</div>
             <div class="small">
@@ -11,4 +11,4 @@
             <div class="small">{{ $shelf->name }} Edition</div>
         </div>
     </x-card>
-</div>
+</a>

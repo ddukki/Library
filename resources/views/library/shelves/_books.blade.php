@@ -10,14 +10,14 @@
         </x-card>
     </div>
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem">
-        <div style="text-align: center">
-            <x-card href="{{ route('books.index') }}">
+        <a href="{{ route('books.index') }}" style="display: block; height: 100%">
+            <x-card>
                 <div style="text-align: center">
                     <p>Add New Book</p>
                     <h1 style="margin-top: 0.75rem"><i class="fas fa-plus"></i></h1>
                 </div>
             </x-card>
-        </div>
+        </a>
         @foreach ($shelf->editions as $edition)
             @include('library.shelves._edition-card', ['edition' => $edition, 'shelf' => $shelf])
         @endforeach

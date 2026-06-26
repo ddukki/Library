@@ -1,4 +1,5 @@
 @use '../tokens' as *;
+@use 'sass:color';
 
 .nav {
     display: flex;
@@ -10,7 +11,7 @@
     min-height: 3.5rem;
 
     &--dark {
-        background: darken($color-text, 5%);
+        background: color.adjust($color-text, $lightness: -5%);
         border-bottom: none;
 
         .nav__link { color: rgba(255, 255, 255, 0.7); }
