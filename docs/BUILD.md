@@ -63,10 +63,47 @@ DB_DATABASE=/var/lib/library/db/database.sqlite
 
 ## Testing
 
+Uses **Pest 4** for PHP feature tests + **Playwright** for browser e2e tests.
+
+### PHP Tests (Pest 4)
+
+App must be running (`lib-dev` container) for the test runner. Run inside the running container:
+
 ```bash
-# Run PHP tests
-docker run --rm -v lib-vendor:/var/www/html/vendor -v ${PWD}:/var/www/html -w /var/www/html php:8.4-cli `
-  php vendor/bin/phpunit
+# All PHP tests via Pest
+docker exec lib-dev bash -c "cd /var/www/html && php ./vendor/bin/pest --configuration phpunit.xml"
+
+# Single file
+docker exec lib-dev bash -c "cd /var/www/html && php ./vendor/bin/pest tests/Feature/LocationTypeTest.php --configuration phpunit.xml"
+```
+
+> Avoid `docker compose exec` — use `docker exec` directly since the container was created without docker-compose.
+
+### Browser Tests (Playwright)
+
+Runs on host Node.js, pointed at the Docker app on `localhost:8081`.
+
+```bash
+# Install (one-time)
+npx playwright install chromium
+
+# Run all e2e tests
+npx playwright test --config tests/playwright.config.js
+
+# Run single file
+npx playwright test tests/e2e/location-types.spec.js --config tests/playwright.config.js
+
+# Run with UI (interactive)
+npx playwright test --config tests/playwright.config.js --ui
+
+# View HTML report
+npx playwright show-report
+```
+
+The suite registers a unique test user per file. Tests within a file share a browser context (serial mode). If `/register` or `/login` returns 500, clear compiled view cache:
+
+```bash
+docker exec lib-dev bash -c "cd /var/www/html && php artisan view:clear"
 ```
 
 ## Quick Start (full flow)

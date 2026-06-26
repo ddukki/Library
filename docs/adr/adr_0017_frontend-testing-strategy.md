@@ -1,16 +1,15 @@
-# ADR-0017: Frontend Testing Strategy — PHPUnit API Tests + Laravel Dusk
+# ADR-0017: Frontend Testing Strategy — Pest Feature Tests + Playwright
 
-**Status:** Approved
+**Status:** Approved (refined — Dusk → Playwright after implementation)
 **Date:** 2026-06-22
 **Replaces:** None
 **Supersedes:** None
-**Revisit Trigger:** When all Vue→Alpine migrations are complete and the stack is stable, evaluate whether Dusk complexity is justified vs lighter alternatives like Vitest + Playwright.
 
 ## Context
 
-The app has Vue 2 components being incrementally migrated to Alpine.js (ADR-0016). Each migration involves Blade partials, Alpine JS modules, and AJAX interactions with Laravel API endpoints.
+The app had Vue 2 components incrementally migrated to Alpine.js (ADR-0016). Each migration involved Blade partials, Alpine JS modules, and AJAX interactions with Laravel API endpoints.
 
-Currently, the only verification is manual — the developer clicks buttons and observes behavior. The shelve button bug (Spec 011) is a concrete case where:
+Previously, the only verification was manual — the developer clicks buttons and observes behavior. The shelve button bug (Spec 011) is a concrete case where:
 1. The server-side endpoint (`EditionController@shelve`) works correctly
 2. The Alpine JS module constructs the correct request
 3. But the bug was in type coercion — `===` vs `==` — only visible at the browser level
@@ -31,61 +30,73 @@ Which testing tools should we adopt to catch both categories of bugs without req
 
 ## Considered Options
 
-### A. PHPUnit Feature Tests + Laravel Dusk
+### A. Pest Feature Tests + Playwright
 
 Two layers:
-1. **PHPUnit HTTP tests** — call API endpoints (`POST library/editions/1/shelve/1`), verify JSON responses, status codes, and database state. Fast (~50ms per test), no browser needed.
-2. **Laravel Dusk** — opens real Chrome, clicks buttons, fills forms, asserts DOM content. Tests the full stack from browser to database. Slower (~2-5s per test) but catches real interaction bugs.
+1. **Pest HTTP tests** — call API endpoints, verify JSON responses, status codes, and database state. Fast (~50ms per test), no browser needed. Uses Pest 4 with the Laravel plugin, runs inside Docker.
+2. **Playwright** — opens headless Chromium, clicks buttons, fills forms, asserts DOM content. Tests the full stack from browser to database. Slower (~2-5s per test) but catches real interaction bugs. Runs on host Node.js against the Docker dev server.
+
+Playwright provides excellent debugging (trace viewer, screenshots, video), auto-waiting, and a rich assertion API.
+
+```
+docker exec lib-dev php ./vendor/bin/pest  # API tests (fast)
+npx playwright test                        # Browser tests (slow)
+```
+
+### B. Pest Feature Tests + Laravel Dusk
+
+Pest for API tests, Dusk for browser E2E running inside Docker.
 
 Dusk is Laravel-native: uses the same test assertions as PHPUnit, supports `RefreshDatabase`, and runs inside the existing Docker container.
 
-```
-./vendor/bin/phpunit              # API tests (fast)
-./vendor/bin/phpunit --testsuite=Feature  # API tests only
-php artisan dusk                  # Browser tests (slow)
-```
+**Pros:**
+- Tighter Laravel integration
+- Runs in Docker alongside PHP
+- Shares database/reset helpers
 
-**Dusk ChromeDriver setup in Docker:**
-- Install `php artisan dusk:chrome-driver` to download matching ChromeDriver
-- Run headless Chrome in the container or on host
-- Existing Docker setup may need Chrome binary installed
+**Cons vs Playwright:**
+- Requires Chrome + ChromeDriver in Docker (setup burden)
+- ChromeDriver version drift (must match Chrome version)
+- Less mature debugging (no trace viewer, time-travel)
+- Browser tests are PHP files — conceptually different from JS-based Alpine stack
+- No auto-waiting — explicit `$browser->waitFor()` needed
 
-### B. PHPUnit Feature Tests + Cypress
+### C. Pest Feature Tests + Cypress
 
-PHPUnit for API tests, Cypress for browser E2E.
+Pest for API tests, Cypress for browser E2E.
 
-Cypress is a standalone JS framework: installs via npm, opens its own browser (Electron), uses JS assertions. Better developer experience (time-travel, auto-waiting, network stubbing) than Dusk.
+Cypress is a standalone JS framework: installs via npm, opens its own browser (Electron), uses JS assertions. Good developer experience (time-travel, auto-waiting, network stubbing).
 
-**Pros over Dusk:**
-- Better debugging (time-travel, screenshots, video)
-- Network stubbing (test error states without backend)
-- Auto-waiting (no explicit `wait()` calls)
+**Pros:**
+- Excellent debugging DX
+- Network stubbing
+- Auto-waiting
 
-**Cons vs Dusk:**
-- Another Node dependency (already 37 packages, adding Cypress doubles count)
-- Runs separately from PHP tests — no shared `RefreshDatabase` or Laravel test helpers
-- Needs a running Laravel dev server (not the testing environment)
-- Less integrated with existing toolchain
+**Cons vs Playwright:**
+- Cypress doubles Node dependency count
+- Runs separately from PHP tests — no shared helpers
+- Smaller browser matrix (Chromium-only)
+- Slower than Playwright for test execution
 
-### C. PHPUnit Feature Tests + Vitest Alpine Unit Tests
+### D. Pest Feature Tests + Vitest Alpine Unit Tests
 
-PHPUnit for API tests, Vitest for Alpine JS module tests in isolation.
+Pest for API tests, Vitest for Alpine JS module tests in isolation.
 
 Vitest imports the Alpine JS modules (`book-editions.js`, `shelf-form.js`) directly, mocks Axios, and tests method behavior. No browser needed.
 
 **Pros:**
 - Fastest option (sub-ms per test)
-- Tests JS logic directly (the `==` vs `===` bug would be caught)
+- Tests JS logic directly
 - Integrates with Vite build pipeline
 - No browser infrastructure
 
-**Cons vs Dusk:**
+**Cons:**
 - Doesn't test real DOM interaction (`x-model`, `x-show`, event handling)
 - Doesn't test Blade template rendering
 - Mocks must match real API behavior — drift possible
 - Can't catch CSS/layout regressions
 
-### D. PHPUnit Feature Tests Only
+### E. Pest Feature Tests Only
 
 Only API tests, no browser/JS testing.
 
@@ -100,45 +111,50 @@ Only API tests, no browser/JS testing.
 
 ## Decision Outcome
 
-**Chosen: Option A — PHPUnit Feature Tests + Laravel Dusk.**
+**Chosen: Option A — Pest Feature Tests + Playwright.**
+
+The ADR originally chose Dusk, but before implementation the decision was revisited. Dusk's ChromeDriver maintenance burden and PHP-centric test syntax didn't fit a stack where all interactive UI is Alpine.js (JS-based). Playwright's auto-waiting, trace viewer, and JS-native assertion model proved more practical for testing Alpine AJAX interactions.
 
 ### Rationale
 
-1. **The shelve bug proves we need browser-level testing.** A `===` vs `==` bug in Alpine JS is invisible to both PHPUnit API tests and Vitest unit tests (mocked Axios wouldn't catch value type mismatches from real `<select>` elements).
+1. **The shelve bug proves we need browser-level testing.** A `===` vs `==` bug in Alpine JS is invisible to both Pest API tests and Vitest unit tests (mocked Axios wouldn't catch value type mismatches from real `<select>` elements).
 
-2. **Dusk is native to Laravel.** It shares the same assertion syntax, database helpers, and test infrastructure. No separate test runner or dev server needed. This matters for a small team — less cognitive overhead.
+2. **Playwright runs on host Node.js, not in Docker.** The app's dev server is already on `localhost:8081`. No Chrome/Chromedriver installation inside the container — one fewer moving part.
 
-3. **PHPUnit API tests provide fast feedback** for server-side changes (endpoint changes, model changes, routing). These run in milliseconds. Dusk tests are reserved for full-stack scenarios.
+3. **Pest API tests provide fast feedback** for server-side changes (endpoint changes, model changes, routing). These run inside the Docker container in milliseconds. Playwright tests are reserved for full-stack scenarios.
 
-4. **Dusk + ChromeDriver can run inside Docker.** The existing container already has PHP + Composer. Adding Chrome and ChromeDriver is a one-time setup cost.
+4. **Playwright's auto-waiting is critical for Alpine.js.** Alpine's reactivity is asynchronous — `x-show` toggles, `x-model` updates, and AJAX responses all have timing gaps. Dusk would require explicit `waitFor()` calls; Playwright's auto-waiting resolves these implicitly.
 
-5. **Vitest is rejected (for now) because** it doesn't provide enough value over Dusk for the Alpine migration phase. Post-migration, when the stack is stable, Vitest might be worth adding for unit-testing Alpine components in isolation. Revisit trigger captures this.
+5. **Playwright's trace viewer + screenshot on failure** provides better debugging than Dusk's console output. Failed tests show exactly what the browser saw at the moment of failure.
 
-6. **Cypress is rejected because** the standalone JS toolchain adds complexity without proportional benefit for a single-developer project. Dusk's tighter Laravel integration outweighs Cypress's DX advantages here.
+6. **Vitest is rejected (for now) because** it doesn't provide enough value over Playwright for the Alpine migration phase. Post-migration, when the stack is stable, Vitest might be worth adding for unit-testing Alpine components in isolation.
+
+7. **Cypress is rejected because** Playwright is faster, lighter, and supports more browsers for the same testing patterns.
 
 ### Consequences
 
 **Positive:**
-- Server-side bugs caught at PHPUnit speed (~50ms)
-- Browser-level bugs caught by Dusk before manual testing
-- Same assertion API for both layers (`$this->assertSee()`, `$this->assertJson()`)
-- Incremental adoption — write tests for each new migration spec
-- Dusk's `RefreshDatabase` trait keeps tests isolated
+- Server-side bugs caught at Pest speed (~50ms)
+- Browser-level bugs caught by Playwright before manual testing
+- Playwright's auto-waiting reduces flaky test issues common with Alpine
+- Trace viewer + screenshots for debugging failures
+- JS-native test syntax matches the Alpine JS stack
+- No Chrome/ChromeDriver in Docker
 
 **Negative:**
-- Dusk requires Chrome + ChromeDriver in the Docker container (one-time setup)
-- Dusk tests are slower than unit tests
-- ChromeDriver version must match Chrome version (maintenance burden)
-- Two test commands instead of one
+- Two test environments: Pest in Docker, Playwright on host
+- Playwright tests require running dev server (not isolated like Dusk's environment)
+- No shared `RefreshDatabase` between layers — Playwright creates data through UI
+- Database state persists between test runs (must create data via UI)
 
 **Neutral:**
-- Tests are PHP files alongside existing test suite — no new language/framework to learn
-- Dusk browser tests can be run selectively via `--group` annotations during development
-- Post-migration, evaluate whether heaviness is justified vs Vitest/Playwright
+- Playwright uses standard JS (Node.js) — no new language to learn
+- Tests are organized per Alpine component (corresponding to specs)
 
 ## Compliance
 
-1. All new API endpoints and existing ones must have PHPUnit feature tests covering success and failure cases.
-2. All Alpine components must have at least one Dusk browser test covering the primary interaction flow.
-3. Dusk tests must use `RefreshDatabase` and seed minimal test data.
-4. CI (when set up) must run PHPUnit tests on every push. Dusk tests run on a schedule or before release.
+1. All API endpoint changes must have corresponding Pest feature tests covering success and failure cases.
+2. All Alpine components must have at least one Playwright browser test covering the primary interaction flow (add/edit/delete).
+3. Playwright tests must register a fresh user per test file and use serial mode for intra-file tests.
+4. CI (when set up) must run Pest tests on every push. Playwright tests run on a schedule or before release.
+5. `php artisan view:clear` must be run after any view/cache change to prevent stale Ziggy namespace errors.

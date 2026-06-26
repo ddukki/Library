@@ -1,5 +1,7 @@
 # Spec 017: SCSS Consolidation
 
+**Status:** Implemented
+
 ## Objective
 
 Clean up SCSS after Vue 2 migration: use modern `@use` syntax, remove dead dependencies, keep stylesheets minimal.

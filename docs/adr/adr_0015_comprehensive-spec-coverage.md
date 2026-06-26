@@ -57,3 +57,17 @@ Models are the most stable layer — they survive the frontend overhaul relative
 ### Revisit Trigger
 
 After the frontend overhaul (Vue/Mix → Vite + Alpine), evaluate whether controllers need specs. If route logic was significantly restructured during the rewrite, write controller specs at that point.
+
+## Remaining Questions (2026-06-22)
+
+These questions were identified when revisiting this draft but not resolved:
+
+1. **Scope count off.** The ADR estimates ~15 models. Actual model count is 8 (`User`, `Author`, `Book`, `Edition`, `LocationType`, `Shelf`, `Quote`, `Progress`). Possibly counting pivot tables (Book ↔ Author, Edition ↔ Shelf) and polymorphic relationships as separate concerns. Should pivots get their own spec, or be folded into the parent model spec?
+
+2. **One spec per model, or one document for all?** The ADR doesn't specify whether model specs should be individual documents (e.g. `spec_018_book-model.md`) or a single comprehensive data-contract document.
+
+3. **Data model is raw.** Several relationships and pivots need rethinking (e.g. Book ↔ Author, Edition ↔ Shelf, Edition ↔ LocationType). If specs describe the current state verbatim, they'll become stale once the data model refactor happens. Options: spec the intended design first, or spec current state with a volatility flag.
+
+4. **Frontend overhaul scope.** The ADR's "after the frontend overhaul" trigger assumed Vite + Alpine would settle the frontend. The overhaul is still in progress — Bootstrap removal is not yet done. "Significantly restructured" for model/controller/pivot logic remains undefined.
+
+5. **Three "known bugs" referenced but unspecified.** The ADR mentions bugs in `Book::shelves()` and `Quote::edition()` but never lists what they are or whether they're fixed. Currently treated as unknown — they should either be documented or the reference removed on approval.
