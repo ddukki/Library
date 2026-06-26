@@ -7,8 +7,8 @@
     },
     "devDependencies": {
         "@fortawesome/fontawesome-free": "^7.2.0",
+        "@playwright/test": "^1.61.0",
         "axios": "^1.18",
-        "bootstrap": "^4.1.0",
         "laravel-vite-plugin": "^3.0",
         "sass": "^1.15.2",
         "vite": "^8.0.16"

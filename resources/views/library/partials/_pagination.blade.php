@@ -1,8 +1,9 @@
-<nav x-show="page && page.last_page > 1" class="mt-3">
-    <ul class="pagination justify-content-center" role="navigation">
+<nav x-show="page && page.last_page > 1" style="margin-top: 1rem">
+    <ul class="pagination" role="navigation" style="justify-content: center">
         <template x-for="n in page.last_page" :key="n">
-            <li x-bind:class="isCurrentPage(n) ? 'page-item active' : 'page-item'">
-                <a class="page-link" href="#" x-on:click.prevent="getPage(n)"
+            <li>
+                <a class="pagination__link" :class="{ 'pagination__link--active': isCurrentPage(n) }"
+                   href="#" x-on:click.prevent="getPage(n)"
                    x-text="n">
                 </a>
             </li>

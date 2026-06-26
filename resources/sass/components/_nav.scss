@@ -1,0 +1,147 @@
+@use '../tokens' as *;
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: $space-xs;
+    padding: 0 $space-md;
+    background: $color-white;
+    border-bottom: $border-width-thin solid $color-border;
+    min-height: 3.5rem;
+
+    &--dark {
+        background: darken($color-text, 5%);
+        border-bottom: none;
+
+        .nav__link { color: rgba(255, 255, 255, 0.7); }
+        .nav__link:hover { color: $color-white; }
+        .nav__link--active { color: $color-white; }
+    }
+
+    &--vertical {
+        flex-direction: column;
+        align-items: stretch;
+        border-bottom: none;
+        border-right: $border-width-thin solid $color-border;
+        min-height: auto;
+        padding: $space-sm 0;
+    }
+
+    &--sticky {
+        position: sticky;
+        top: 0;
+        z-index: $z-sticky;
+    }
+}
+
+.nav__brand {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text;
+    text-decoration: none;
+    padding: $space-sm 0;
+    margin-right: $space-md;
+
+    &:hover {
+        text-decoration: none;
+        color: $color-primary;
+    }
+}
+
+.nav__links {
+    display: flex;
+    align-items: center;
+    gap: $space-xs;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .nav--vertical & {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+
+.nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-xs;
+    padding: $space-sm $space-md;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-text-muted;
+    border-radius: $radius-md;
+    transition: color $transition-fast, background $transition-fast;
+    text-decoration: none;
+
+    &:hover {
+        color: $color-text;
+        background: $color-bg-alt;
+        text-decoration: none;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $color-primary;
+        outline-offset: 2px;
+    }
+
+    &--active {
+        color: $color-primary;
+        background: $color-primary-light;
+    }
+}
+
+.nav__end {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+}
+
+// Responsive toggle (hamburger)
+.nav__toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: $color-text;
+    border-radius: $radius-md;
+    font-size: 1.25rem;
+
+    &:hover {
+        background: $color-bg-alt;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $color-primary;
+        outline-offset: 2px;
+    }
+}
+
+// Responsive: collapse at md
+@media (max-width: 767px) {
+    .nav__toggle {
+        display: inline-flex;
+    }
+
+    .nav__links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+
+        &.nav__links--open {
+            display: flex;
+        }
+    }
+
+    .nav:not(.nav--vertical) {
+        flex-wrap: wrap;
+    }
+}

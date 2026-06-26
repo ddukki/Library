@@ -1,0 +1,77 @@
+@use '../tokens' as *;
+
+.alert {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-sm;
+    padding: $space-md $space-lg;
+    border-radius: $radius-md;
+    font-size: $font-size-sm;
+    line-height: $line-height-normal;
+    border: $border-width-thin solid transparent;
+
+    &--success {
+        background: $color-success-light;
+        color: darken($color-success, 10%);
+        border-color: $color-success;
+    }
+
+    &--danger {
+        background: $color-danger-light;
+        color: darken($color-danger, 10%);
+        border-color: $color-danger;
+    }
+
+    &--warning {
+        background: $color-warning-light;
+        color: darken($color-warning, 10%);
+        border-color: $color-warning;
+    }
+
+    &--info {
+        background: $color-info-light;
+        color: darken($color-info, 10%);
+        border-color: $color-info;
+    }
+}
+
+.alert__dismiss {
+    margin-left: auto;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.6;
+    font-size: $font-size-lg;
+    line-height: 1;
+    border-radius: $radius-sm;
+    transition: opacity $transition-fast;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
+    }
+}
+
+.alert--toast {
+    position: fixed;
+    z-index: $z-toast;
+    min-width: 280px;
+    max-width: 420px;
+    box-shadow: $shadow-lg;
+
+    &-br { bottom: $space-lg; right: $space-lg; }
+    &-bl { bottom: $space-lg; left: $space-lg; }
+    &-tr { top: $space-lg; right: $space-lg; }
+    &-tl { top: $space-lg; left: $space-lg; }
+}

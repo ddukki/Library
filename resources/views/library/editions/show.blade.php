@@ -1,23 +1,19 @@
 @extends('layouts.library')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>{{ $edition->book->title }}</h5>
-                        <i>{{ $edition->name }} Edition</i>
-                    </div>
-                    <div class="card-body border-bottom">
-                        @include('library.editions.progress')
-                    </div>
-                    <div class="card-body">
-                        @include('library.editions.quotes')
-                    </div>
-                </div>
+    <div class="container" style="margin-top: 1.5rem">
+        <x-card>
+            <x-slot:header>
+                <h5>{{ $edition->book->title }}</h5>
+                <i>{{ $edition->name }} Edition</i>
+            </x-slot:header>
+
+            <div style="margin-bottom: 1.5rem">
+                @include('library.editions.progress')
             </div>
-        </div>
+
+            @include('library.editions.quotes')
+        </x-card>
     </div>
 @endsection
 

@@ -1,0 +1,29 @@
+@use '../tokens' as *;
+
+.progress {
+    display: flex;
+    height: 1.5rem;
+    background: $color-bg-alt;
+    border-radius: $radius-md;
+    overflow: hidden;
+}
+
+.progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: $color-primary;
+    transition: width $transition-fast;
+    font-size: $font-size-xs;
+    white-space: nowrap;
+
+    &--light {
+        background: $color-bg-alt;
+        color: $color-text;
+    }
+
+    &--danger {
+        background: $color-danger;
+    }
+}

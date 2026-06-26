@@ -1,42 +1,32 @@
 @extends('layouts.library')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 text-center mb-3">
-                <h2>{{ $book->title }}</h2>
-                <h5>
-                    @php
-                        $authors = [];
-                        foreach($book->authors as $author) {
-                            array_push($authors, $author->first_name.' '.$author->middle_name.' '.$author->last_name);
-                        }
-                        $authorList = implode(', ', $authors);
-                    @endphp
-                    {{ $authorList }}
-                </h5>
-            </div>
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        Book Information
-                    </div>
-                    <div class="card-body">
-                    </div>
+    <div class="container" style="margin-top: 1.5rem">
+        <div style="text-align: center; margin-bottom: 1rem">
+            <h2>{{ $book->title }}</h2>
+            <h5>
+                @php
+                    $authors = [];
+                    foreach($book->authors as $author) {
+                        array_push($authors, $author->first_name.' '.$author->middle_name.' '.$author->last_name);
+                    }
+                    $authorList = implode(', ', $authors);
+                @endphp
+                {{ $authorList }}
+            </h5>
+        </div>
+        <x-card compact>
+            <x-slot:header>Book Information</x-slot:header>
+            <div></div>
+        </x-card>
+        <div style="margin-top: 1rem">
+            <x-card compact>
+                <x-slot:header>Editions</x-slot:header>
+
+                <div class="container">
+                    @include('library.editions._editions')
                 </div>
-            </div>
-            <div class="col-12 mt-3">
-                <div class="card">
-                    <div class="card-header">
-                        Editions
-                    </div>
-                    <div class="card-body">
-                        <div class="container">
-                            @include('library.editions._editions')
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </x-card>
         </div>
     </div>
 @endsection

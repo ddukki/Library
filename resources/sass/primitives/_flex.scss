@@ -1,0 +1,30 @@
+@use '../tokens' as *;
+
+.flex--row { display: flex; flex-direction: row; }
+.flex--col { display: flex; flex-direction: column; }
+.flex--wrap { flex-wrap: wrap; }
+.flex--nowrap { flex-wrap: nowrap; }
+
+.flex--center { display: flex; align-items: center; justify-content: center; }
+.flex--center-between { display: flex; align-items: center; justify-content: space-between; }
+.flex--center-around { display: flex; align-items: center; justify-content: space-around; }
+.flex--center-evenly { display: flex; align-items: center; justify-content: space-evenly; }
+.flex--start-between { display: flex; align-items: flex-start; justify-content: space-between; }
+
+.flex--gap-xs { gap: $space-xs; }
+.flex--gap-sm { gap: $space-sm; }
+.flex--gap-md { gap: $space-md; }
+.flex--gap-lg { gap: $space-lg; }
+.flex--gap-xl { gap: $space-xl; }
+
+.flex--1 { flex: 1; }
+.flex--shrink-0 { flex-shrink: 0; }
+
+.align--center { align-items: center; }
+.align--start { align-items: flex-start; }
+.align--end { align-items: flex-end; }
+
+.justify--center { justify-content: center; }
+.justify--start { justify-content: flex-start; }
+.justify--end { justify-content: flex-end; }
+.justify--between { justify-content: space-between; }

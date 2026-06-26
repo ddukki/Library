@@ -1,0 +1,113 @@
+@use '../tokens' as *;
+
+.tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid $color-border;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+
+    &--pills {
+        border-bottom: none;
+        gap: $space-xs;
+    }
+
+    &--vertical {
+        flex-direction: column;
+        border-bottom: none;
+        border-right: 1px solid $color-border;
+    }
+}
+
+.tab {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-xs;
+    padding: $space-sm $space-md;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-text-muted;
+    cursor: pointer;
+    white-space: nowrap;
+    border: none;
+    background: none;
+    transition: color $transition-fast, border-color $transition-fast, background $transition-fast;
+
+    .tabs:not(.tabs--pills) & {
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+    }
+    .tabs:not(.tabs--pills) &:hover {
+        color: $color-text;
+        border-bottom-color: $color-border;
+    }
+    .tabs:not(.tabs--pills) &.tab--active {
+        color: $color-primary;
+        border-bottom-color: $color-primary;
+    }
+
+    .tabs--pills & {
+        padding: $space-xs $space-md;
+        border-radius: $radius-full;
+        border: none;
+    }
+    .tabs--pills &:hover {
+        background: $color-bg-alt;
+        color: $color-text;
+    }
+    .tabs--pills &.tab--active {
+        background: $color-primary;
+        color: $color-white;
+    }
+
+    .tabs--vertical & {
+        border-bottom: none;
+        border-right: 2px solid transparent;
+        margin-right: -1px;
+    }
+    .tabs--vertical &:hover {
+        color: $color-text;
+        border-right-color: $color-border;
+    }
+    .tabs--vertical &.tab--active {
+        color: $color-primary;
+        border-right-color: $color-primary;
+    }
+
+    &.tab--disabled {
+        opacity: 0.4;
+        pointer-events: none;
+        cursor: default;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $color-primary;
+        outline-offset: -2px;
+    }
+
+    .tab__icon {
+        width: 1em;
+        height: 1em;
+        flex-shrink: 0;
+    }
+}
+
+.tab-panel {
+    padding-top: $space-md;
+}
+
+.tab-panel--enter {
+    transition: opacity $transition-normal, transform $transition-normal;
+}
+
+.tab-panel--enter-start {
+    opacity: 0;
+    transform: translateY(4px);
+}
+
+.tab-panel--enter-end {
+    opacity: 1;
+    transform: translateY(0);
+}

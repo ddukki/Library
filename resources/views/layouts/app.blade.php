@@ -15,58 +15,34 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" x-data="{ navOpen: false }">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" @click="navOpen = !navOpen" :aria-expanded="navOpen" aria-controls="navbarSupportedContent" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <x-nav brand="{{ config('app.name', 'Laravel') }}" brand-url="{{ url('/') }}">
+            <x-slot:links>
+            </x-slot:links>
 
-                <div x-show="navOpen" x-collapse class="navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+            <x-slot:end>
+                @guest
+                    <a class="nav__link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    @if (Route::has('register'))
+                        <a class="nav__link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    @endif
+                @else
+                    <x-dropdown placement="right">
+                        <x-slot:trigger>{{ Auth::user()->name }}</x-slot:trigger>
 
-                    </ul>
+                        <x-dropdown-link href="{{ route('logout') }}"
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </x-dropdown-link>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown" x-data="{ userOpen: false }">
-                                <a class="nav-link dropdown-toggle" href="#" @click.prevent="userOpen = !userOpen" :aria-expanded="userOpen" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </x-dropdown>
+                @endguest
+            </x-slot:end>
+        </x-nav>
 
-                                <div x-show="userOpen" @click.outside="userOpen = false" class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <main class="py-4">
+        <main style="padding-top: 1.5rem; padding-bottom: 1.5rem">
             @yield('content')
         </main>
     </div>

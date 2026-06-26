@@ -1,0 +1,93 @@
+@use '../tokens' as *;
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: $z-modal-backdrop;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $space-lg;
+}
+
+.modal {
+    position: relative;
+    background: $color-white;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-xl;
+    width: 100%;
+    max-width: 32rem;
+    max-height: calc(100vh - $space-lg * 2);
+    display: flex;
+    flex-direction: column;
+    z-index: $z-modal;
+    animation: modal-enter $transition-normal ease-out;
+
+    &--sm { max-width: 24rem; }
+    &--lg { max-width: 48rem; }
+    &--xl { max-width: 64rem; }
+}
+
+@keyframes modal-enter {
+    from { opacity: 0; transform: scale(0.95) translateY(-10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $space-md $space-lg;
+    border-bottom: 1px solid $color-border;
+    flex-shrink: 0;
+}
+
+.modal__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text;
+    margin: 0;
+}
+
+.modal__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: $color-text-muted;
+    border-radius: $radius-sm;
+    font-size: 1.25rem;
+    line-height: 1;
+    transition: background $transition-fast, color $transition-fast;
+
+    &:hover {
+        background: $color-bg-alt;
+        color: $color-text;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $color-primary;
+        outline-offset: 2px;
+    }
+}
+
+.modal__body {
+    padding: $space-lg;
+    overflow-y: auto;
+    flex: 1 1 auto;
+}
+
+.modal__footer {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    padding: $space-md $space-lg;
+    border-top: 1px solid $color-border;
+    flex-shrink: 0;
+    justify-content: flex-end;
+}

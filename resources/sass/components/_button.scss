@@ -1,0 +1,140 @@
+@use '../tokens' as *;
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-xs;
+    padding: $space-sm $space-md;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    line-height: $line-height-tight;
+    border-radius: $radius-md;
+    border: $border-width-thin solid transparent;
+    cursor: pointer;
+    transition: background $transition-fast, color $transition-fast, border-color $transition-fast, box-shadow $transition-fast;
+    text-decoration: none;
+    white-space: nowrap;
+    user-select: none;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $color-primary;
+        outline-offset: 2px;
+    }
+
+    &:disabled,
+    &.btn--disabled {
+        opacity: 0.5;
+        pointer-events: none;
+        cursor: default;
+    }
+
+    // Variants
+    &--primary {
+        background: $color-primary;
+        color: $color-white;
+        border-color: $color-primary;
+
+        &:hover:not(:disabled) {
+            background: $color-primary-hover;
+            border-color: $color-primary-hover;
+        }
+    }
+
+    &--secondary {
+        background: $color-white;
+        color: $color-text;
+        border-color: $color-border;
+
+        &:hover:not(:disabled) {
+            background: $color-bg-alt;
+            border-color: $color-border-dark;
+        }
+    }
+
+    &--danger {
+        background: $color-danger;
+        color: $color-white;
+        border-color: $color-danger;
+
+        &:hover:not(:disabled) {
+            background: darken($color-danger, 10%);
+            border-color: darken($color-danger, 10%);
+        }
+    }
+
+    &--link {
+        background: none;
+        color: $color-primary;
+        border-color: transparent;
+        padding: 0;
+
+        &:hover:not(:disabled) {
+            text-decoration: underline;
+            background: none;
+        }
+    }
+
+    // Sizes
+    &--sm { padding: $space-xs $space-sm; font-size: $font-size-xs; }
+    &--lg { padding: $space-md $space-lg; font-size: $font-size-md; }
+
+    // Block
+    &--block { width: 100%; }
+
+    // Active/toggle state
+    &--active,
+    &[aria-pressed="true"] {
+        background: $color-primary-hover;
+        color: $color-white;
+        border-color: $color-primary-hover;
+    }
+
+    // Outline variants
+    &--outline-primary {
+        background: transparent;
+        color: $color-primary;
+        border-color: $color-primary;
+
+        &:hover:not(:disabled) {
+            background: $color-primary;
+            color: $color-white;
+        }
+    }
+
+    &--outline-secondary {
+        background: transparent;
+        color: $color-text;
+        border-color: $color-border;
+
+        &:hover:not(:disabled) {
+            background: $color-bg-alt;
+            border-color: $color-border-dark;
+        }
+    }
+}
+
+// Button group
+.btn-group {
+    display: inline-flex;
+
+    .btn {
+        border-radius: 0;
+
+        &:first-child {
+            border-radius: $radius-md 0 0 $radius-md;
+        }
+
+        &:last-child {
+            border-radius: 0 $radius-md $radius-md 0;
+        }
+
+        &:not(:first-child) {
+            margin-left: -#{$border-width-thin};
+        }
+    }
+}

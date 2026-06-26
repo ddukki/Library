@@ -1,9 +1,7 @@
 @extends('layouts.library')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        @include('library.shelves._form', ['shelf' => false])
-    </div>
+<div class="container" style="margin-top: 1.5rem">
+    @include('library.shelves._form', ['shelf' => false])
 </div>
 @endsection

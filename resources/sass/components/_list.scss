@@ -1,0 +1,85 @@
+@use '../tokens' as *;
+
+.list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.list__item {
+    padding: $space-sm $space-md;
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    transition: background $transition-fast;
+}
+
+// Ordered
+.list--ordered {
+    list-style: decimal;
+    padding-left: $space-lg;
+
+    .list__item {
+        display: list-item;
+        padding: $space-xs 0;
+    }
+}
+
+// Divided
+.list--divided {
+    .list__item + .list__item {
+        border-top: $border-width-thin solid $color-border;
+    }
+}
+
+// Inline
+.list--inline {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: $space-sm;
+}
+
+// Draggable
+.list--draggable {
+    .list__item {
+        cursor: grab;
+    }
+}
+
+.list__handle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: grab;
+    color: $color-text-muted;
+    flex-shrink: 0;
+    font-size: $font-size-sm;
+    user-select: none;
+
+    &::before {
+        content: '\2630'; // trigram for heaven (hamburger grip)
+    }
+
+    .list__item--dragging & {
+        cursor: grabbing;
+    }
+}
+
+// Drag states
+.list__item--dragging {
+    opacity: 0.5;
+}
+
+.list__item--drag-over {
+    border-top: 2px solid $color-primary;
+}
+
+.list__item--drag-ghost {
+    box-shadow: $shadow-md;
+    opacity: 0.8;
+}

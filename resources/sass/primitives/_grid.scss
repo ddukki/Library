@@ -1,0 +1,24 @@
+@use '../tokens' as *;
+@use 'responsive' as *;
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: $space-md;
+}
+
+@for $i from 1 through 12 {
+    .grid__col--#{$i} {
+        grid-column: span $i;
+    }
+}
+
+@each $bp in (sm, md, lg, xl, 2xl) {
+    @include respond-to($bp) {
+        @for $i from 1 through 12 {
+            .grid__col--#{$bp}-#{$i} {
+                grid-column: span $i;
+            }
+        }
+    }
+}

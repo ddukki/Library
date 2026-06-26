@@ -1,0 +1,145 @@
+@use '../tokens' as *;
+
+// Text inputs, select, textarea
+.form-input {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+}
+
+.form-input__label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-text;
+
+    .form-input--required &::after {
+        content: ' *';
+        color: $color-danger;
+    }
+}
+
+.form-input__field {
+    width: 100%;
+    padding: $space-sm $space-md;
+    font-size: $font-size-sm;
+    font-family: $font-family-sans;
+    color: $color-text;
+    background: $color-white;
+    border: $border-width-thin solid $color-border;
+    border-radius: $radius-md;
+    transition: border-color $transition-fast, box-shadow $transition-fast;
+    line-height: $line-height-normal;
+
+    &::placeholder {
+        color: $color-text-muted;
+    }
+
+    &:focus {
+        outline: none;
+        border-color: $color-primary;
+        box-shadow: 0 0 0 3px rgba($color-primary, 0.15);
+    }
+
+    &:disabled {
+        background: $color-bg-alt;
+        color: $color-text-muted;
+        cursor: not-allowed;
+    }
+
+    // Validation states
+    .form-input--invalid & {
+        border-color: $color-danger;
+
+        &:focus {
+            box-shadow: 0 0 0 3px rgba($color-danger, 0.15);
+        }
+    }
+
+    .form-input--valid & {
+        border-color: $color-success;
+
+        &:focus {
+            box-shadow: 0 0 0 3px rgba($color-success, 0.15);
+        }
+    }
+}
+
+// Select
+select.form-input__field {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right $space-md center;
+    padding-right: $space-xl;
+}
+
+// Textarea
+textarea.form-input__field {
+    min-height: 100px;
+    resize: vertical;
+}
+
+// Checkbox & Radio
+.form-input--checkbox,
+.form-input--radio {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: $space-sm;
+}
+
+.form-input__checkbox,
+.form-input__radio {
+    accent-color: $color-primary;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.form-input__error {
+    font-size: $font-size-xs;
+    color: $color-danger;
+}
+
+.form-input__help {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+}
+
+// Form group - wrapper with spacing
+.form-group {
+    margin-bottom: $space-md;
+}
+
+// Form row - inline form layout
+.form-row {
+    display: flex;
+    gap: $space-md;
+    flex-wrap: wrap;
+
+    > .form-group {
+        flex: 1;
+        min-width: 120px;
+        margin-bottom: 0;
+    }
+}
+
+// Custom select
+.custom-select {
+    display: inline-block;
+    width: auto;
+    padding: $space-xs $space-md;
+    font-size: $font-size-sm;
+    color: $color-text;
+    background: $color-white;
+    border: $border-width-thin solid $color-border;
+    border-radius: $radius-md;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right $space-sm center;
+    padding-right: $space-xl;
+
+    &--sm {
+        padding: $space-xs $space-sm;
+        font-size: $font-size-xs;
+    }
+}

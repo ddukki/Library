@@ -1,0 +1,88 @@
+@use '../tokens' as *;
+
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: $font-size-sm;
+
+    th, td {
+        padding: $space-sm $space-md;
+        text-align: left;
+        border-bottom: $border-width-thin solid $color-border;
+        vertical-align: middle;
+    }
+
+    th {
+        font-weight: $font-weight-semibold;
+        color: $color-text;
+        white-space: nowrap;
+        background: $color-bg-alt;
+    }
+
+    td {
+        color: $color-text;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    // Striped
+    &--striped tbody tr:nth-child(even) td {
+        background: $color-bg-alt;
+    }
+
+    // Hover
+    &--hover tbody tr:hover td {
+        background: darken($color-bg-alt, 3%);
+    }
+
+    // Compact
+    &--compact th,
+    &--compact td {
+        padding: $space-xs $space-sm;
+    }
+}
+
+// Sortable header
+.table__th--sortable {
+    cursor: pointer;
+    user-select: none;
+    transition: background $transition-fast;
+
+    &:hover {
+        background: darken($color-bg-alt, 5%);
+    }
+
+    &::after {
+        content: '';
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: $space-xs;
+        vertical-align: middle;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 5px solid $color-text-muted;
+    }
+}
+
+// Sticky header
+.table--sticky-header th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+// Empty state
+.table__empty {
+    text-align: center;
+    padding: $space-xl $space-lg;
+    color: $color-text-muted;
+    font-size: $font-size-sm;
+}

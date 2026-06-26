@@ -1,0 +1,56 @@
+@use '../tokens' as *;
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-xs;
+    padding: 2px $space-sm;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    line-height: $line-height-tight;
+    border-radius: $radius-full;
+    white-space: nowrap;
+    border: $border-width-thin solid transparent;
+
+    // Variants
+    &--primary { background: $color-primary-light; color: $color-primary; border-color: $color-primary; }
+    &--secondary { background: $color-bg-alt; color: $color-text-muted; border-color: $color-border; }
+    &--success { background: $color-success-light; color: darken($color-success, 10%); border-color: $color-success; }
+    &--danger { background: $color-danger-light; color: darken($color-danger, 10%); border-color: $color-danger; }
+    &--warning { background: $color-warning-light; color: darken($color-warning, 10%); border-color: $color-warning; }
+    &--info { background: $color-info-light; color: darken($color-info, 10%); border-color: $color-info; }
+
+    // Sizes
+    &--sm { padding: 1px $space-xs; font-size: 0.625rem; }
+    &--lg { padding: 3px $space-md; font-size: $font-size-sm; }
+
+    // Pill shape
+    &--pill { border-radius: $radius-full; }
+}
+
+// Clickable
+.badge--clickable {
+    cursor: pointer;
+    transition: opacity $transition-fast;
+
+    &:hover {
+        opacity: 0.8;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $color-primary;
+        outline-offset: 2px;
+    }
+}
+
+// Toggable (active state for filter badges)
+.badge--togglable {
+    cursor: pointer;
+    transition: background $transition-fast, color $transition-fast, border-color $transition-fast;
+
+    &:not(.badge--active) {
+        background: $color-bg-alt;
+        color: $color-text-muted;
+        border-color: $color-border;
+    }
+}

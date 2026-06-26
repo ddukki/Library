@@ -1,5 +1,5 @@
-<div x-data="locationTypes" class="col-12">
-    <table class="table table-sm" x-show="locationTypes.length > 0">
+<div x-data="locationTypes">
+    <table class="table" x-show="locationTypes.length > 0">
         <thead>
             <th scope="col">ID</th>
             <th scope="col">Name</th>
@@ -10,7 +10,7 @@
                 <td x-text="locationType.id"></td>
                 <td x-text="locationType.name"></td>
                 <td>
-                    <button class="btn btn-danger btn-sm" x-on:click="removeLocationType(index)">
+                    <button aria-label="Delete location type" class="btn btn--danger btn--sm" x-on:click="removeLocationType(index)">
                         <i class="fas fa-minus"></i>
                     </button>
                 </td>
@@ -21,11 +21,11 @@
         Add <b>Location Types</b> to start creating book editions!
     </p>
     <div class="input-group">
-        <input class="form-control" type="text" x-model="locationType.name">
-        <div class="input-group-append">
-            <button class="btn btn-primary" x-on:click="addLocationType">
+        <input aria-label="New location type" class="form-input__field" type="text" x-model="locationType.name">
+        <div class="input-group__append">
+            <x-button x-on:click="addLocationType">
                 <i class="fas fa-plus"></i> Add
-            </button>
+            </x-button>
         </div>
     </div>
 </div>

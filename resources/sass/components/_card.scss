@@ -1,0 +1,106 @@
+@use '../tokens' as *;
+
+.card {
+    background: $color-white;
+    border: $border-width-thin solid $color-border;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-card;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.card__header {
+    padding: $space-md $space-lg;
+    border-bottom: $border-width-thin solid $color-border;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-sm;
+}
+
+.card__body {
+    padding: $space-lg;
+    flex: 1 1 auto;
+}
+
+.card__footer {
+    padding: $space-md $space-lg;
+    border-top: $border-width-thin solid $color-border;
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+}
+
+// Clickable card
+.card--clickable {
+    cursor: pointer;
+    transition: box-shadow $transition-fast, transform $transition-fast;
+
+    &:hover {
+        box-shadow: $shadow-card-hover;
+        transform: translateY(-2px);
+    }
+}
+
+// Card with image
+.card--has-image-top {
+    flex-direction: column;
+}
+
+.card--has-image-bottom {
+    flex-direction: column-reverse;
+}
+
+.card--has-image-left {
+    flex-direction: row;
+
+    .card__img {
+        width: 200px;
+        flex-shrink: 0;
+    }
+
+    @media (max-width: 767px) {
+        flex-direction: column;
+
+        .card__img {
+            width: 100%;
+        }
+    }
+}
+
+.card--has-image-right {
+    flex-direction: row-reverse;
+
+    .card__img {
+        width: 200px;
+        flex-shrink: 0;
+    }
+
+    @media (max-width: 767px) {
+        flex-direction: column;
+
+        .card__img {
+            width: 100%;
+        }
+    }
+}
+
+.card__img {
+    width: 100%;
+    object-fit: cover;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+}
+
+// Compact
+.card--compact {
+    .card__header { padding: $space-sm $space-md; }
+    .card__body { padding: $space-md; }
+    .card__footer { padding: $space-sm $space-md; }
+}

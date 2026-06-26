@@ -1,0 +1,33 @@
+@use '../tokens' as *;
+
+.input-group {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+}
+
+// Two-class selectors beat the single-class .form-input__field rule
+.input-group .form-input__field,
+.input-group input[type="text"],
+.input-group input[type="search"],
+.input-group input[type="email"],
+.input-group input[type="password"] {
+    flex: 1;
+    min-width: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: none;
+}
+
+.input-group__append {
+    display: flex;
+    align-items: stretch;
+}
+
+.input-group__append .btn {
+    box-sizing: border-box;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: $border-width-thin solid $color-border;
+    height: 100%;
+}

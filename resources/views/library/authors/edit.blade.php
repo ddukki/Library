@@ -1,9 +1,7 @@
 @extends('layouts.library')
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            @include('library.authors._form', ['author' => $author])
-        </div>
+    <div style="margin-top: 1.5rem">
+        @include('library.authors._form', ['author' => $author])
     </div>
 @endsection

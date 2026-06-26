@@ -1,0 +1,33 @@
+@use '../tokens' as *;
+
+// Text alignment
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+// Text color
+.text-light { color: $color-white; }
+.text-muted { color: $color-text-muted; }
+.text-primary { color: $color-primary; }
+.text-danger { color: $color-danger; }
+.text-dark { color: $color-text; }
+
+// Font size
+.small { font-size: $font-size-sm; }
+
+// Display
+.d-block { display: block; }
+.d-inline { display: inline; }
+.d-inline-block { display: inline-block; }
+.d-flex { display: flex; }
+.d-none { display: none; }
+
+// Border
+.border-bottom { border-bottom: $border-width-thin solid $color-border; }
+.border-top { border-top: $border-width-thin solid $color-border; }
+
+// No gutters (remove grid gap)
+.no-gutters { gap: 0; }
+
+// Text decoration
+.text-decoration-none { text-decoration: none; }
