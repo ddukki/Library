@@ -20,9 +20,9 @@
 
     th {
         font-weight: $font-weight-semibold;
-        color: $color-text;
+        color: $color-gold;
         white-space: nowrap;
-        background: $color-bg-alt;
+        background: rgba($color-gold, 0.1);
     }
 
     td {

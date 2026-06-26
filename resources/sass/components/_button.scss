@@ -1,5 +1,6 @@
 @use '../tokens' as *;
 @use 'sass:color';
+@use '../primitives/texture' as *;
 
 .btn {
     display: inline-flex;
@@ -11,9 +12,9 @@
     font-weight: $font-weight-medium;
     line-height: $line-height-tight;
     border-radius: $radius-md;
-    border: $border-width-thin solid transparent;
+    border: 1px solid transparent;
     cursor: pointer;
-    transition: background $transition-fast, color $transition-fast, border-color $transition-fast, box-shadow $transition-fast;
+    transition: all $transition-fast;
     text-decoration: none;
     white-space: nowrap;
     user-select: none;
@@ -23,7 +24,7 @@
     }
 
     &:focus-visible {
-        outline: 2px solid $color-primary;
+        outline: 2px solid $color-gold;
         outline-offset: 2px;
     }
 
@@ -36,24 +37,25 @@
 
     // Variants
     &--primary {
-        background: $color-primary;
-        color: $color-white;
-        border-color: $color-primary;
+        background: $color-gold;
+        color: $color-leather-dark;
+        border-color: $color-gold-dark;
+        font-weight: $font-weight-semibold;
 
         &:hover:not(:disabled) {
-            background: $color-primary-hover;
-            border-color: $color-primary-hover;
+            background: $color-gold-light;
+            box-shadow: 0 0 12px rgba($color-gold, 0.4);
         }
     }
 
     &--secondary {
-        background: $color-white;
+        background: $color-leather-mid;
         color: $color-text;
         border-color: $color-border;
 
         &:hover:not(:disabled) {
-            background: $color-bg-alt;
-            border-color: $color-border-dark;
+            background: $color-leather-light;
+            border-color: $color-gold-dark;
         }
     }
 
@@ -70,13 +72,14 @@
 
     &--link {
         background: none;
-        color: $color-primary;
+        color: $color-gold;
         border-color: transparent;
         padding: 0;
 
         &:hover:not(:disabled) {
             text-decoration: underline;
             background: none;
+            color: $color-gold-light;
         }
     }
 
@@ -90,20 +93,20 @@
     // Active/toggle state
     &--active,
     &[aria-pressed="true"] {
-        background: $color-primary-hover;
+        background: $color-gold-dark;
         color: $color-white;
-        border-color: $color-primary-hover;
+        border-color: $color-gold-dark;
     }
 
     // Outline variants
     &--outline-primary {
         background: transparent;
-        color: $color-primary;
-        border-color: $color-primary;
+        color: $color-gold;
+        border-color: $color-gold;
 
         &:hover:not(:disabled) {
-            background: $color-primary;
-            color: $color-white;
+            background: $color-gold;
+            color: $color-leather-dark;
         }
     }
 
@@ -113,8 +116,8 @@
         border-color: $color-border;
 
         &:hover:not(:disabled) {
-            background: $color-bg-alt;
-            border-color: $color-border-dark;
+            background: $color-leather-light;
+            border-color: $color-gold-dark;
         }
     }
 }

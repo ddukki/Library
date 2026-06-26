@@ -1,5 +1,6 @@
 @use '../tokens' as *;
 @use 'sass:color';
+@use '../primitives/texture' as *;
 
 .pagination {
     display: flex;
@@ -24,24 +25,24 @@
     transition: background $transition-fast, color $transition-fast;
 
     &:hover {
-        background: $color-bg-alt;
-        color: $color-primary;
+        background: rgba($color-gold, 0.1);
+        color: $color-gold;
         text-decoration: none;
     }
 
     &:focus-visible {
-        outline: 2px solid $color-primary;
+        outline: 2px solid $color-gold;
         outline-offset: 2px;
     }
 
     &--active {
-        background: $color-primary;
-        color: $color-white;
+        @include gold-shimmer;
+        color: $color-leather-dark;
         font-weight: $font-weight-semibold;
 
         &:hover {
-            background: color.adjust($color-primary, $lightness: -5%);
-            color: $color-white;
+            background: linear-gradient(135deg, $color-gold-dark 0%, $color-gold 50%, $color-gold-light 100%);
+            color: $color-leather-dark;
         }
     }
 

@@ -1,22 +1,23 @@
 @use '../tokens' as *;
 @use 'sass:color';
+@use '../primitives/texture' as *;
 
 .nav {
     display: flex;
     align-items: center;
     gap: $space-xs;
     padding: 0 $space-md;
-    background: $color-white;
-    border-bottom: $border-width-thin solid $color-border;
+    @include leather-texture($color-leather-dark);
+    border-bottom: 1px solid $color-border;
     min-height: 3.5rem;
 
     &--dark {
-        background: color.adjust($color-text, $lightness: -5%);
+        @include leather-texture(color.adjust($color-leather-dark, $lightness: -5%));
         border-bottom: none;
 
-        .nav__link { color: rgba(255, 255, 255, 0.7); }
-        .nav__link:hover { color: $color-white; }
-        .nav__link--active { color: $color-white; }
+        .nav__link { color: rgba($color-text, 0.7); }
+        .nav__link:hover { color: $color-gold; }
+        .nav__link--active { color: $color-gold; }
     }
 
     &--vertical {
@@ -39,16 +40,17 @@
     display: flex;
     align-items: center;
     gap: $space-sm;
+    font-family: $font-family-serif;
     font-size: $font-size-lg;
     font-weight: $font-weight-semibold;
-    color: $color-text;
+    color: $color-gold;
     text-decoration: none;
     padding: $space-sm 0;
     margin-right: $space-md;
 
     &:hover {
         text-decoration: none;
-        color: $color-primary;
+        color: $color-gold-light;
     }
 }
 
@@ -79,19 +81,19 @@
     text-decoration: none;
 
     &:hover {
-        color: $color-text;
-        background: $color-bg-alt;
+        color: $color-gold;
+        background: rgba($color-gold, 0.1);
         text-decoration: none;
     }
 
     &:focus-visible {
-        outline: 2px solid $color-primary;
+        outline: 2px solid $color-gold;
         outline-offset: 2px;
     }
 
     &--active {
-        color: $color-primary;
-        background: $color-primary-light;
+        color: $color-gold;
+        background: rgba($color-gold, 0.15);
     }
 }
 

@@ -1,5 +1,5 @@
 @use '../tokens' as *;
-@use 'sass:color';
+@use '../primitives/texture' as *;
 
 .dropdown {
     position: relative;
@@ -35,10 +35,10 @@
     top: 100%;
     margin-top: $space-xs;
     min-width: 180px;
-    background: $color-white;
-    border: $border-width-thin solid $color-border;
+    @include leather-texture($color-leather-mid);
+    border: 1px solid $color-border;
     border-radius: $radius-md;
-    box-shadow: $shadow-md;
+    @include raised-surface;
     padding: $space-xs 0;
     z-index: $z-dropdown;
 
@@ -66,13 +66,13 @@
     transition: background $transition-fast, color $transition-fast;
 
     &:hover {
-        background: $color-bg-alt;
-        color: $color-primary;
+        background: rgba($color-gold, 0.1);
+        color: $color-gold;
         text-decoration: none;
     }
 
     &:active {
-        background: color.adjust($color-bg-alt, $lightness: -5%);
+        background: rgba($color-gold, 0.2);
     }
 
     &--disabled {

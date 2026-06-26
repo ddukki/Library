@@ -10,7 +10,7 @@
 .form-input__label {
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
-    color: $color-text;
+    color: $color-gold;
 
     .form-input--required &::after {
         content: ' *';
@@ -20,13 +20,12 @@
 
 .form-input__field {
     width: 100%;
-    box-sizing: border-box;
     padding: $space-sm $space-md;
     font-size: $font-size-sm;
     font-family: $font-family-sans;
     color: $color-text;
-    background: $color-white;
-    border: $border-width-thin solid $color-border;
+    background: $color-leather-dark;
+    border: 1px solid $color-border;
     border-radius: $radius-md;
     transition: border-color $transition-fast, box-shadow $transition-fast;
     line-height: $line-height-normal;
@@ -37,8 +36,8 @@
 
     &:focus {
         outline: none;
-        border-color: $color-primary;
-        box-shadow: 0 0 0 3px rgba($color-primary, 0.15);
+        border-color: $color-gold;
+        box-shadow: 0 0 0 3px rgba($color-gold, 0.2);
     }
 
     &:disabled {
@@ -52,7 +51,7 @@
         border-color: $color-danger;
 
         &:focus {
-            box-shadow: 0 0 0 3px rgba($color-danger, 0.15);
+            box-shadow: 0 0 0 3px rgba($color-danger, 0.2);
         }
     }
 
@@ -60,7 +59,7 @@
         border-color: $color-success;
 
         &:focus {
-            box-shadow: 0 0 0 3px rgba($color-success, 0.15);
+            box-shadow: 0 0 0 3px rgba($color-success, 0.2);
         }
     }
 }
