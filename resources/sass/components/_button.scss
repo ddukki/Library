@@ -37,13 +37,13 @@
 
     // Variants
     &--primary {
-        background: $color-gold;
+        background: linear-gradient(135deg, #bf9e45, #d4b255, #bf9e45);
         color: $color-leather-dark;
         border-color: $color-gold-dark;
         font-weight: $font-weight-semibold;
 
         &:hover:not(:disabled) {
-            background: $color-gold-light;
+            background: linear-gradient(135deg, #c9a84c, #dcc06a, #c9a84c);
             box-shadow: 0 0 12px rgba($color-gold, 0.4);
         }
     }

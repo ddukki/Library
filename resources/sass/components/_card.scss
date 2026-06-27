@@ -4,7 +4,7 @@
 
 .card {
     @include leather-texture($color-leather-mid);
-    border: 1px solid $color-gold-dark;
+    border: 2px solid $color-gold-dark;
     border-radius: $radius-lg;
     @include raised-surface;
     overflow: hidden;
@@ -52,7 +52,6 @@ a > .card {
 
     &:hover {
         box-shadow: $shadow-card-hover;
-        transform: translateY(-2px);
     }
 }
 
