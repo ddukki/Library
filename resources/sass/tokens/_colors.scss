@@ -1,15 +1,23 @@
-// Leather-bound book theme
+// Mallard-inspired leather-bound book theme
+// Dark brown background, dark green surfaces, gold accents, muted greys
+
+// Greys
+$color-grey-light: #6b6b6b;
+$color-grey-mid: #4a4a4a;
+$color-grey-dark: #2a2a2a;
+
+// Primary (gold / mallard beak)
 $color-primary: #c9a84c;
 $color-primary-hover: #b8963f;
 $color-primary-light: #2a2010;
 
-$color-secondary: #6b5b3e;
-$color-secondary-hover: #5a4c33;
+$color-secondary: #5a5a5a;
+$color-secondary-hover: #4a4a4a;
 
 $color-success: #4a7c59;
 $color-success-light: #1a2e1f;
 
-$color-danger: #8b2020;
+$color-danger: #8b3030;
 $color-danger-light: #2e1212;
 
 $color-warning: #b8860b;
@@ -19,20 +27,23 @@ $color-info: #3a6b8c;
 $color-info-light: #0f1e28;
 
 $color-text: #f5e6c8;
-$color-text-muted: #a89070;
+$color-text-muted: #8a8a8a;
 
 $color-white: #faf6ef;
 
-$color-bg: #0a1628;
-$color-bg-alt: #121f35;
+// Backgrounds
+$color-bg: #1a1410;
+$color-bg-alt: #241c16;
 
-$color-border: #2a3a52;
-$color-border-dark: #3d4f6a;
+// Borders
+$color-border: #3d3d3d;
+$color-border-dark: #555555;
 
-// Leather accent colors
-$color-leather-dark: #1f0a0a;
-$color-leather-mid: #3a1515;
-$color-leather-light: #5a2525;
+// Surface colors (green instead of red)
+$color-leather-dark: #0d1f12;
+$color-leather-mid: #1a3220;
+$color-leather-light: #294530;
+
 $color-gold: #c9a84c;
 $color-gold-light: #e8d48b;
 $color-gold-dark: #8a6e2f;

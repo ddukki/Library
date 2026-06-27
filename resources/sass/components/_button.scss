@@ -49,13 +49,12 @@
     }
 
     &--secondary {
-        background: $color-leather-mid;
-        color: $color-text;
-        border-color: $color-border;
+        background: $color-secondary;
+        color: $color-white;
+        border-color: $color-secondary;
 
         &:hover:not(:disabled) {
-            background: $color-leather-light;
-            border-color: $color-gold-dark;
+            background: $color-secondary-hover;
         }
     }
 
