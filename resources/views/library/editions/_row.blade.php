@@ -1,4 +1,4 @@
-<div class="border-bottom" style="display: grid; grid-template-columns: 3fr 2fr 2fr 3fr 2fr; gap: 0; padding: 0.5rem 0; align-items: center">
+<div class="edition-row">
     <div>
         <a class="small" x-bind:href="editionURL(edition)" x-show="!editingRows[index]" x-text="editData[index].name"></a>
         <input aria-label="Edit edition name" x-show="editingRows[index]" class="form-input__field"

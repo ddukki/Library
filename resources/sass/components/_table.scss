@@ -80,6 +80,38 @@
     z-index: 1;
 }
 
+// Data table — modern table layout
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+        font-size: $font-size-xs;
+        font-weight: $font-weight-semibold;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: $color-gold;
+        text-align: left;
+        padding: $space-md $space-lg;
+        background: rgba($color-gold, 0.08);
+        border-bottom: 2px solid $color-gold-dark;
+    }
+
+    td {
+        padding: $space-md $space-lg;
+        border-bottom: 1px solid $color-border;
+        font-size: $font-size-sm;
+    }
+
+    tr:hover td {
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+}
+
 // Empty state
 .table__empty {
     text-align: center;

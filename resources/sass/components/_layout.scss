@@ -1,0 +1,441 @@
+@use '../tokens' as *;
+
+// ============================================
+// Page Content — standard page container spacing
+// ============================================
+.page-content {
+    margin-top: $space-lg;
+}
+
+// ============================================
+// Form Card — sectioned form container
+// ============================================
+.form-card {
+    background: $color-leather-mid;
+    border: 2px solid $color-gold-dark;
+    border-radius: $radius-lg;
+    overflow: hidden;
+
+    &__header {
+        padding: $space-md $space-lg;
+        border-bottom: 1px solid $color-border;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__header-title {
+        font-family: $font-family-serif;
+        font-size: $font-size-md;
+        color: $color-text;
+    }
+
+    &__body {
+        padding: $space-lg;
+    }
+}
+
+// ============================================
+// Form Grid — 2-column responsive form layout
+// ============================================
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-md $space-lg;
+
+    &--single {
+        grid-template-columns: 1fr;
+    }
+
+    &__full {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 640px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+// ============================================
+// Form Group — label + input + hint/error
+// ============================================
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+
+    &__label {
+        font-size: $font-size-xs;
+        font-weight: $font-weight-semibold;
+        color: $color-gold;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+
+    &__required::after {
+        content: ' *';
+        color: $color-danger;
+    }
+
+    &__hint {
+        font-size: $font-size-xs;
+        color: $color-text-muted;
+    }
+
+    &__error {
+        font-size: $font-size-xs;
+        color: $color-danger;
+    }
+}
+
+// ============================================
+// Split Layout — main + sidebar
+// ============================================
+.split-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: $space-lg;
+    align-items: start;
+}
+
+@media (max-width: 768px) {
+    .split-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+// ============================================
+// Sidebar Card — sticky metadata sidebar
+// ============================================
+.sidebar-card {
+    background: $color-leather-mid;
+    border: 2px solid $color-gold-dark;
+    border-radius: $radius-lg;
+    padding: $space-lg;
+    position: sticky;
+    top: $space-lg;
+
+    &__title {
+        font-family: $font-family-serif;
+        font-size: $font-size-sm;
+        color: $color-gold;
+        margin-bottom: $space-md;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+
+    &__item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: $space-sm 0;
+        border-bottom: 1px solid $color-border;
+        font-size: $font-size-sm;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    &__hint {
+        font-size: $font-size-sm;
+        color: $color-text-muted;
+        margin-bottom: $space-sm;
+    }
+
+    &__badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $space-sm;
+        margin-bottom: $space-sm;
+    }
+
+    &__search-btn {
+        width: 100%;
+        margin-bottom: $space-sm;
+    }
+
+    &__list {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    &__table {
+        font-size: $font-size-xs;
+    }
+}
+
+// ============================================
+// Detail Page — show page header
+// ============================================
+.detail-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: $space-lg;
+    gap: $space-md;
+}
+
+.detail-title {
+    font-family: $font-family-serif;
+    font-size: $font-size-3xl;
+    color: $color-text;
+}
+
+.detail-meta {
+    display: flex;
+    gap: $space-md;
+    margin-top: $space-xs;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    flex-wrap: wrap;
+
+    span {
+        display: flex;
+        align-items: center;
+        gap: $space-xs;
+    }
+}
+
+// ============================================
+// Detail Section — grouped content blocks
+// ============================================
+.detail-section {
+    background: $color-leather-mid;
+    border: 2px solid $color-gold-dark;
+    border-radius: $radius-lg;
+    margin-bottom: $space-lg;
+
+    &__header {
+        padding: $space-md $space-lg;
+        border-bottom: 1px solid $color-border;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__title {
+        font-family: $font-family-serif;
+        font-size: $font-size-md;
+        color: $color-gold;
+    }
+
+    &__body {
+        padding: $space-lg;
+    }
+}
+
+// ============================================
+// Detail Grid — 2-column field layout
+// ============================================
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-md $space-lg;
+
+    &__full {
+        grid-column: 1 / -1;
+    }
+}
+
+.detail-actions {
+    display: flex;
+    gap: $space-sm;
+    align-items: center;
+}
+
+.detail-field {
+    &__label {
+        font-size: $font-size-xs;
+        font-weight: $font-weight-semibold;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: $color-text-muted;
+        margin-bottom: $space-xs;
+    }
+
+    &__value {
+        font-size: $font-size-md;
+    }
+}
+
+// ============================================
+// Index Header — page title + search + actions
+// ============================================
+.index-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $space-lg;
+    gap: $space-md;
+    flex-wrap: wrap;
+}
+
+.index-header__title {
+    font-family: $font-family-serif;
+    font-size: $font-size-2xl;
+}
+
+.index-header__subtitle {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    margin-top: $space-xs;
+}
+
+.index-search {
+    display: flex;
+    gap: $space-sm;
+
+    .form-input {
+        max-width: 280px;
+    }
+}
+
+// ============================================
+// Page Title — centered page header
+// ============================================
+.page-title {
+    font-family: $font-family-serif;
+    font-size: $font-size-2xl;
+    color: $color-gold;
+    text-align: center;
+    margin-bottom: $space-lg;
+}
+
+// ============================================
+// Form Actions — bottom of form
+// ============================================
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    margin-top: $space-lg;
+    padding-top: $space-lg;
+    border-top: 1px solid $color-border;
+
+    &--right {
+        justify-content: flex-end;
+    }
+
+    &--center {
+        justify-content: center;
+    }
+}
+
+// ============================================
+// Tag — small label chip
+// ============================================
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-xs;
+    padding: $space-xs $space-sm;
+    background: rgba($color-gold, 0.12);
+    border: 1px solid rgba($color-gold, 0.25);
+    border-radius: 999px;
+    font-size: $font-size-xs;
+    color: $color-gold;
+    font-weight: $font-weight-semibold;
+}
+
+// ============================================
+// Shelf Grid — card grid for shelves
+// ============================================
+.shelf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: $space-md;
+}
+
+// ============================================
+// Progress Tracker — 2-column reading layout
+// ============================================
+.progress-tracker {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-lg;
+}
+
+@media (max-width: 768px) {
+    .progress-tracker {
+        grid-template-columns: 1fr;
+    }
+}
+
+.progress-tracker__range {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    margin-bottom: $space-lg;
+}
+
+.progress-tracker__range-bar {
+    flex: 1;
+}
+
+// ============================================
+// Quote List — compact card list
+// ============================================
+.quote-list {
+    &__item {
+        margin-bottom: $space-sm;
+    }
+
+    &__text {
+        padding: $space-sm;
+    }
+
+    &__meta {
+        display: flex;
+        gap: $space-sm;
+        margin-top: $space-xs;
+    }
+}
+
+.quote-form {
+    margin-top: $space-md;
+    padding-top: $space-md;
+    border-top: 1px solid $color-border;
+}
+
+// ============================================
+// Edition Row — inline grid for edition list
+// ============================================
+.edition-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr 3fr 2fr;
+    gap: 0;
+    padding: $space-sm 0;
+    border-bottom: 1px solid $color-border;
+    align-items: center;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: $space-sm;
+    }
+}
+
+.edition-row__header {
+    @extend .edition-row;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: $color-text-muted;
+}
+
+// ============================================
+// Shelve Controls — inline shelf assignment
+// ============================================
+.shelve-controls {
+    display: flex;
+    gap: $space-sm;
+    margin-bottom: $space-sm;
+    align-items: center;
+}
+
+.shelve-controls__select {
+    flex: 1;
+}

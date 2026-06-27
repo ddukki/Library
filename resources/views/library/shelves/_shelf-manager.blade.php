@@ -1,15 +1,16 @@
 <div x-data="shelfManager">
-    <div style="text-align: center; margin-bottom: 1rem">
-        <h2>Your Shelves</h2>
+    <div class="index-header">
+        <div>
+            <h1 class="index-header__title">Your Shelves</h1>
+            <p class="index-header__subtitle">Organize your reading collection</p>
+        </div>
     </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem">
-        <a href="{{ route('shelves.create') }}" style="display: block">
-            <x-card>
-                <div style="text-align: center">
-                    Add New Shelf<br/>
-                    <h1>+</h1>
-                </div>
-            </x-card>
+    <div class="shelf-grid">
+        <a href="{{ route('shelves.create') }}" class="card card--clickable">
+            <div style="text-align: center; padding: 2rem">
+                <i class="fas fa-plus" style="font-size: 2rem; color: var(--color-gold); margin-bottom: 0.5rem"></i>
+                <div>Add New Shelf</div>
+            </div>
         </a>
         <template x-for="(shelf, index) in shelves">
             <div style="position: relative">
@@ -18,13 +19,11 @@
                         x-on:click="deleteShelf(shelf.id, index)">
                     <i class="fas fa-times"></i>
                 </a>
-                <a x-bind:href="route('shelves.show', { shelf: shelf.id })" style="display: block">
-                    <x-card>
-                        <div style="text-align: center">
-                            <span class="d-block" x-text="shelf.name"></span>
-                            <h1><i class="fas fa-archive"></i></h1>
-                        </div>
-                    </x-card>
+                <a x-bind:href="route('shelves.show', { shelf: shelf.id })" class="card card--clickable">
+                    <div style="text-align: center; padding: 2rem">
+                        <i class="fas fa-archive" style="font-size: 2rem; color: var(--color-gold); margin-bottom: 0.5rem"></i>
+                        <div x-text="shelf.name"></div>
+                    </div>
                 </a>
             </div>
         </template>

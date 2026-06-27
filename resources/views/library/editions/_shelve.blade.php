@@ -1,19 +1,15 @@
 <div>
-    <div x-show="shelveEditRows[index]" class="flex" style="gap: 0.5rem; margin-bottom: 0.5rem">
-        <div style="flex: 1">
-            <select class="custom-select custom-select--sm"
-                    name="selectedShelf"
-                    x-model="selectedShelf">
-                <template x-for="userShelf in userShelves">
-                    <option :value="userShelf.id" x-text="userShelf.name"></option>
-                </template>
-            </select>
-        </div>
-        <div>
-            <button aria-label="Shelve edition" class="btn btn--primary btn--sm" x-on:click="shelveEdition(index, selectedShelf)">
-                <i class="fas fa-plus"></i>
-            </button>
-        </div>
+    <div x-show="shelveEditRows[index]" class="shelve-controls">
+        <select class="custom-select custom-select--sm"
+                name="selectedShelf"
+                x-model="selectedShelf">
+            <template x-for="userShelf in userShelves">
+                <option :value="userShelf.id" x-text="userShelf.name"></option>
+            </template>
+        </select>
+        <button aria-label="Shelve edition" class="btn btn--primary btn--sm" x-on:click="shelveEdition(index, selectedShelf)">
+            <i class="fas fa-plus"></i>
+        </button>
     </div>
     <div>
         <template x-for="(shelf, sIndex) in (edition.shelves || [])">

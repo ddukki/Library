@@ -1,20 +1,31 @@
 @extends('layouts.library')
 
 @section('content')
-    <div class="container" style="margin-top: 1.5rem">
-        <x-card>
-            <x-slot:header>
-                <h5>{{ $edition->book->title }}</h5>
-                <i>{{ $edition->name }} Edition</i>
-            </x-slot:header>
-
-            <div style="margin-bottom: 1.5rem">
-                @include('library.editions.progress')
+<div class="container page-content">
+    <div class="detail-header">
+        <div>
+            <h1 class="detail-title">{{ $edition->book->title }}</h1>
+            <div class="detail-meta">
+                <span>{{ $edition->name }} Edition</span>
             </div>
-
-            @include('library.editions.quotes')
-        </x-card>
+        </div>
     </div>
+
+    <div class="detail-section">
+        <div class="detail-section__body">
+            @include('library.editions.progress')
+        </div>
+    </div>
+
+    <div class="detail-section">
+        <div class="detail-section__header">
+            <h3 class="detail-section__title">Quotes</h3>
+        </div>
+        <div class="detail-section__body">
+            @include('library.editions.quotes')
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('body-scripts')

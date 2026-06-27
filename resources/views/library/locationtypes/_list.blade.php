@@ -17,11 +17,11 @@
             </tr>
         </template>
     </table>
-    <p x-show="locationTypes.length === 0">
-        Add <b>Location Types</b> to start creating book editions!
+    <p x-show="locationTypes.length === 0" style="color: var(--color-text-muted)">
+        Add <strong>Location Types</strong> to start creating book editions!
     </p>
-    <div class="input-group">
-        <input aria-label="New location type" class="form-input__field" type="text" x-model="locationType.name">
+    <div class="input-group" style="margin-top: 1rem">
+        <input aria-label="New location type" class="form-input__field" type="text" x-model="locationType.name" placeholder="New location type...">
         <div class="input-group__append">
             <x-button x-on:click="addLocationType">
                 <i class="fas fa-plus"></i> Add

@@ -1,9 +1,9 @@
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem">
+<div class="progress-tracker">
     <div>
         <h5 style="margin-bottom: 0.75rem">Reading Progress Tracker</h5>
-        <div style="display: flex; align-items: center; gap: 0.5rem; text-align: center; margin-bottom: 1.5rem">
+        <div class="progress-tracker__range">
             <div class="small">0</div>
-            <div style="flex: 1">
+            <div class="progress-tracker__range-bar">
                 @if(count($allProgress) == 0)
                     <div class="progress">
                         <div class="progress-bar progress-bar--light" role="progressbar" style="width: 100%">No Progress Made!</div>
@@ -46,8 +46,8 @@
         <form method="post" action="{{route('progress.store')}}">
             @csrf
             <input type="hidden" name="edition_id" value="{{ $edition->id }}"/>
-            <div class="form-group" style="margin-top: 1rem">
-                <label for="location_start">Reading Start</label>
+            <div class="form-group">
+                <label class="form-group__label" for="location_start">Reading Start</label>
                 <input id="location_start"
                         name="location_start"
                         class="form-input__field"
@@ -55,7 +55,7 @@
                         type="text">
             </div>
             <div class="form-group">
-                <label for="location_end">Reading End</label>
+                <label class="form-group__label" for="location_end">Reading End</label>
                 <input id="location_end"
                         name="location_end"
                         class="form-input__field"

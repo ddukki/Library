@@ -36,12 +36,12 @@
     }
 
     &--active {
-        @include gold-shimmer;
+        background: linear-gradient(135deg, #bf9e45, #d4b255, #bf9e45);
         color: $color-leather-dark;
         font-weight: $font-weight-semibold;
 
         &:hover {
-            background: linear-gradient(135deg, $color-gold-dark 0%, $color-gold 50%, $color-gold-light 100%);
+            background: linear-gradient(135deg, #c9a84c, #dcc06a, #c9a84c);
             color: $color-leather-dark;
         }
     }
