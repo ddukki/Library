@@ -41,10 +41,10 @@ class EditionController extends Controller
         $edition = Edition::create([
             'book_id' => $bookID,
             'name' => $newEdition['name'],
-            'location_type_id' => $newEdition['location_type_id'],
-            'location_size' => $newEdition['location_size'],
+            'extent_type_id' => $newEdition['extent_type_id'],
+            'extent' => $newEdition['extent'],
         ]);
-        $edition->load('location_type');
+        $edition->load('extent_type');
         $edition->load('shelves');
 
         return response()->json([
@@ -121,8 +121,8 @@ class EditionController extends Controller
 
         $edition = Edition::where('id', $id)->first();
         $edition->name = $newEdition['name'];
-        $edition->location_type_id = $newEdition['location_type_id'];
-        $edition->location_size = $newEdition['location_size'];
+        $edition->extent_type_id = $newEdition['extent_type_id'];
+        $edition->extent = $newEdition['extent'];
         $edition->save();
 
         return response()->json([

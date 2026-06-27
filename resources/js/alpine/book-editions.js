@@ -5,7 +5,7 @@ export default function (bookData) {
 
     return {
         editions: editions,
-        locationTypes: [],
+        extentTypes: [],
         newEdition: { name: '', type_id: null, size: 0 },
         showAddForm: false,
         editingRows: editions.map(() => false),
@@ -14,10 +14,10 @@ export default function (bookData) {
         ...shelving,
 
         init() {
-            axios.get(route('locationtypes.all')).then(response => {
-                this.locationTypes = response.data.locationTypes;
-                if (this.locationTypes.length > 0) {
-                    this.newEdition.type_id = this.locationTypes[0].id;
+            axios.get(route('extenttypes.all')).then(response => {
+                this.extentTypes = response.data.extentTypes;
+                if (this.extentTypes.length > 0) {
+                    this.newEdition.type_id = this.extentTypes[0].id;
                 }
             }).catch(error => {});
             axios.get(route('shelves.user')).then(response => {
@@ -33,8 +33,8 @@ export default function (bookData) {
             this.showAddForm = !this.showAddForm;
             if (this.showAddForm) {
                 this.newEdition = { name: '', type_id: null, size: 0 };
-                if (this.locationTypes.length > 0) {
-                    this.newEdition.type_id = this.locationTypes[0].id;
+                if (this.extentTypes.length > 0) {
+                    this.newEdition.type_id = this.extentTypes[0].id;
                 }
             }
         },
@@ -44,8 +44,8 @@ export default function (bookData) {
                 book: bookData,
                 edition: {
                     name: this.newEdition.name,
-                    location_type_id: this.newEdition.type_id,
-                    location_size: this.newEdition.size,
+                    extent_type_id: this.newEdition.type_id,
+                    extent: this.newEdition.size,
                 },
             }).then(response => {
                 this.editions.push(response.data.added);
@@ -68,7 +68,7 @@ export default function (bookData) {
             this.editingRows[index] = !this.editingRows[index];
             this.editData[index] = {
                 ...this.editions[index],
-                location_type_id: this.editions[index].location_type?.id ?? null,
+                extent_type_id: this.editions[index].extent_type?.id ?? null,
             };
         },
 
@@ -76,12 +76,12 @@ export default function (bookData) {
             axios.put(route('editions.update', { edition: this.editions[index].id }), {
                 edition: {
                     name: this.editData[index].name,
-                    location_type_id: this.editData[index].location_type_id,
-                    location_size: this.editData[index].location_size,
+                    extent_type_id: this.editData[index].extent_type_id,
+                    extent: this.editData[index].extent,
                 },
             }).then(response => {
-                const type = this.locationTypes.find(t => t.id == this.editData[index].location_type_id);
-                this.editions[index] = { ...this.editData[index], location_type: type };
+                const type = this.extentTypes.find(t => t.id == this.editData[index].extent_type_id);
+                this.editions[index] = { ...this.editData[index], extent_type: type };
                 this.editingRows[index] = false;
             }).catch(error => {});
         },
@@ -90,8 +90,8 @@ export default function (bookData) {
             return route('editions.show', { edition: edition.id });
         },
 
-        locationTypeName(id) {
-            const type = this.locationTypes.find(t => t.id === id);
+        extentTypeName(id) {
+            const type = this.extentTypes.find(t => t.id === id);
             return type ? type.name : '';
         },
     };

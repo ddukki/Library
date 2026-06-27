@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\User;
 
-class LocationType extends Model
+class ExtentType extends Model
 {
+    protected $table = 'extent_types';
+
     public $fillable = ['name'];
 }

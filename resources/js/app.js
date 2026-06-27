@@ -4,7 +4,7 @@ import '@fortawesome/fontawesome-free/js/all.js';
 import shelfForm from './alpine/shelf-form';
 import shelfManager from './alpine/shelf-manager';
 import authorForm from './alpine/author-form';
-import locationTypes from './alpine/location-types';
+import extentTypes from './alpine/extent-types';
 import bookEditions from './alpine/book-editions';
 import bookForm from './alpine/book-form';
 import allAuthors from './alpine/all-authors';
@@ -24,7 +24,7 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('shelfForm', shelfForm);
     Alpine.data('shelfManager', shelfManager);
     Alpine.data('authorForm', authorForm);
-    Alpine.data('locationTypes', locationTypes);
+    Alpine.data('extentTypes', extentTypes);
     Alpine.data('bookEditions', bookEditions);
     Alpine.data('bookForm', bookForm);
     Alpine.data('allAuthors', allAuthors);

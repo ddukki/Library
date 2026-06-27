@@ -6,18 +6,18 @@
                 x-model="editData[index].name">
     </div>
     <div>
-        <p class="small" x-show="!editingRows[index]" x-text="locationTypeName(edition.location_type?.id)"></p>
+        <p class="small" x-show="!editingRows[index]" x-text="extentTypeName(edition.extent_type?.id)"></p>
         <select x-show="editingRows[index]" class="form-input__field"
-                x-model="editData[index].location_type_id">
+                x-model="editData[index].extent_type_id">
             <template x-for="type in locationTypes">
                 <option :value="type.id" x-text="type.name"></option>
             </template>
         </select>
     </div>
     <div>
-        <p class="small" x-show="!editingRows[index]" x-text="editData[index].location_size"></p>
+        <p class="small" x-show="!editingRows[index]" x-text="editData[index].extent"></p>
         <input aria-label="Edit edition size" x-show="editingRows[index]" class="form-input__field"
-                type="text" x-model="editData[index].location_size">
+                type="text" x-model="editData[index].extent">
     </div>
     <div>
         @include('library.editions._shelve')

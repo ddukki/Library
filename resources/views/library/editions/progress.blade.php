@@ -14,34 +14,34 @@
                             @if($i == 0 && $allProgress[$i][0] != 1)
                                 <div class="progress-bar progress-bar--light"
                                         role="progressbar"
-                                        style="width: {{ ($allProgress[$i][0] - 1) / $edition->location_size * 100 }}%">
+                                        style="width: {{ ($allProgress[$i][0] - 1) / $edition->extent * 100 }}%">
                                 </div>
                             @endif
 
                             @if($i > 0)
                                 <div class="progress-bar progress-bar--light"
                                         role="progressbar"
-                                        style="width: {{ ($allProgress[$i][0] - 1 - $allProgress[$i - 1][1]) / $edition->location_size * 100 }}%">
+                                        style="width: {{ ($allProgress[$i][0] - 1 - $allProgress[$i - 1][1]) / $edition->extent * 100 }}%">
                                 </div>
                             @endif
 
                             <div class="progress-bar"
                                     role="progressbar"
                                     title="@if($allProgress[$i][0] == $allProgress[$i][1]) {{ $allProgress[$i][0] }} @else {{ $allProgress[$i][0] }} to {{ $allProgress[$i][1] }} @endif"
-                                    style="width: {{ ($allProgress[$i][1] - $allProgress[$i][0] + 1) / $edition->location_size * 100 }}%">
+                                    style="width: {{ ($allProgress[$i][1] - $allProgress[$i][0] + 1) / $edition->extent * 100 }}%">
                             </div>
                         @endfor
 
-                        @if($allProgress[count($allProgress) - 1][1] < $edition->location_size)
+                        @if($allProgress[count($allProgress) - 1][1] < $edition->extent)
                             <div class="progress-bar progress-bar--light"
                                     role="progressbar"
-                                    style="width: {{ ($edition->location_size - $allProgress[count($allProgress) - 1][1]) / $edition->location_size * 100 }}%">
+                                    style="width: {{ ($edition->extent - $allProgress[count($allProgress) - 1][1]) / $edition->extent * 100 }}%">
                             </div>
                         @endif
                     </div>
                 @endif
             </div>
-            <div class="small">{{ $edition->location_size }}</div>
+            <div class="small">{{ $edition->extent }}</div>
         </div>
         <form method="post" action="{{route('progress.store')}}">
             @csrf

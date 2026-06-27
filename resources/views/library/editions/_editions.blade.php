@@ -26,11 +26,11 @@
                     x-model="newEdition.name">
         </div>
         <div class="form-group">
-            <label class="form-group__label" for="locationTypes">Edition Type</label>
+            <label class="form-group__label" for="extentTypes">Extent Type</label>
             <select class="form-input__field"
-                    id="locationTypes"
+                    id="extentTypes"
                     x-model="newEdition.type_id">
-                <template x-for="type in locationTypes">
+                <template x-for="type in extentTypes">
                     <option :value="type.id" x-text="type.name"></option>
                 </template>
             </select>

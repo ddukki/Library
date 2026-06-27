@@ -6,7 +6,7 @@ use Tests\TestCase;
 use App\User;
 use App\Models\Library\Book;
 use App\Models\Library\Edition;
-use App\Models\Library\LocationType;
+use App\Models\Library\ExtentType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class EditionStoreTest extends TestCase
@@ -17,15 +17,15 @@ class EditionStoreTest extends TestCase
     {
         $user = User::factory()->create();
         $book = Book::create(['title' => 'Test Book']);
-        $locationType = LocationType::create(['name' => 'Hardcover']);
+        $extentType = ExtentType::create(['name' => 'Page']);
 
         $this->actingAs($user);
         $response = $this->post(route('editions.store'), [
             'book' => ['id' => $book->id],
             'edition' => [
                 'name' => 'First Edition',
-                'location_type_id' => $locationType->id,
-                'location_size' => 450,
+                'extent_type_id' => $extentType->id,
+                'extent' => 450,
             ],
         ]);
 
@@ -37,8 +37,8 @@ class EditionStoreTest extends TestCase
         $this->assertDatabaseHas('editions', [
             'book_id' => $book->id,
             'name' => 'First Edition',
-            'location_type_id' => $locationType->id,
-            'location_size' => 450,
+            'extent_type_id' => $extentType->id,
+            'extent' => 450,
         ]);
     }
 
@@ -46,7 +46,7 @@ class EditionStoreTest extends TestCase
     {
         $response = $this->post(route('editions.store'), [
             'book' => ['id' => 1],
-            'edition' => ['name' => 'Hacked', 'location_type_id' => 1, 'location_size' => 0],
+                'edition' => ['name' => 'Hacked', 'extent_type_id' => 1, 'extent' => 0],
         ]);
 
         $response->assertRedirect('/login');

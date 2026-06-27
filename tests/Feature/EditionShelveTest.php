@@ -7,7 +7,7 @@ use App\User;
 use App\Models\Library\Shelf;
 use App\Models\Library\Book;
 use App\Models\Library\Edition;
-use App\Models\Library\LocationType;
+use App\Models\Library\ExtentType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class EditionShelveTest extends TestCase
@@ -22,12 +22,12 @@ class EditionShelveTest extends TestCase
             'user_id' => $user->id,
         ]);
         $book = Book::create(['title' => 'Test Book']);
-        $locationType = LocationType::create(['name' => 'Test Type']);
+        $extentType = ExtentType::create(['name' => 'Page']);
         $edition = Edition::create([
             'book_id' => $book->id,
             'name' => 'Test Edition',
-            'location_type_id' => $locationType->id,
-            'location_size' => 0,
+            'extent_type_id' => $extentType->id,
+            'extent' => 0,
         ]);
 
         $this->actingAs($user);

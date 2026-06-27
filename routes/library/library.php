@@ -3,7 +3,7 @@
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\EditionController;
-use App\Http\Controllers\LocationTypeController;
+use App\Http\Controllers\ExtentTypeController;
 use App\Http\Controllers\ProgressController;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\ShelfController;
@@ -25,8 +25,8 @@ Route::post('editions/{edition}/shelve/{shelf}', [EditionController::class, 'she
 Route::post('editions/{edition}/unshelve/{shelf}', [EditionController::class, 'unshelve'])->name('editions.unshelve');
 Route::resource('editions', EditionController::class);
 
-Route::get('locationtypes/all', [LocationTypeController::class, 'all'])->name('locationtypes.all');
-Route::resource('locationtypes', LocationTypeController::class);
+Route::get('extenttypes/all', [ExtentTypeController::class, 'all'])->name('extenttypes.all');
+Route::resource('extenttypes', ExtentTypeController::class);
 
 Route::resource('quotes', QuoteController::class);
 

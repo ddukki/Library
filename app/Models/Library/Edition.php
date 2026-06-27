@@ -11,7 +11,7 @@ use App\User;
 
 class Edition extends Model
 {
-    public $fillable = ['book_id', 'name', 'location_type_id', 'location_size'];
+    public $fillable = ['book_id', 'name', 'extent_type_id', 'extent'];
 
     public function book() {
         return $this->belongsTo(Book::class);
@@ -25,8 +25,8 @@ class Edition extends Model
         return $this->belongsToMany(Shelf::class, 'edition_shelves');
     }
 
-    public function location_type() {
-        return $this->belongsTo(LocationType::class);
+    public function extent_type() {
+        return $this->belongsTo(ExtentType::class);
     }
 
     public function progress() {
