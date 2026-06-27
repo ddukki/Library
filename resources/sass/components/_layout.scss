@@ -15,6 +15,7 @@
     border: 2px solid $color-gold-dark;
     border-radius: $radius-lg;
     overflow: hidden;
+    height: 100%;
 
     &__header {
         padding: $space-md $space-lg;
@@ -97,7 +98,7 @@
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: $space-lg;
-    align-items: start;
+    align-items: stretch;
 }
 
 @media (max-width: 768px) {
@@ -116,6 +117,7 @@
     padding: $space-lg;
     position: sticky;
     top: $space-lg;
+    height: 100%;
 
     &__title {
         font-family: $font-family-serif;
