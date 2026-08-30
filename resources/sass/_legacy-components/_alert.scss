@@ -9,30 +9,30 @@
     border-radius: $radius-md;
     font-size: $font-size-sm;
     line-height: $line-height-normal;
-    border: 1px solid transparent;
+    border: 1px solid;
 
     &--success {
-        background: rgba($color-success, 0.15);
-        color: $color-success;
-        border-color: rgba($color-success, 0.3);
+        background: $color-success-light;
+        color: color.adjust($color-success, $lightness: 30%);
+        border-color: $color-success;
     }
 
     &--danger {
-        background: rgba($color-danger, 0.15);
-        color: $color-danger;
-        border-color: rgba($color-danger, 0.3);
+        background: $color-danger-light;
+        color: color.adjust($color-danger, $lightness: 25%);
+        border-color: $color-danger;
     }
 
     &--warning {
-        background: rgba($color-warning, 0.15);
-        color: $color-warning;
-        border-color: rgba($color-warning, 0.3);
+        background: $color-warning-light;
+        color: color.adjust($color-warning, $lightness: 30%);
+        border-color: $color-warning;
     }
 
     &--info {
-        background: rgba($color-info, 0.15);
-        color: $color-info;
-        border-color: rgba($color-info, 0.3);
+        background: $color-info-light;
+        color: color.adjust($color-info, $lightness: 25%);
+        border-color: $color-info;
     }
 }
 
@@ -42,24 +42,22 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 1.5rem;
+    height: 1.5rem;
     border: none;
-    background: none;
+    background: $color-bg;
     cursor: pointer;
-    color: inherit;
-    opacity: 0.6;
-    font-size: $font-size-lg;
+    color: $color-text;
+    font-size: 1.1rem;
     line-height: 1;
     border-radius: $radius-sm;
-    transition: opacity $transition-fast;
 
     &:hover {
-        opacity: 1;
+        background: $color-bg-alt;
     }
 
     &:focus-visible {
-        outline: 2px solid currentColor;
+        outline: 2px solid $color-primary;
         outline-offset: 2px;
     }
 }

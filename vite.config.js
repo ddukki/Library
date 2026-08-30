@@ -16,6 +16,13 @@ export default defineConfig({
             '~bootstrap': '/node_modules/bootstrap',
         },
     },
+    css: {
+        preprocessorOptions: {
+            scss: {
+                loadPaths: ['node_modules'],
+            },
+        },
+    },
     server: {
         watch: {
             ignored: ['**/storage/framework/views/**'],
