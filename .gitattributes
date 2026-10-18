@@ -1,4 +1,19 @@
-* text=auto
+# Normalise line endings on checkout.
+#
+# `text=auto` normalises line endings INTO the repository but leaves the
+# checkout format to core.eol, which defaults to `native` - CRLF on Windows.
+# core.autocrlf does not change this; that setting governs the input side
+# only.
+#
+# The repository already stores LF, so this changes no committed content. What
+# it fixes is the working tree: a fresh clone had 205 of 301 text files checked
+# out as CRLF, so any formatter or diff expecting LF reported whole-file
+# changes that were not changes, and a Windows checkout and a Linux checkout
+# held different bytes for the same commit.
+#
+# Naming eol=lf makes the working tree agree with the index on every platform.
+* text=auto eol=lf
+
 *.css linguist-vendored
 *.scss linguist-vendored
 *.js linguist-vendored
