@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mallard — Form Mockups</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Zilla+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --color-bg: #0a1628;
+            --color-leather-dark: #1f0a0a;
+            --color-leather-mid: #3a1515;
+            --color-leather-light: #5a2525;
+            --color-gold: #c9a84c;
+            --color-gold-light: #e8d48b;
+            --color-gold-dark: #8a6e2f;
+            --color-text: #f5e6c8;
+            --color-text-muted: #a89070;
+            --color-border: #2a3a52;
+            --radius-md: 6px;
+            --radius-lg: 12px;
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 500;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.5;
+            padding: 2rem;
+        }
+
+        h1 { font-family: 'Zilla Slab', serif; color: var(--color-gold); text-align: center; margin-bottom: 2rem; font-size: 1.75rem; }
+        .section-title { font-family: 'Zilla Slab', serif; color: var(--color-gold); font-size: 1.25rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--color-border); }
+        .mockup-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-muted); margin-bottom: 0.5rem; }
+        .mockup { background: var(--color-leather-mid); border: 1px solid var(--color-gold-dark); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; }
+        .mockup-title { font-family: 'Zilla Slab', serif; color: var(--color-gold); font-size: 1.1rem; margin-bottom: 1.5rem; }
+
+        /* --- FORM STYLES --- */
+        .form-page { max-width: 720px; margin: 0 auto; }
+        .form-page__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+        .form-page__title { font-family: 'Zilla Slab', serif; font-size: 1.5rem; color: var(--color-gold); }
+
+        .form-card { background: var(--color-leather-mid); border: 2px solid var(--color-gold-dark); border-radius: var(--radius-lg); overflow: hidden; }
+        .form-card__header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; }
+        .form-card__header-title { font-family: 'Zilla Slab', serif; font-size: 1rem; color: var(--color-text); }
+        .form-card__body { padding: 1.5rem; }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.5rem; }
+        .form-grid--single { grid-template-columns: 1fr; }
+        .form-grid__full { grid-column: 1 / -1; }
+
+        .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+        .form-group__label { font-size: 0.8rem; font-weight: 600; color: var(--color-gold); text-transform: uppercase; letter-spacing: 0.03em; }
+        .form-group__required::after { content: ' *'; color: #8b2020; }
+        .form-group__hint { font-size: 0.75rem; color: var(--color-text-muted); }
+        .form-group__error { font-size: 0.75rem; color: #8b2020; }
+
+        .form-input {
+            width: 100%;
+            padding: 0.6rem 0.85rem;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--color-text);
+            background: var(--color-leather-dark);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+        .form-input:focus { outline: none; border-color: var(--color-gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.15); }
+        .form-input::placeholder { color: var(--color-text-muted); opacity: 0.6; }
+
+        .form-select {
+            width: 100%;
+            padding: 0.6rem 0.85rem;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--color-text);
+            background: var(--color-leather-dark);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a89070' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            padding-right: 2rem;
+        }
+        .form-select:focus { outline: none; border-color: var(--color-gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.15); }
+
+        textarea.form-input { resize: vertical; min-height: 5rem; }
+
+        .form-actions { display: flex; align-items: center; gap: 0.75rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border); }
+        .form-actions--right { justify-content: flex-end; }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem;
+            padding: 0.5rem 1.25rem; font-family: 'Quicksand', sans-serif; font-size: 0.85rem; font-weight: 600;
+            border-radius: var(--radius-md); border: 1px solid transparent; cursor: pointer; transition: all 0.15s;
+        }
+        .btn--primary { background: linear-gradient(135deg, #bf9e45, #d4b255, #bf9e45); color: var(--color-leather-dark); border-color: var(--color-gold-dark); }
+        .btn--primary:hover { background: linear-gradient(135deg, #c9a84c, #dcc06a, #c9a84c); box-shadow: 0 0 12px rgba(201,168,76,0.4); }
+        .btn--secondary { background: var(--color-leather-mid); color: var(--color-text); border-color: var(--color-border); }
+        .btn--secondary:hover { background: var(--color-leather-light); border-color: var(--color-gold-dark); }
+        .btn--ghost { background: transparent; color: var(--color-text-muted); border-color: transparent; }
+        .btn--ghost:hover { color: var(--color-text); background: rgba(255,255,255,0.05); }
+        .btn--sm { padding: 0.35rem 0.75rem; font-size: 0.75rem; }
+
+        /* --- SPLIT LAYOUT --- */
+        .split-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; align-items: start; }
+        .sidebar-card { background: var(--color-leather-mid); border: 2px solid var(--color-gold-dark); border-radius: var(--radius-lg); padding: 1.25rem; position: sticky; top: 1.5rem; }
+        .sidebar-card__title { font-family: 'Zilla Slab', serif; font-size: 0.9rem; color: var(--color-gold); margin-bottom: 0.75rem; }
+        .sidebar-card__item { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--color-border); font-size: 0.85rem; }
+        .sidebar-card__item:last-child { border-bottom: none; }
+
+        /* --- INDEX PAGE --- */
+        .index-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+        .index-search { display: flex; gap: 0.5rem; }
+        .index-search .form-input { max-width: 280px; }
+
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-gold); text-align: left; padding: 0.75rem 1rem; background: rgba(201,168,76,0.08); border-bottom: 2px solid var(--color-gold-dark); }
+        .data-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--color-border); font-size: 0.9rem; }
+        .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+        /* --- DETAIL PAGE --- */
+        .detail-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.5rem; }
+        .detail-title { font-family: 'Zilla Slab', serif; font-size: 1.75rem; color: var(--color-text); }
+        .detail-meta { display: flex; gap: 1rem; margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-muted); }
+        .detail-meta span { display: flex; align-items: center; gap: 0.3rem; }
+
+        .detail-section { background: var(--color-leather-mid); border: 2px solid var(--color-gold-dark); border-radius: var(--radius-lg); margin-bottom: 1.5rem; }
+        .detail-section__header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; }
+        .detail-section__title { font-family: 'Zilla Slab', serif; font-size: 1rem; color: var(--color-gold); }
+        .detail-section__body { padding: 1.5rem; }
+
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .detail-field__label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); margin-bottom: 0.2rem; }
+        .detail-field__value { font-size: 0.95rem; }
+
+        .tag-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tag { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0.7rem; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.25); border-radius: 999px; font-size: 0.8rem; color: var(--color-gold); }
+
+        .empty-state { text-align: center; padding: 3rem 1rem; color: var(--color-text-muted); }
+        .empty-state__icon { font-size: 2rem; margin-bottom: 0.75rem; }
+        .empty-state__text { font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <h1>Mallard UI Mockups</h1>
+
+    <!-- ============================================ -->
+    <!-- MOCKUP 1: SPLIT FORM (Book Create/Edit) -->
+    <!-- ============================================ -->
+    <div class="mockup">
+        <div class="mockup-label">Mockup 1</div>
+        <div class="mockup-title">Book Create/Edit — Split Layout</div>
+
+        <div class="split-layout">
+            <div class="form-card">
+                <div class="form-card__header">
+                    <span class="form-card__header-title">Book Details</span>
+                </div>
+                <div class="form-card__body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-group__label form-group__required">Title</label>
+                            <input type="text" class="form-input" placeholder="Enter book title">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group__label">Author</label>
+                            <select class="form-select">
+                                <option>Select author...</option>
+                                <option>Ernest Hemingway</option>
+                                <option>Harper Lee</option>
+                            </select>
+                        </div>
+                        <div class="form-group form-grid__full">
+                            <label class="form-group__label">Description</label>
+                            <textarea class="form-input" placeholder="Brief description of the book..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group__label">ISBN</label>
+                            <input type="text" class="form-input" placeholder="978-0-000-00000-0">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group__label">Language</label>
+                            <select class="form-select">
+                                <option>English</option>
+                                <option>Spanish</option>
+                                <option>French</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group__label">Page Count</label>
+                            <input type="number" class="form-input" placeholder="0">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group__label">Publication Year</label>
+                            <input type="number" class="form-input" placeholder="YYYY">
+                        </div>
+                    </div>
+                    <div class="form-actions form-actions--right">
+                        <button class="btn btn--ghost">Cancel</button>
+                        <button class="btn btn--primary">Save Book</button>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="sidebar-card">
+                    <div class="sidebar-card__title">Metadata</div>
+                    <div class="sidebar-card__item"><span>Status</span><span class="tag">Draft</span></div>
+                    <div class="sidebar-card__item"><span>Editions</span><span>0</span></div>
+                    <div class="sidebar-card__item"><span>Created</span><span>—</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- MOCKUP 2: INLINE FORM (Author Create) -->
+    <!-- ============================================ -->
+    <div class="mockup">
+        <div class="mockup-label">Mockup 2</div>
+        <div class="mockup-title">Author Create — Centered Card</div>
+
+        <div style="max-width: 540px; margin: 0 auto;">
+            <div class="form-card">
+                <div class="form-card__header">
+                    <span class="form-card__header-title">New Author</span>
+                </div>
+                <div class="form-card__body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-group__label form-group__required">First Name</label>
+                            <input type="text" class="form-input" placeholder="First name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group__label">Middle Name</label>
+                            <input type="text" class="form-input" placeholder="Middle name (optional)">
+                        </div>
+                        <div class="form-group form-grid__full">
+                            <label class="form-group__label form-group__required">Last Name</label>
+                            <input type="text" class="form-input" placeholder="Last name">
+                        </div>
+                        <div class="form-group form-grid__full">
+                            <label class="form-group__label">Biography</label>
+                            <textarea class="form-input" placeholder="Brief bio..."></textarea>
+                            <span class="form-group__hint">Optional — a short description of the author.</span>
+                        </div>
+                    </div>
+                    <div class="form-actions form-actions--right">
+                        <button class="btn btn--ghost">Cancel</button>
+                        <button class="btn btn--primary">Save Author</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- MOCKUP 3: INDEX PAGE (Books List) -->
+    <!-- ============================================ -->
+    <div class="mockup">
+        <div class="mockup-label">Mockup 3</div>
+        <div class="mockup-title">Books Index — Table Layout</div>
+
+        <div class="index-header">
+            <div>
+                <h2 style="font-family: 'Zilla Slab', serif; font-size: 1.5rem;">Books</h2>
+                <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-top: 0.25rem;">24 books in your collection</p>
+            </div>
+            <div class="index-search">
+                <input type="text" class="form-input" placeholder="Search books...">
+                <button class="btn btn--primary">+ Add Book</button>
+            </div>
+        </div>
+
+        <div style="background: var(--color-leather-mid); border: 2px solid var(--color-gold-dark); border-radius: var(--radius-lg); overflow: hidden;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Editions</th>
+                        <th style="width: 100px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight: 600;">The Old Man and the Sea</td>
+                        <td>Ernest Hemingway</td>
+                        <td><span class="tag">2</span></td>
+                        <td><button class="btn btn--ghost btn--sm">Edit</button></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">To Kill a Mockingbird</td>
+                        <td>Harper Lee</td>
+                        <td><span class="tag">1</span></td>
+                        <td><button class="btn btn--ghost btn--sm">Edit</button></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">1984</td>
+                        <td>George Orwell</td>
+                        <td><span class="tag">3</span></td>
+                        <td><button class="btn btn--ghost btn--sm">Edit</button></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">Pride and Prejudice</td>
+                        <td>Jane Austen</td>
+                        <td><span class="tag">1</span></td>
+                        <td><button class="btn btn--ghost btn--sm">Edit</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- MOCKUP 4: DETAIL PAGE (Book Show) -->
+    <!-- ============================================ -->
+    <div class="mockup">
+        <div class="mockup-label">Mockup 4</div>
+        <div class="mockup-title">Book Detail — Show Page</div>
+
+        <div class="detail-header">
+            <div>
+                <div class="detail-title">The Old Man and the Sea</div>
+                <div class="detail-meta">
+                    <span>By Ernest Hemingway</span>
+                    <span>·</span>
+                    <span>1952</span>
+                    <span>·</span>
+                    <span>128 pages</span>
+                </div>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn--secondary">Edit</button>
+                <button class="btn btn--ghost" style="color: #8b2020;">Delete</button>
+            </div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-section__header">
+                <span class="detail-section__title">Details</span>
+            </div>
+            <div class="detail-section__body">
+                <div class="detail-grid">
+                    <div>
+                        <div class="detail-field__label">ISBN</div>
+                        <div class="detail-field__value">978-0-684-80122-1</div>
+                    </div>
+                    <div>
+                        <div class="detail-field__label">Language</div>
+                        <div class="detail-field__value">English</div>
+                    </div>
+                    <div>
+                        <div class="detail-field__label">Publisher</div>
+                        <div class="detail-field__value">Charles Scribner's Sons</div>
+                    </div>
+                    <div>
+                        <div class="detail-field__label">Status</div>
+                        <div class="detail-field__value"><span class="tag">Owned</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-section__header">
+                <span class="detail-section__title">Editions</span>
+                <button class="btn btn--secondary btn--sm">+ Add Edition</button>
+            </div>
+            <div class="detail-section__body">
+                <div style="display: flex; gap: 1rem;">
+                    <div style="flex: 1; background: var(--color-leather-dark); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1rem;">
+                        <div style="font-weight: 600; margin-bottom: 0.25rem;">Hardcover</div>
+                        <div style="font-size: 0.8rem; color: var(--color-text-muted);">Scribner · 1952</div>
+                    </div>
+                    <div style="flex: 1; background: var(--color-leather-dark); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1rem;">
+                        <div style="font-weight: 600; margin-bottom: 0.25rem;">Paperback</div>
+                        <div style="font-size: 0.8rem; color: var(--color-text-muted);">Simon & Schuster · 1995</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- MOCKUP 5: SHELF CARDS (Home) -->
+    <!-- ============================================ -->
+    <div class="mockup">
+        <div class="mockup-label">Mockup 5</div>
+        <div class="mockup-title">Shelves — Card Grid</div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem;">
+            <div style="background: var(--color-leather-mid); border: 2px solid var(--color-gold-dark); border-radius: var(--radius-lg); padding: 1.5rem; text-align: center; cursor: pointer; transition: box-shadow 0.15s;">
+                <div style="font-family: 'Zilla Slab', serif; font-size: 1.1rem; margin-bottom: 0.5rem;">Add New Shelf</div>
+                <div style="font-size: 1.5rem; color: var(--color-gold);">+</div>
+            </div>
+            <div style="background: var(--color-leather-mid); border: 2px solid var(--color-gold-dark); border-radius: var(--radius-lg); padding: 1.5rem; text-align: center; cursor: pointer; position: relative;">
+                <div style="position: absolute; top: 0.5rem; right: 0.5rem; width: 1.25rem; height: 1.25rem; border-radius: 50%; background: rgba(139,32,32,0.8); display: flex; align-items: center; justify-content: center; font-size: 0.6rem; cursor: pointer;">✕</div>
+                <div style="font-family: 'Zilla Slab', serif; font-size: 1.1rem; margin-bottom: 0.5rem;">Dave's Favs</div>
+                <div style="font-size: 1.5rem; color: var(--color-gold);">📦</div>
+                <div style="font-size: 0.75rem; color: var(--color-text-muted); margin-top: 0.5rem;">5 books</div>
+            </div>
+            <div style="background: var(--color-leather-mid); border: 2px solid var(--color-gold-dark); border-radius: var(--radius-lg); padding: 1.5rem; text-align: center; cursor: pointer;">
+                <div style="font-family: 'Zilla Slab', serif; font-size: 1.1rem; margin-bottom: 0.5rem;">Classics</div>
+                <div style="font-size: 1.5rem; color: var(--color-gold);">📦</div>
+                <div style="font-size: 0.75rem; color: var(--color-text-muted); margin-top: 0.5rem;">12 books</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
