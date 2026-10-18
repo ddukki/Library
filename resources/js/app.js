@@ -9,6 +9,7 @@ import bookEditions from './alpine/book-editions';
 import bookForm from './alpine/book-form';
 import allAuthors from './alpine/all-authors';
 import allBooks from './alpine/all-books';
+import toastManager from './alpine/toast-manager';
 
 Alpine.plugin(collapse);
 
@@ -29,6 +30,7 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('bookForm', bookForm);
     Alpine.data('allAuthors', allAuthors);
     Alpine.data('allBooks', allBooks);
+    Alpine.data('toastManager', toastManager);
 });
 
 Alpine.start();

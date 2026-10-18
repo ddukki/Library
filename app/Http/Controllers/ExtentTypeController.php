@@ -47,9 +47,26 @@ class ExtentTypeController extends Controller
         //
     }
 
+    public function usage($id)
+    {
+        $extentType = ExtentType::findOrFail($id);
+        $editionsCount = $extentType->editions()->count();
+
+        return response()->json(['editions_count' => $editionsCount]);
+    }
+
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->validate([
+            'extentType.name' => 'required|string|max:255',
+        ]);
+
+        $extentType = ExtentType::findOrFail($id);
+        $extentType->update([
+            'name' => $data['extentType']['name'],
+        ]);
+
+        return response()->json(['updated' => $extentType]);
     }
 
     public function destroy($id)

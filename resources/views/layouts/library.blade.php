@@ -24,6 +24,24 @@
         <main style="padding-top: 1.5rem; padding-bottom: 1.5rem">
             @yield('content')
         </main>
+
+        <div x-data="toastManager"
+             @toast.window="addToast"
+             class="toast-container">
+            <template x-for="toast in toasts" :key="toast.id">
+                <div role="alert"
+                     :class="'alert alert--' + toast.variant + ' alert--toast alert--toast-bl'">
+                    <div class="alert__content">
+                        <span x-text="toast.message"></span>
+                    </div>
+                    <button type="button" class="alert__dismiss"
+                            @click="removeToast(toast.id)"
+                            aria-label="Dismiss">
+                        &times;
+                    </button>
+                </div>
+            </template>
+        </div>
     </div>
 </body>
 </html>

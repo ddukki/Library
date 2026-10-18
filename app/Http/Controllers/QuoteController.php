@@ -78,7 +78,18 @@ class QuoteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->validate([
+            'quote' => 'required|string',
+            'location' => 'nullable|string|max:255',
+        ]);
+
+        $quote = Quote::findOrFail($id);
+        $quote->update([
+            'quote' => $data['quote'],
+            'location' => $data['location'] ?? null,
+        ]);
+
+        return response()->json(['updated' => $quote]);
     }
 
     /**
@@ -89,6 +100,9 @@ class QuoteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $quote = Quote::findOrFail($id);
+        $quote->delete();
+
+        return response()->json([], 204);
     }
 }

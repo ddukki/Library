@@ -50,7 +50,7 @@
             <x-slot:header>Admin Settings</x-slot:header>
 
             <a href="{{ route('extenttypes.index') }}">
-                Manage Location Types
+                Manage Extent Types
             </a>
         </x-card>
     </div>

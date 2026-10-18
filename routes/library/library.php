@@ -26,6 +26,7 @@ Route::post('editions/{edition}/unshelve/{shelf}', [EditionController::class, 'u
 Route::resource('editions', EditionController::class);
 
 Route::get('extenttypes/all', [ExtentTypeController::class, 'all'])->name('extenttypes.all');
+Route::get('extenttypes/{extenttype}/usage', [ExtentTypeController::class, 'usage'])->name('extenttypes.usage');
 Route::resource('extenttypes', ExtentTypeController::class);
 
 Route::resource('quotes', QuoteController::class);

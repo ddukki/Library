@@ -37,6 +37,55 @@ test('authenticated user can delete an extent type', function () {
     $this->assertDatabaseMissing('extent_types', ['id' => $type->id]);
 });
 
+test('authenticated user can update an extent type', function () {
+    $user = User::factory()->create();
+    $type = ExtentType::create(['name' => 'Old Name']);
+
+    $this->actingAs($user);
+    $response = $this->put(route('extenttypes.update', ['extenttype' => $type->id]), [
+        'extentType' => ['name' => 'New Name'],
+    ]);
+
+    $response->assertStatus(200);
+    $response->assertJsonPath('updated.name', 'New Name');
+    $this->assertDatabaseHas('extent_types', ['id' => $type->id, 'name' => 'New Name']);
+});
+
+test('usage endpoint returns zero for unused extent type', function () {
+    $user = User::factory()->create();
+    $type = ExtentType::create(['name' => 'Unused']);
+
+    $this->actingAs($user);
+    $response = $this->get(route('extenttypes.usage', ['extenttype' => $type->id]));
+
+    $response->assertStatus(200);
+    $response->assertJson(['editions_count' => 0]);
+});
+
+test('usage endpoint returns edition count for used extent type', function () {
+    $user = User::factory()->create();
+    $book = App\Models\Library\Book::create(['title' => 'Test Book']);
+    $type = ExtentType::create(['name' => 'Page']);
+    App\Models\Library\Edition::create([
+        'book_id' => $book->id,
+        'name' => 'First Edition',
+        'extent_type_id' => $type->id,
+        'extent' => 0,
+    ]);
+    App\Models\Library\Edition::create([
+        'book_id' => $book->id,
+        'name' => 'Second Edition',
+        'extent_type_id' => $type->id,
+        'extent' => 0,
+    ]);
+
+    $this->actingAs($user);
+    $response = $this->get(route('extenttypes.usage', ['extenttype' => $type->id]));
+
+    $response->assertStatus(200);
+    $response->assertJson(['editions_count' => 2]);
+});
+
 test('unauthenticated user cannot create an extent type', function () {
     $response = $this->post(route('extenttypes.store'), [
         'extentType' => ['name' => 'Hacked'],
